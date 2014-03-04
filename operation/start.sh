@@ -2,6 +2,13 @@ LD_LIBRARY_PATH=/usr/local/lib
 export LD_LIBRARY_PATH
 
 
+rm -rf /srv/pillar
+rm -rf /srv/salt
+
+ln -s    /var/www/salt/srv/pillar  /srv/pillar
+
+ln -s   /var/www/salt/srv/salt  /srv/salt
+
 sudo killall -9 uwsgi
 sudo uwsgi /var/www/salt/salt.ini
 
