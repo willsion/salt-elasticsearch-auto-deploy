@@ -1,0 +1,37 @@
+/* Copyright (c) 2012 Cloudera, Inc. All rights reserved. */
+
+#ConfigGroupTable,
+#AlertsTable {
+
+  height: 100%;
+  width: 100%;
+
+  .narrow {
+    width: 250px;
+  }
+
+  table.noZebra tr:nth-child(odd) {
+    background: #fff;
+  }
+
+  .notLeftmost {
+    border-left: 1px solid #ccc;
+  }
+
+  .selector,
+  .drillDown
+  {
+    cursor: pointer;
+  }
+}
+
+.global-alert-settings {
+
+  .recipient {
+    padding-right: 6px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

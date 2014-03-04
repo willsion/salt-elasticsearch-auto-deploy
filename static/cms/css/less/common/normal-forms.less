@@ -1,0 +1,34 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+
+input.number {
+  text-align: right;
+}
+
+input:invalid,
+textarea:invalid {
+  border-radius: 1px;
+  -moz-box-shadow: 0px 0px 5px red;
+  -webkit-box-shadow: 0px 0px 5px red;
+  box-shadow: 0px 0px 5px red;
+}
+
+.control-group .controls > {
+  .display-value {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+  }
+}
+
+.control-group .controls-vertical > {
+  input, select, textarea, .display-value {
+    margin-top: 10px;
+    display: block;
+
+    &:first-child {
+    margin-top: 0px;
+    }
+  }
+}

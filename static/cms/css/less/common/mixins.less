@@ -1,0 +1,229 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+
+@lightBlueBackground: #76ccfe;
+@mediumBlueBackground: #1F92D8;
+@darkBlueBackground: #01639C;
+@orangeBackground: #E75117;
+@lightBlue: #76ccfe;
+@mediumBlue: #1F92D8;
+@darkBlue: #01639C;
+@orange: #E75117;
+@mustardYellow: #f6eb97;
+@lightYellow: lightyellow;
+@alertRed: #c0131b;
+@lightRed: #FFECEC;
+@mediumRed: #FFCDCC;
+@darkRed: @alertRed;
+@warningYellow: #aa8c22;
+@checkGreen: darkgreen;
+@paleYellow: #fefdcc;
+@gray15: #262626;
+@gray30: #4d4d4d;
+@gray60: #999999;
+@gray80: #cccccc;
+@gray85: #d9d9d9;
+@gray90: #e5e5e5;
+@gray95: #f2f2f2;
+@hoverColor: #f5f5f5;
+
+@redStatusTopBg: #FFECEC;
+@redStatusBottomBg: #FFCDCC;
+@redStatusColor: #CC0F0C;
+
+@yellowStatusTopBg: #FFF2C9;
+@yellowStatusBottomBg: #FADC7C;
+@yellowStatusColor: #A98B2B;
+
+@greenStatusTopBg: #DFF0D8;
+@greenStatusBottomBg: #D6E9C6;
+@greenStatusColor: #078c9a;
+
+@greyStatusTopBg: #F1F1F1;
+@greyStatusBottomBg: #D9D9D9;
+@greyStatusColor: #111;
+
+@khakiStatusTopBg: #FDEFDC;
+@khakiStatusBottomBg: #E6D8C5;
+@khakiStatusColor: #967c5a;
+
+@generalBorderColor: #DDD;
+
+@dataTableOuterBorderColor: #BBB;
+@dataTableBorderColor: #DDD;
+@dataTableOdd: #FFFFFF;
+@dataTableEven: WhiteSmoke;
+
+@fontSizeA: 24px;
+@fontSizeB: 18px;
+@fontSizeC: 14px;
+@fontSizeD: 11px;
+@fontSizeE: 10px;
+
+@jQueryThemePath: "/static/ext/jquery/css/bootstrap";
+
+.jQueryImageBackground(@image) {
+    @imageAbsPath: %("%s/%s", @jQueryThemePath, @image);
+    background: url(@imageAbsPath) repeat-x scroll 50% 50%;
+}
+
+.standardTextColor() {
+  color: #111;
+}
+
+.img() {
+  border: 0;
+}
+
+.noBorder() {
+  border: 0;
+}
+
+.nowrap() {
+  white-space: nowrap;
+}
+
+.noLeftRightBorders() {
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.borderBottom(@color: black, @type: solid, @width: 1px) {
+  border-bottom: @width @type @color;
+}
+
+.borderLeft(@color: black, @type: solid, @width: 1px) {
+  border-left: @width @type @color;
+}
+
+.borderRight(@color: black, @type: solid, @width: 1px) {
+  border-right: @width @type @color;
+}
+
+.borderTop(@color: black, @type: solid, @width: 1px) {
+    border-top: @width @type @color;
+}
+
+.borderAll(@color: black, @type: solid, @width: 1px) {
+  border: @width @type @color;
+}
+
+.backgroundGradientY(@topColor, @bottomColor) {
+  background-color: (@topColor + @bottomColor) / 2;
+  background: -moz-linear-gradient(top, @topColor, @bottomColor);
+  background: -webkit-gradient(linear, left top, left bottom, from(@topColor), to(@bottomColor));
+  -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=@{topColor}, EndColorStr=@{bottomColor})";
+  filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=@{topColor}, EndColorStr=@{bottomColor})";
+}
+
+.backgroundGradientYImportant(@topColor, @bottomColor) {
+  background-color: (@topColor + @bottomColor) / 2 !important;
+  background: -moz-linear-gradient(top, @topColor, @bottomColor) !important;
+  background: -webkit-gradient(linear, left top, left bottom, from(@topColor), to(@bottomColor)) !important;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=@{topColor}, EndColorStr=@{bottomColor})" !important;
+  filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=@{topColor}, EndColorStr=@{bottomColor})" !important;
+}
+
+.box-shadow(@shadowA, @shadowB:X, ...){
+  // Multiple shadow solution from http://toekneestuck.com/blog/2012/05/15/less-css-arguments-variable/
+  @props: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+  -webkit-box-shadow: @props;
+     -moz-box-shadow: @props;
+          box-shadow: @props;
+}
+
+.borderRadius(@topLeft, @topRight, @bottomRight, @bottomLeft) {
+  -moz-border-top-left-radius: @topLeft;
+  -moz-border-top-right-radius: @topRight;
+  -moz-border-bottom-right-radius: @bottomRight;
+  -moz-border-bottom-left-radius: @bottomLeft;
+
+  -webkit-border-radius-topleft: @topLeft;
+  -webkit-border-radius-topright: @topRight;
+  -webkit-border-radius-bottomight: @bottomRight;
+  -webkit-border-radius-bottomleft: @bottomLeft;
+
+  border-top-left-radius: @topLeft;
+  border-top-right-radius: @topRight;
+  border-bottom-right-radius: @bottomRight;
+  border-bottom-left-radius: @bottomLeft;
+}
+
+.borderRadius(@radius) {
+  .borderRadius(@radius, @radius, @radius, @radius);
+}
+
+.textLink (@color: #fff) {
+  &:link,
+  &:visited {
+    color: @color;
+    text-decoration: none;
+  }
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+  &:active {
+    color: inherit;
+  }
+}
+
+.borderBox () {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
+.healthStatus(@topBg, @bottomBg, @iconY) {
+  .backgroundGradientY(@topBg, @bottomBg);
+  .icon {
+    background-position: 0 @iconY;
+  }
+}
+
+
+// http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting/4358620#4358620
+.unselectable () {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+// ---
+// name: Fill
+// description: |
+//   Fill forces an element to fill its offsetParent
+//
+//   Specificity
+//   has been very carefully tuned in each selector.
+//   The specificity value has been included as a comment before many selectors.
+//   Cf. http://www.w3.org/TR/CSS21/cascade.html#specificity
+//
+//   @group Fill
+//
+//
+//   Fill the entire area of your element's parentElement using relative or absolute positioning
+//   The parentElement of a Fill must either be a FillCell or be the offsetParent
+//
+//   To Fill the content of a table or Grid cell:
+//   1.  Make sure the table/Grid has a height of at least 1px
+//   2.  Add FillCell to the cell
+//   3.  Add Fill to your element
+//   4.  If your element is an img, table or iframe
+//     Wrap your element in a Fill element
+//   5.  Test in all target browsers
+
+.Fill {
+  // Some versions of webkit have a box-sizing bug
+  // where top and bottom border size
+  // is subtracted from the total height.
+  // The workaround is to not use a top or bottom border.
+  .borderBox();
+}
+
+.close {
+  text-decoration: none;
+}

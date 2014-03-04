@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style type = "text/css" >
+      .LandingPage .elk_dashboard .row-fluid{
+          margin:0px;
+      }
+      .LandingPage .nav-tabs>.active>a{
+          background-color: #007fff !important;
+      }
+      .row-tab:hover{
+          padding-left:3px;
+      }
+      .row-tab{
+          transition: .1s padding;
+      }
+    </style >
+
+  <link rel = "stylesheet" href = "/static/cms/css/bootstrap.light.min.css" >
+
+  <div class = "elk_dashboard" >
+    <ul class="nav nav-tabs" id="myTab">
+    {% for cluster in clusters %}
+      <li {% if cluster.action  %}class="active"{% endif %}><a href="?id={{ cluster.id }}" date_id="{{ cluster.id }}">{{ cluster.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <div class="tab-content">    
+    </div>
+
+
+  <script type="text/javascript" >
+    var cluster = "";
+    function refresh_dashboard()
+    {
+        //alert("刷新");
+        $.get("indexdate",{id:cluster},function(date){
+            $('.tab-content').html(date);
+        })
+    }
+
+    $(document).ready(function(){
+
+        if($("#myTab .active>a").attr("date_id"))
+        {
+          cluster = $("#myTab .active>a").attr("date_id");
+        }            
+        else 
+        {
+          cluster = $("#myTab.active>a:first").attr("date_id");
+        }
+
+        window.setInterval(refresh_dashboard,60000);
+        
+        $.get("indexdate",{id:''+cluster+''},function(date){
+            $('.tab-content').html(date);
+        })
+    });
+  </script>
+{% endblock %}

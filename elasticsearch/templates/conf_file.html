@@ -1,0 +1,581 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+    <script src="/static/ajaxfileupload.js"></script>
+    <script src="/static/jquery.contextmenu.js"></script>
+    <link rel="stylesheet" href="/static/jquery.contextmenu.css">
+{% endblock %}
+
+{% block content %}
+
+   
+
+    <input type='hidden' id='template_id' value="{{template.id}}"/>
+
+    <input type='hidden' id='operation' />
+
+    <input type='hidden' id='right_click_id' />
+
+    <input type='hidden' id='right_click_name' />
+
+    <input type='hidden' id='role_conf_id' />
+
+    <input type='hidden' id='role_conf_configure_id' />
+
+    <div class="container-fluid">
+
+        <h2><img border="0" src="/static/img/{{template.icon}}" style="height: 16px;width: 14px">{{template.name}}</h2>
+
+
+        <ul class="nav nav-tabs" id="myTab" style="margin-bottom: 1px;">
+
+            <li>    
+                <a href="/salt/role?template_id={{template.id}}">
+                <i class="icon-home"></i>role管理</a>    
+            </li>
+
+            <li class="nav nav-tabs dropdown active">
+                <a href="#" class=" dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-wrench"></i>配置管理<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/salt/conf_file?template_id={{template.id}}">配置文件</a>
+                    </li>                   
+                </ul>
+            </li>                
+        </ul>
+
+        <div class="toolbar" style="margin-bottom: 10px;text-align: right;">
+            <a data-toggle="modal" 
+                href="#myModal"
+                class="btn btn-primary AjaxLink"
+                id="realtive_with_role" >关联role批量操作
+            </a>
+            <a data-toggle="modal" 
+                href="#myModal"
+                class="btn btn-primary AjaxLink"
+                id="new_configure" value="configure">新增配置文件
+            </a>
+            <a  
+                class="btn btn-primary AjaxLink"
+                id="commit_modify_conf" value="configure">提交修改
+            </a>
+        </div>
+
+        <div class="tab-content" id="machine_info">
+            <div class="tab-pane" id="package">package</div>
+            <div class="tab-pane" id="folder">folder</div>
+            <div class="tab-pane" id="custom">custom</div>
+            <div class="tab-pane active" id="conf_file">
+                <table class="width1of1" id="cmfConfigContainer" style="">
+                    <tbody>
+                        <tr>
+                            <td class="widthMin" id="cmfConfigLeftBar">
+                                <div id="cmfConfigLeftBarContent" class="YScroll">
+                                    <table class="DataTable noZebra">
+                                        <thead>
+                                            <tr>
+                                                <th>配置</th>
+                                            </tr>
+                                        </thead>
+                                        {% if  len == 1 %}
+                                        <tbody>
+                                            <tr>
+                                                <td id="cmfConfigNavTree">
+                                                    <table class="width1of1 treeTable">                                               
+                                                        <tbody>
+                                                            {% for item in conf %}
+                                                            <tr id="config--host--parcel--display_group" class="initialized">
+                                                                <td style="font-weight: bold;"><a  class="configure" value="-1_{{item.id}}">{{item.name}}</a>
+                                                                </td>                                                       
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endif %}
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td class="width1of1" id="cmfConfigMain">
+                                <div id="cmfConfig" class="YScroll">
+                                    <table class="DataTable" id="configTableBase">
+                                        <colgroup>
+                                            <col class="category hidden">
+                                            <col class="name">
+                                            <col class="value wrap">
+                                            <col class="description wrap">
+                                        </colgroup>
+
+                                        <thead>
+                                            <tr class="headerRow">
+                                                <th style="width: 30px;">
+                                                    <input class="default_configure" type="checkbox" />
+                                                </th>
+                                                <th style="width: 30%;" >属性</th>
+                                                <th>缺省值</th>
+                                                
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="content">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 950px;height:auto;left: 32%;top:40%;font-weight: 600;font-size: 20px;">
+        <div class="modal-header">
+        <span id="modal-header" class="modal_head"></span>
+        <a class="close" data-dismiss="modal">×</a>
+        </div>
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="modal_body">
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn AjaxLink btn-primary" id="modal_command">提交</button>
+            <button class="btn dismissButton " data-dismiss="modal">取消</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+    new_modal_body = '<div style="font-size: 14px;font-weight: normal;">名称 :<input id="name1" name="templateName" value=""  type="text" style="margin-left: 124px;"></div><div style="font-size: 14px;font-weight: normal;">部署路径 :<input id="deploy_path" name="deploy_path" value=""  type="text" style="margin-left: 96px;" placeholder="例如：/etc/target_folder/"></div><div style="font-size: 14px;font-weight: normal;">分隔符 :<input id="spera" name="templateName" value=""  type="text" style="margin-left: 110px;width: 400px;" placeholder="现在只可以处理(key 分隔符 value)形式的配置，比如 key : value"></div><div style="font-size: 14px;font-weight: normal;" >创建且关联同名role :<input id="create_role" type="checkbox"  style="margin-left: 30px;" checked="checked"/><div>';
+
+    mapping = {"configure":new_modal_body,
+                "role":new_modal_body,
+                "add_configure":'<div class="control-group"><label class="control-label">匹配规则:</label><div class="controls"><input id="_reg" name="templateName" style="width: 420px;" type="text" placeholder="例如：[\\r\\n]+[#]?[ ]*([^: ]+)[ ]*:[ ]*([^\\r\\n]+) 对应(#?)key : value形式"></div></div><div class="control-group"><label class="control-label">文件:</label><div class="controls"><input type="file" name="configure_file" id="configure_file" size="28" /><p class="help-block message"></p></div></div><div class="control-group" style="margin-top: 20px;"><label class="control-label" style="display: inline;">属性去重:</label><input id="unique_key" type="checkbox" class="un_check" style="margin-left: 30px;" checked="checked"/></div>',
+                "onebyone_configure":'<div style="font-size: 14px;font-weight: normal;">名称 :<input id="config_name" name="templateName" value=""  type="text" style="margin-left: 110px;"></div><div style="font-size: 14px;font-weight: normal;">值 :<textarea id="config_value" style="height:180px;width: 205px;margin-left: 124px;"></textarea></div>'
+            };  
+
+    function batchcheck () {
+        checked = $(this).attr('checked');
+        class_name = $(this).attr('class');
+        map = {"default_configure":'.dc_item',
+            "all_role":".need_record_item",
+            "cancel_all_role":'.cancel_item'}
+
+        $(map[class_name]).each(function(index, item) {
+            if (checked) {
+                $(item).attr('checked', checked);
+            }
+            else {
+                $(item).removeAttr('checked');
+            }
+      });
+    }
+
+    function _onebyone_configure(id)
+    {
+        var config_value = $("#config_value").val();
+        var config_name  = $("#config_name").val();
+        var _id = $("#right_click_id").attr("value");
+
+        adjax("/salt/configure/" + ope,{id:id,name:config_name,value:config_value,_id:_id},0);        
+    }
+
+    function _upload_reg(name)
+    {
+        var _reg = $("#_reg").val();
+        var _id = $("#right_click_id").attr("value");
+
+        var checked = $("#unique_key").attr('checked');
+
+
+        adjax("/salt/configure/file/add/reg",{reg:_reg,name:name,id:_id,checked:checked},0);
+    }
+
+    function _add_configure(id)
+    {
+        if(typeof $("#configure_file").val() != 'undefined'){
+            $.ajaxFileUpload({
+                url:'/salt/configure/file/add/file',
+                secureuri:false,
+                fileElementId:'configure_file',//input框的ID
+                dataType: 'json',//返回数据类型
+                success: function (data, status){//上传成功
+                    if(data.status == "ok"){
+                        _upload_reg(data.filename);
+                        } else{
+                            alert('上传失败！');
+                        }
+                    },
+                error: function (data) {
+                    alert("新建出错");
+            }
+            });
+        }        
+    }
+
+    function _new()
+    {
+        var name = $(this).attr("value");
+
+        $("#modal-header").html("请输入" + name + "的名称");
+        $('#modal_body').html(mapping[name]);
+        $("#operation").attr("value",name);
+    }
+
+
+    function toggleDown(obj,flag) 
+    {
+        if(flag == 1) {
+            var w = $(obj).find("a").width() + 10;
+            $(obj).find("ul").css("left", w + "px");
+            $(obj).find("ul").show();
+        }
+        else {
+            $(obj).find("ul").hide();
+        }
+    };
+
+
+    function commit()
+    {
+        id = $("#template_id").attr("value");
+        ope = $("#operation").attr("value");
+        if ((ope == "configure") || (ope == "role"))
+        {
+            var deploy_path = $("#deploy_path").val();
+            var name = $("#name1").val();
+            var create_role = $("#create_role").attr('checked');
+            var spera = $("#spera").val();
+            adjax("/salt/configure/add/" + ope,{deploy_path:deploy_path,id:id,name:name,create_role:create_role,spera:spera},0);           
+        }
+        else if (ope == "add_configure")
+        {
+            _add_configure(id);
+        }
+        else if (ope == 'role_conf_configure')
+        {
+            var a = $('#role_conf_configure_id').attr("value");
+            var b = $('#role_conf_id').attr("value");
+            var c = $('.role_conf_configure_modify').val();
+            adjax("/salt/configure/role_conf_configure_commit",{role_conf_configure_id:a,role_conf_id:b,name:c},0);
+        }
+        else if (ope == "role_conf")
+        {
+            var dc_item = new Array();
+            $('.dc_item').each(function(index,ele)
+            {
+                if ($(ele).attr("checked"))
+                {
+                    var id = $(ele).parent().parent().find("td");
+                    id = id.eq(2).attr("id").split("_")[1];
+                    dc_item.push(id);
+                }
+            });
+
+            var role_id_array = new Array();
+            var add_array     = new Array();
+            var del_array     = new Array();
+
+            //查看role
+            $('#role_list').find('tr').each(function(index,ele)
+            {
+                var need_record_item = $(ele).find(".need_record_item").attr("checked");
+                add_array.push(need_record_item);
+
+                var cancel_item      = $(ele).find(".cancel_item").attr("checked");
+                del_array.push(cancel_item);
+
+                var name             = $(ele).find(".name").html();
+                role_id_array.push(name);
+            });
+
+            
+            adjax("/salt/configure/role_configure_relative",{id:dc_item.join("&"),role_id_array:role_id_array.join('&'),add_array:add_array.join("&"),del_array:del_array.join("&")},0);
+        }
+        else if (ope == "fetch_file_info")
+        {
+            var name = $("#current_conf_name").val();
+            var path = $("#current_conf_path").val();
+            var sep = $("#current_conf_spera").val();
+            var id = $("#right_click_id").attr("value");
+            adjax("/salt/configure/modify_configure_info",{id:id,name:name,path:path,sep:sep},0)
+        }
+
+        else
+        {
+            _onebyone_configure(id);
+        }
+
+    }
+    function _configure_detail()
+    {
+        var id = $(this).attr("value");
+        var result = adjax("/salt/configure/display",{id:id},1);
+    }
+
+    function modify_role_configure(configure_id,role_id,obj)
+    {
+        var role_name = $(obj).text();
+        var key_name = $(obj).parent().parent().parent().parent().find('.cmfParamName').text();
+        $("#modal-header").html("修改role: " + role_name + "        key: " + key_name + "的值");
+        $('#modal_body').html("请稍候");
+        $('#role_conf_configure_id').attr("value",configure_id);
+        $('#role_conf_id').attr("value",role_id);
+        $("#operation").attr("value","role_conf_configure");
+
+        $.ajax({
+                url: "/salt/configure/role_configure?configure_id=" + configure_id + "&role_id=" + role_id,
+                type: 'GET',
+                dataType: 'JSON',
+                timeout: 5000,
+                success: function(data) 
+                {
+                    if( data.status=="ok")
+                    {                                               
+                        $('#modal_body').html('<textarea class="role_conf_configure_modify" name="desc" style="height:180px;width:380px;">' + data.result + '</textarea>');
+                    }
+                    else
+                    {
+                        $('#modal_body').html("操作失败");
+                    }
+                },
+                error: function (data) {
+                    $('#modal_body').html("操作出错");
+                }
+            });    
+    }
+
+    function adjax(url,data,return_flag)
+    {
+        $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: data,
+                timeout: 5000,
+                success: function(data) {
+                    if( data.status=="ok")
+                    {                                                
+                        if (return_flag == 0)
+                        {
+                            alert("操作成功");
+                            window.location.href="/salt/conf_file?template_id={{template.id}}";
+                            return;
+                        }
+                        else if (return_flag == 2)
+                        {
+
+                            var __need_add_html = '<table class="table table-bordered table-striped table-hover" style="font-size: 14px;"><thead><tr><th><input type="checkbox" class="all_role"/>关联此role</th><th><input type="checkbox" class="cancel_all_role"/>取消与此role的关联</th><th>role</th></tr></thead><tbody id="role_list">';
+
+                            for (var i=0;i<data.result.length;i++)
+                            {
+                                var _need_item = data.result[i];
+                                var default_value = 
+                                __need_add_html = __need_add_html + ' <tr><td><input type="checkbox" class="need_record_item"/><input type="hidden"  class="role_id" value="' + _need_item[0] + '"/></td><td><input type="checkbox" class="cancel_item"/></td><td class="name">' + _need_item[1] + '</td></tr>';
+                            }
+
+                            __need_add_html = __need_add_html + '</tbody></table>';
+
+                            $('#modal_body').html(__need_add_html);
+                            $(".all_role").click(batchcheck);
+                            $(".cancel_all_role").click(batchcheck);
+                            $("#operation").attr("value","role_conf");
+                        }
+                        else if (return_flag == 3)
+                        {
+
+                           var nn = '<div style="font-size: 14px;font-weight: normal;">名称 :<input id="current_conf_name"  value="'+ data.name + '"  type="text" style="margin-left: 124px;"></div><div style="font-size: 14px;font-weight: normal;">部署路径 :<input id="current_conf_path"  value="'+ data.path + '"  type="text" style="margin-left: 96px;" ></div><div style="font-size: 14px;font-weight: normal;">分隔符 :<input id="current_conf_spera" value="'+ data.spe + '"  type="text" style="margin-left: 110px;width: 400px;" ></div>';
+                           $('#modal_body').html(nn);
+                        }
+
+                        else
+                        {
+                            var html_cn = ""
+                            var result = data.result;
+                            for(var i=0;i<result.length;i++)
+                            {
+                                var role = "";
+                                var item = result[i];
+                                var role_list = item.role;
+                                if (role_list.length)
+                                {
+                                    var role = '<ul class="drop_menu dropdown-menu" style="padding: 0;cursor: pointer;"><li style="margin:7px;">role-value修改</li><li class="divider"></li>';                                    
+                                }                                
+                                
+                                for (var j=0;j<role_list.length;j++)
+                                {
+                                    var role_item = role_list[j];
+
+                                    role = role + '<li><a data-toggle="modal" href="#myModal" onclick="modify_role_configure(' + "'" + item.id + "','" + role_item[0] + "'," + "this" + ')">'  + role_item[1] + '</a></li>';
+                                }
+                                if (role_list.length)
+                                {
+                                     role = role + "</ul>";                                    
+                                }                          
+                                html_cn = html_cn + '<tr class="configRow" style="height: 50px;"><td><input class="dc_item" type="checkbox" /></td><td class="wrap name" onmouseover="toggleDown(this,1)"  onmouseout="toggleDown(this,2)"><span class="cmfParamName">' + item.key + '</span><br>'+  '<div style="position:relative;">' + role + '</div></td><td class="wrap value editable defaultGroup" id="td_' + item.id + '"><div class="item_value"' + 'value="' + item.id + '">' + item.value + '</div></td></tr>';                             
+                            }
+                            $("#content").html(html_cn);
+                            $(".item_value").css({'cursor':'pointer'});
+                            $(".item_value").click(_modify_conf);
+                        }
+                        
+                    }
+                    else
+                    {
+                        alert("操作失败");
+                    }
+                },
+                error: function (data) {
+                    //alert(data);
+                    alert("操作出错");
+                }
+            });
+    }
+
+
+    function _reset(_id,_name)
+    {
+        var html = '<div class="item_value" value="' + _id + '" style="cursor: pointer;">' + _name + '</div>';
+        $("#td_" + _id).html(html);
+        $("#td_" + _id).find(".item_value").click(_modify_conf); 
+    }
+
+
+    function _modify_conf()
+    {
+        var _id  = $(this).attr("value");
+        var _name = $(this).html();
+        var _changes_html = '<div class="nowrap overrideGroup"><div class="warningThreshold">原来的值: </div><div>' + _name + '</div><div class="criticalThreshold"><label class="control-label input-small">修改后的值:</label><div class="controls"><textarea class="modify_value" name="desc"' + 'tag="'+ _id + '" style="height:180px;width:380px;"></textarea><p class="help-block message"></p></div></div><a href="#" class="erase overrideGroup" value="1" onclick="_reset(' + "'" + _id + "','" + _name + "'" + ')" >取消修改<i class="IconErase16x16"></i></a></div></div></div>';
+        $(this).parent().html(_changes_html);
+        $(".defaultGroup").css({'cursor':'pointer'});
+
+    }
+
+    function commit_modify_conf()
+    {
+        if(confirm("是否继续")){
+            _commit_modify_conf();
+        }
+    }
+    function _commit_modify_conf()
+    {
+        var id_array = new Array();
+        var context_array = new Array();
+
+        $('.modify_value').each(function (index, item) {
+            var id = $(item).attr("tag");
+            var context = $(item).val();
+            id_array.push(id);
+            context_array.push(context);
+        });
+
+        adjax("/salt/configure/modify",{id:id_array.join("&"),context:context_array.join("&sperate&")},0);
+
+    }
+
+    function realtive_with_role()
+    {
+        var dc_item = new Array();
+
+        $('.dc_item').each(function(index,ele)
+        {
+            if ($(ele).attr("checked"))
+            {
+                var id = $(ele).parent().parent().find("td");
+                id = id.eq(2).attr("id").split("_")[1];
+                //var key = id.eq(1).find(".cmfParamName").text();
+                //var value = id.eq(2).find(".item_value").text();
+                dc_item.push(id);
+            }
+        });
+
+        $("#modal-header").html("配置项关联配置 批量操作");
+        $('#modal_body').html("请稍候");
+
+        if (dc_item.length == 0)
+        {
+            $('#modal_body').html("请选择配置项");
+            return;
+        }
+
+
+        adjax("/salt/configure/fetch_role",{id:$("#template_id").attr("value")},2);
+    }
+
+    $(document).ready(function() {
+        $("#modal_command").click(commit);
+        $("#new_configure").click(_new);
+        $("#new_role").click(_new);
+        $(".configure").click(_configure_detail);
+        $(".configure").css({'cursor':'pointer'});
+        page_light("template_page");
+        $("#commit_modify_conf").click(commit_modify_conf);
+        $(".default_configure").click(batchcheck);
+        $("#realtive_with_role").click(realtive_with_role);
+    });
+
+    function import_configure()
+    {
+        var id = $("#right_click_id").attr("value");        
+        var name = $("#right_click_name").attr("value");
+
+        $("#modal-header").html("增加文件 '" + name + "' 的配置");
+        $('#modal_body').html(mapping["add_configure"]);
+        $("#operation").attr("value","add_configure");
+    }
+
+    function onebyone_configure () {
+        $("#modal-header").html("增加文件 '" + name + "' 的配置");
+        $('#modal_body').html(mapping["onebyone_configure"]);
+        $("#operation").attr("value","onebyone_configure");
+    }
+
+    function modify_info()
+    {
+        var id = $("#right_click_id").attr("value");        
+        var name = $("#right_click_name").attr("value");
+
+        $("#modal-header").html("修改文件 '" + name + "' 的信息");
+        $('#modal_body').html("请稍候");
+        $("#operation").attr("value","fetch_file_info");
+
+        adjax("/salt/configure/fetch_file_info",{id:id,name:name},3);            
+    }
+
+
+    function _delte_conf()
+    {
+        var id = $("#right_click_id").attr("value");        
+        var name = $("#right_click_name").attr("value");
+
+        adjax("/salt/configure/delete_conf",{id:id},0);       
+    }
+
+    function delte_conf()
+    {
+
+        if(confirm("是否继续")){
+            _delte_conf();
+        }
+    }
+
+    $(function() {
+        $('.configure').contextPopup({
+          title: '',
+          items: [
+            {label:'导入配置', action: import_configure},                 
+            {label:'增加配置', action: onebyone_configure }, 
+            null, // divider
+            {label:'修改信息', action: modify_info },
+            {label:'删除', action: delte_conf },
+          ]
+        });
+    });
+
+    </script>
+
+
+{% endblock %}

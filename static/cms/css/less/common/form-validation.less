@@ -1,0 +1,41 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+
+// @group Validation Message
+.cmfParamName {
+  color: #595959;
+  font-weight: bold;
+}
+
+.cmfParamState {
+  .alignLeft;
+  margin-right: auto;
+  padding: 0.5ex 0;
+}
+.cmfParamState + p {
+  margin-top: 1ex;
+}
+
+label.error,
+.cmfParamState.error {
+  clear: both;
+  color: #c10d0a;
+}
+
+.cmfParamState.warning {
+  clear: both;
+  color: #997711;
+}
+
+.cmfParamState.check {
+  clear: both;
+  color: @checkGreen;
+}
+
+label.error {
+  display: inline-block;
+  width: auto;
+  padding: 0 4px;
+}
+// @end
+
+

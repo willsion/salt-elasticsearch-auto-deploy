@@ -1,0 +1,88 @@
+// (c) Copyright 2013 Cloudera, Inc. All rights reserved.
+
+@import "../common/mixins.less";
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+
+// Give Impala time stamps more room.
+@timestampWidth: 200px;
+@actionsWidth: 100px;
+
+#impala-query-filters {
+  textarea {
+    width: 60%;
+    margin-right: @fontSizeB;
+
+    min-width: 300px;
+    max-width: 90%;
+    max-height: @fontSizeB * 4;
+  }
+
+  .filter-result-spinner {
+    margin-left: 12px;
+  }
+}
+
+#impala-queries-list-container {
+  margin-top: 0;
+  margin-left: 0;
+
+  .load-more-container {
+    text-align: center;
+    font-size: @fontSizeB;
+  }
+}
+
+.history-search {
+  .event-list {
+    li {
+
+      height: @fontSizeB * 4;
+      overflow: hidden;
+
+      .timestamp {
+        width: @timestampWidth;
+      }
+
+      .result {
+        margin-left: @timestampWidth + @fontSizeB;
+
+        .content {
+          margin-right: @actionsWidth + @fontSizeB;
+
+          .statement {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            .keyword {
+              color: @blue;
+              padding: 0;
+            }
+          }
+        }
+
+        .related {
+          font-size: @fontSizeC;
+        }
+
+        .actions {
+          width: @actionsWidth;
+          text-align: right;
+        }
+      }
+
+      &.hovered {
+        .result {
+          .content {
+            .statement {
+              overflow: inherit;
+              text-overflow: normal;
+              white-space: pre-wrap;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.Fill{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}
+.close{text-decoration:none;}
+.CMFValue{line-height:1.5em;clear:both;}
+.ie9 .CMFValue input[type=radio],.ie8 .CMFValue input[type=radio]{margin:0 -0.5ex;}
+.CMFValue .value{word-wrap:break-word;}
+.CMFValue .default{color:#777;}
+.CMFValue .criticalThreshold label,.CMFValue .warningThreshold label{display:inline-block;}
+.notSection{display:none;}
+.notKeyword{display:none;}
+#cmfConfigSearch{padding:10px 30px 10px 10px;border-bottom:1px solid #dddddd;background-color:#ffffff;}
+#cmfConfigCategoryFilter{padding:10px;}
+#cmfConfigNavTree{padding:0;min-width:200px;background-color:#ffffff;cursor:pointer;}
+#cmfConfigNavTree a,#cmfConfigNavTree a:hover,#cmfConfigNavTree a:visited,#cmfConfigNavTree a:focus{text-decoration:none;}
+#cmfConfigNavTree table tr td{padding-left:19px;}
+#cmfConfigLeftBarContent{overflow-x:hidden;}
+#cmfConfigLeftBar{padding:0;}#cmfConfigLeftBar .toolbar{font-weight:bold;}#cmfConfigLeftBar .toolbar a{color:#111;text-decoration:none;}
+#cmfConfigLeftBar .toolbar a:hover{text-decoration:underline;}
+#cmfConfigMain{padding:0;}
+#cmfConfigMain a.filterLink{font-weight:bold;text-decoration:none;}
+.hover{background:#f5f6c2;cursor:pointer;}
+.cmfConfig{margin:0;}.cmfConfig .alert{margin:0;-moz-border-top-left-radius:0;-moz-border-top-right-radius:0;-moz-border-bottom-right-radius:0;-moz-border-bottom-left-radius:0;-webkit-border-radius-topleft:0;-webkit-border-radius-topright:0;-webkit-border-radius-bottomight:0;-webkit-border-radius-bottomleft:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;}
+.overrideLink{visibility:hidden;}
+.hover .overrideLink{visibility:visible;}
+div.override{margin-top:20px;}
+ul.override li{margin-left:16px;}
+.req{font-weight:bold;color:red;}

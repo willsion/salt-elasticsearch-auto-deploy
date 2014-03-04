@@ -1,0 +1,80 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+
+.small {
+  font-size: @fontSizeD;
+}
+
+@h1LineHeight: 40px;
+@h2LineHeight: 30px;
+@h3LineHeight: 24px;
+
+td { vertical-align: top; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid @generalBorderColor;
+  padding: 0;
+}
+
+/* Header Text Styles */
+h1 {
+  font-size: @fontSizeA;
+  line-height: @h1LineHeight;
+}
+h2 {
+  font-size:@fontSizeB;
+  line-height: @h2LineHeight;
+}
+
+h3, h4, h5, h6 {
+  font-size:@fontSizeC;
+  line-height: @h3LineHeight;
+}
+
+.h1-toolbar {
+  line-height: @h1LineHeight;
+}
+
+.h2-toolbar {
+  line-height: @h2LineHeight;
+}
+
+.h3-toolbar {
+  line-height: @h3LineHeight;
+}
+
+// This margin comes from bootstrap
+.h1-toolbar {
+  margin-top: 10px;
+}
+
+.h2-toolbar {
+  margin-top: 15px;
+}
+
+h2 {
+  margin: 15px 0 5px 0;
+}
+
+h1 i, h2 i, h3 i {
+  // bootstrap icons, reset them back.
+  vertical-align: text-top;
+}
+
+/* These selection declarations have to be separate
+   No text-shadow: twitter.com/miketaylr/status/12228805301
+*/
+.selectedText {
+  /*color: #000;*/
+  background-color: #bbd3ff;
+  background-color: darken(rgba(169, 200, 255, 0.5), 10%);
+  text-shadow: none;
+}
+::-moz-selection {
+  .selectedText;
+}
+::selection {
+  .selectedText;
+}

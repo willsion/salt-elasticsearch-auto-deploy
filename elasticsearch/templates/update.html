@@ -1,0 +1,338 @@
+{% extends "service_base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/odb-app.css">
+{% endblock %}
+
+{% block service_content %}
+<div style="text-align: right; margin-top: 10px; height: 32px;">
+     <span style="float: left;padding-left:10px; font-size: 16px;margin: 5px 0px;">service种类：{{services_tmp}}</span>
+     <a onclick="submit()"  class="btn btn-primary AjaxLink">提交升级</a>
+</div>
+<div style="float: left;width:30%">
+<table class="DataTable" id="HostsTable" >
+    <thead>
+        <tr>
+            <th class="widthMin" rowspan="1">
+                <label>
+                <input type="checkbox" checked title="选择所有行" class="chkAll"  onclick="checkall()"/>
+                </label>
+            </th>
+            <th rowspan="1" style="width: 100px;"><div>IP</div></th>
+            <th rowspan="1"><div>群集</div></th>
+            <th rowspan="1" style="width: 45%;text-align:center"><div >角色</div></th>
+        </tr>
+
+{#        <tr class="cmfTableFilterRow">#}
+{#            <th class="noSort">&nbsp;</th>#}
+{#            <th><label><input class="input-small filter" id="filterName" type="text" placeholder="任何名称"></label></th>#}
+{#            <th><label><input class="input-small filter" id="filterIp" type="text" placeholder="任何 IP"></label></th>#}
+{#            <th>#}
+{#                <label>#}
+{#                <select class="input-small filter" id="filterCluster">#}
+{#                </select>#}
+{#                </label>#}
+{#            </th>#}
+{#            <th></th>#}
+{#            <th></th>#}
+{#        </tr>#}
+    </thead>
+    <tbody id="scanResults">
+        {%for item in machine_role %}
+            <tr value="d">
+                <td><input class="chkServer" type="checkbox" checked onclick='checkline("{{item.id}}");reshow();' id="{{item.id}}_check" value="{{item.id}}" ></td>
+                <td class="IP">{{item.IP}}</td>
+                <td>
+                    <input type='hidden' id="{{item.cluster}}_id" value="0" />
+                </td>
+                <td>
+                    <span>
+                        <table class='DataTable' style='font-size: 14px;margin: 0;'>
+                            <tbody>
+                                {% for r in item.role %}
+                                {% if r.tag == 1 %}
+                                <tr class='{{item.id}}_table'>
+{#                                    <td style="width: 25px;"><input class="chkRole" type="checkbox"></td>#}
+{#                                    <td>#}
+{#                                        <img border="0" class="img" src="/static/img/{{r.2}}" style="height: 16px;width: 14px">#}
+{#                                    </td>#}
+                                    <td>
+                                        <label class="name" >{{r.name}}</label><input type='hidden' class="ser_id" value='{{r.id}}' />
+                                    </td>
+                                </tr>
+                                {% endif %}
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+    <div style="font-size: 14px; line-height: 35px;">
+        <p>
+            <center>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>当前版本号:</td>
+                            <td><b>{{now_versioin}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>目标版本号：</td>
+                            <td><input id="service_version" type="text" style="margin-bottom: 0px;" name="service_version" placeholder="请输入值" value="{{now_versioin}}" ></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </p>
+    </div>
+   <!--     <div class="row-fluid" style="float: left;width: 66%">
+            <div class="span12" style="margin: 1px 0 0 30px;">
+                {% for item in machine_role %}
+                <div id="{{item.id}}_table" style="display:none" class="role_machine_table">
+                    <h4><b>IP: </b>{{item.IP}}</h4>
+                    <table class="DataTable" value="{{item.id}}">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">参数</th>
+                                <th style="width: 30%">值</th>
+                                <th>当前是否需要升级</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for k,v in item.update_config.items %}
+                        <tr class="line" >
+                            <td style="line-height: 35px;">{{k}}</td>
+                            <td><input type="text" style="margin-bottom: 0px;" placeholder="请输入值" value="{{v}}" ></td>
+                            <td>
+                                否
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+   -->
+
+    <div id="jobModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 650px;height:auto;left: 45%;top:40%">
+        <div class="modal-header">
+        <span id="modal-header" class="modal_head" style="font-weight:600;font-size:15px;"></span>
+        <a class="close" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="jobModal_body">
+
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary" data-dismiss="modal"   href="/salt/update?service_id={{services.id}}&cluster_id={{cluster.id}}" >关闭</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block service_js %}
+    <script type="text/javascript">
+
+        function _page_refresh_status()
+        {
+            var job_id = $(".job_id").attr("value");
+            if (job_id == "NULL")
+            {
+                return;
+            }
+            else
+            {
+                var job_size = $(".job_size").attr("value");
+                $.ajax({
+                        url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        timeout: 5000,
+                        success: function(data) {
+                            //alert(data.status)
+                            if(( data.status=="ok"))
+                            {
+                               //alert(data.result);
+                               $("#jobModal_body").append(data.result);
+                               $(".job_size").attr("value",data.job_size);
+
+                               if (data.end_flag == 1)
+                               {
+                                    //alert("Done!");
+                                    $(".job_id").attr("value","NULL");
+                                    $(".job_size").attr("value","0");
+                                    $("#jobModal_body").append("<br>Done!");
+                               }
+                               return;
+                            }
+                            else
+                            {
+                                $(".job_id").attr("value","NULL");
+                                $(".job_size").attr("value","0");
+                            }
+                        },
+                        error: function (data) {
+                            $(".job_id").attr("value","NULL");
+                            $(".job_size").attr("value","0");
+                            return;
+                        }
+                    });
+            }
+        }
+        function reshow()
+        {
+            $(".role_machine_table").each(function(){
+                $(this).hide();
+            });
+            var numclik=0;
+
+            $('.chkServer').each(function (index, item){
+                va = $(this).attr("checked");
+                if(va)
+                {
+                    numclik++;
+                    var id = $(this).attr("id").split("_")[0];
+                    $("#" + id + "_table").show();
+                }
+            });
+            if($('.chkServer').size()==numclik&& ! $('.chkAll').attr("checked"))
+            {
+                $('.chkAll').attr("checked",true);
+                reshow();
+            }
+            if(numclik == 0 && $('.chkAll').attr("checked"))
+            {
+                $('.chkAll').attr("checked",false);
+                reshow();
+            }
+
+        }
+
+        function checkall(){
+            va = $('.chkAll').attr("checked");
+            if (va){
+            $('.chkServer').each(function (index, item){
+                $(this).attr("checked",true);
+                var id = $(this).attr("id").split("_")[0];
+                checkline(id);
+            });
+            }
+            else
+            {
+                $('.chkServer').each(function (index, item){
+                $(this).attr("checked",false);
+                var id = $(this).attr("id").split("_")[0];
+                checkline(id);
+            });
+            }
+            reshow();
+        }
+
+        function checkline(id)
+        {
+            var check = $("#" + id + "_check").attr("checked");
+
+            $("#" + id + "_check").parent().parent().find(".chkRole").each(function (index, item)
+            {
+                if (check)
+                {
+                    $(item).attr("checked",true);
+                }
+                else
+                {
+                    $(item).attr("checked",false);
+                }
+            });
+        }
+
+        function submit()
+        {
+            if(confirm("是否继续")){
+                _submit();
+            }
+        }
+
+        function _submit()
+        {
+
+            var package_url = $('#package_url').attr("value");
+
+            var service_version = $('#service_version').attr("value");
+            var machine_id_list = new Array();
+            var machine_ids = ""
+            $('.chkServer').each(function (){
+                if($(this).attr('checked'))
+                    machine_id_list.push($(this).attr('value'));
+            });
+            machine_ids=machine_id_list.join("_");
+            //alert(machine_ids);
+            $.ajax({
+                url: '/salt/update/execute',
+                type: 'POST',
+                dataType: 'JSON',
+                timeout: 50000 ,
+                data: {package_url:package_url,service_id:{{services.id}},service_version:service_version,machine_ids:machine_ids,service_tmp:'{{services_tmp}}'},
+                /*success: function(data) {
+                    if( data.status=="ok")
+                    {
+                        alert("操作成功  " +  data.result);
+                        //window.location.href="/salt/update?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                        return;
+                    }
+                    else
+                    {
+                        alert("操作失败: " + data.result);
+                        //window.location.href="/salt/update?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                        return;
+                    }
+                },
+                error: function (data) {
+                    alert("操作出错");
+                    //window.location.href="/salt/update?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                    return;
+                }*/
+                success: function(data) {
+
+                    $('#jobModal').modal('show')
+                    if (data.status == "ok")
+                    {
+                        $(".job_id").attr("value",data.job_id);
+                        //$(".modal-heade_title").html("结果");
+                        $("#jobModal_body").html("job_id: " + data.job_id + "running...</br>");
+                    }
+                    else
+                    {
+                        $("#jobModal_body").html(data.result);
+                    }
+                },
+                error: function (data) {
+                    $('#jobModal').modal('show')
+                    $("#jobModal_body").html("操作失败");
+                }
+            });
+
+        }
+
+        function show(id)
+        {
+            $(".role_machine_table").each(function(){
+                $(this).hide();
+            });
+
+            $("#" + id + "_table").show();
+        }
+        $(document).ready(function() {
+            page_light("ser_page");
+            window.setInterval(_page_refresh_status, 3000);
+            tag_change("update");
+       });
+    </script>
+{% endblock %}
+
+

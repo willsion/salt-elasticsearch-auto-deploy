@@ -1,0 +1,83 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+
+.Wizard {
+
+  margin: 20px auto 50px auto;
+
+  // these are the default bootstrap styles,
+  // we overwrite them everywhere else though
+  .alert-standalone {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+  }
+
+  // give .alert the same bottom margin
+  // as .well
+  .alert-standalone {
+    margin-bottom: 20px;
+    // we don't need the margin that bootstrap
+    // adds if the list is in an alert
+    ul {
+      margin-bottom: 0;
+    }
+  }
+
+  .tableContainer {
+    overflow: auto;
+  }
+
+  .borderedContainer, .tableContainer {
+    border: 1px solid @generalBorderColor;
+    background-color: whiteSmoke;
+  }
+
+  #hostnameEntryForm textarea {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+
+  #hostSearchTypeSelector td {
+    vertical-align: middle;
+  }
+
+  .addHostsQuestion {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .buttonContainer {
+    text-align: center;
+  }
+
+  .popupLink {
+    vertical-align: text-bottom;
+  }
+
+  .inspectorContainer {
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .runningIndicator {
+      text-align: center;
+      margin: 100px auto;
+    }
+  }
+  
+  .verticalSpace {
+  	margin-top: 15px;
+  }
+}
+
+#bottomButtons {
+  border-top: 1px solid @generalBorderColor;
+  position: fixed;
+  bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}

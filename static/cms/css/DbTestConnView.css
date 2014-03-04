@@ -1,0 +1,6 @@
+#Main td{padding:2px 4px;}
+#Main legend{display:block;padding:4px 6px;}
+#Main .req{color:red;}
+#Main p{padding:4px 6px;}
+#Main label{font-weight:bold;display:block;padding:4px 6px 2px;}
+#Main input[type=text],#Main input[type=password]{margin:2px 6px 4px;display:block;}

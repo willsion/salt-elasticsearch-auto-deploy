@@ -1,0 +1,7 @@
+/var/log/logstash/*.log  /var/log/logstash/*.err {
+	rotate 2
+	daily
+	compress
+	missingok
+	notifempty
+}

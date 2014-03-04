@@ -1,0 +1,473 @@
+/* Copyright (c) 2012 Cloudera, Inc. All rights reserved. */
+
+@import "../common/mixins.less";
+
+.ellipsis {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#replication {
+  h2 {
+    padding: 10px;
+    margin: 0;
+  }
+
+  #replicationOverview {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+
+    h2 {
+      padding-left: 0;
+    }
+  }
+  
+  .return-to-details {
+    color: #666;
+    cursor: pointer;
+  }
+
+  .controls {
+    padding: 0;
+    
+    .btn-group .btn {
+      float: right;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      margin-right: 10px;
+    }
+  }
+}
+
+#sourceService {
+  width: 280px;
+}
+
+#replication {
+
+  .align-middle {
+    position: absolute;
+    top: 50%;
+  }
+
+  .state-disabled, .state-expired, .state-active, .state-failed, .state-scheduled {
+    display:none;
+
+    &.IconSpinner24x24, &.IconError24x24, &.IconStopped24x24, &.glyphicon {
+      margin-top: -12px;
+    }
+  }
+
+  .disabled, .expired {
+    .summary {
+      color: #aaa;
+    }
+    
+    &.active .summary {
+      color: #000;
+    }
+  }
+
+  .expired {
+    .state-expired {
+      display:inline-block;
+    }
+  }
+  
+  .scheduled {
+    .state-scheduled {
+      display:inline-block;
+    }
+  }
+  
+  .failed {
+    header, .summary {
+      color: @darkRed;
+    }
+
+    .state-failed {
+      display: inline-block;
+    }
+
+    .state-scheduled {
+      display: none;
+    }
+  }
+
+  .disabled {
+    .state-disabled {
+      display:inline-block;
+    }
+
+    .state-failed {
+      display: none;
+    }
+
+    .state-scheduled {
+      display: none;
+    }
+  }
+  
+  .active {
+    .state-active {
+      display: inline-block;
+    }
+
+    .state-failed {
+      display: none;
+    }
+
+    .state-scheduled {
+      display: none;
+    }
+
+    .state-disabled {
+      display: none;
+    }
+  }
+  
+  .replication-source h3 {
+    padding-left: 10px;
+    margin: 0;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  ul.replication-schedules {
+    padding: 0 10px 10px 10px;
+
+    > li {
+      margin: -1px 0 0 0;
+      
+      .replica {
+        position: relative;
+
+        .btn-group {
+          margin-top: -15px;
+          right: 0;
+        }
+      }
+
+      .summary {
+        padding: 10px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+        
+        .replica {
+          min-height: 40px;
+          
+          .target {
+            min-height: 40px;
+          }
+        }
+
+        header, section.status {
+          margin-left: 24px;
+          padding-left: 10px;
+        }
+        
+        header {
+          padding-right: 130px;
+
+          .status-paths {
+            font-weight: bolder;
+          }
+          
+          .message {
+            margin-left: 10px;
+          }
+        }
+        
+        section.status {
+          font-size: 90%;
+          
+          & > * {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .failed {
+        color: @darkRed;
+      }
+    }
+    
+    li:first-child {
+     margin: 0;
+    }
+  }
+
+  .counter-value {
+    display: inline-block;
+    min-width: 60px;
+  }
+  
+  .state-dry-run {
+    display: none;
+  }
+  
+  .dry-run {
+    .state-dry-run {
+      display: inline-block;
+    }
+    
+    .state-run {
+      display: none;
+    }
+  }
+  
+  .command-focused {
+      border: 1px solid #ddd;
+      margin-top: -1px;
+      margin-left: 25px;
+  }
+  
+  .table-filter-list {
+    max-width: 250px;
+    
+    .seperator:last-child {
+      display: none;
+    }
+  }
+  
+  .error-table-name {
+    padding-right: 10px;
+  }
+  
+  .replica:last-child .replication-history {
+    max-height: auto;
+  }
+  
+  div.replication-history {
+    border: 1px solid #ddd;
+    border-top: 0;
+    padding: 10px;
+  }
+
+  .replication-history {
+    display: none;
+    padding-top: 0;
+    padding-right: 0;
+    margin-left: 25px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+
+    li {
+      border: 1px solid #ddd;
+      border-top: 0;
+      padding: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+
+      .date-time {
+        display: inline-block;
+        min-width: 160px;
+      }
+    }
+
+    li:last-child {
+      border: 1px solid #ddd;
+      border-top: 0;
+      margin-bottom: 1px;
+    }
+  }
+
+  .expanded {
+    .disabled, .expired {
+      .summary {
+        color: #000;
+      }
+    }
+
+    .replication-history {
+      display: block;
+    }
+  }
+
+  .state-command-summary {
+    .status-message {
+      min-width: 112px;
+      display: inline-block;
+    }
+
+    label {
+      display: inline;
+      margin-left: 10px;
+      margin-bottom: 0;
+    }
+  }
+
+  .state-command-details, 
+  .state-command-listing, 
+  .state-command-failed,
+  .state-command-not-copied,
+  .state-command-tables {
+    display:none;
+    min-height: 400px;
+    overflow-y: auto;
+    
+    label {
+      display: inline-block;
+      min-width: 120px;
+      text-align: right;
+      padding-right: 10px;
+      cursor: text;
+    }
+
+    a.details-link {
+      text-transform: lowercase;
+    }
+  }
+  
+  .command-focused {
+    padding: 10px;
+    color: #000;
+  }
+  
+  .command-focused .state-command-summary {
+    display:none;
+  }
+  
+  .command-details {
+    .command-focused {
+      .state-command-details {
+        display: block;
+      }
+    }
+  }
+  
+  .command-listing {
+    .command-focused {
+      .state-command-listing {
+        display: block;
+      }
+    }
+  }
+  
+  .command-not-copied {
+    .command-focused {
+      .state-command-not-copied {
+        display: block;
+      }
+    }
+  }
+
+  .command-failed {
+    .command-focused {
+      .state-command-failed {
+        display: block;
+      }
+    }
+  }
+
+  .command-tables {
+    .command-focused {
+      .state-command-tables {
+        display: block;
+      }
+    }
+  }
+  
+  .path-listing {
+    height: 325px;
+    
+    span {
+      padding: 0 10px;
+    }
+    
+    span.file-status {
+      display: inline-block;
+      width: 75px;
+      text-align: right;
+    }
+  }
+}
+
+#scheduleReplicationDialog {
+  min-width: 660px;
+  
+  .alert {
+    margin-bottom: 10px;
+  }
+  
+  .state-update {
+    display: none;
+  }
+  
+  &.update {
+    .state-update {
+      display: block;
+    }
+    
+    .state-add {
+      display: none;
+    }
+  }
+  
+  #moreOptions i {
+    margin-top: 5px;
+    margin-left: 10px;
+  }
+
+  .controls label {
+    padding-top: 5px;
+  }
+}
+
+#databases {
+  list-style: none;
+  margin-left: 0;
+  
+  textarea {
+    width: 312px;
+    height: 60px;
+  }
+  
+  .icon-plus {
+    display: none;
+  }
+  
+  li {
+    margin-bottom: 15px;
+    
+    input {
+      margin-bottom: 10px;
+    }
+  }
+  
+  li:last-child {
+    .icon-plus {
+      display: inline-block;
+    }
+  }
+}
+
+#Main > .primary {
+  padding: 10px;
+  
+  table.table > tbody {
+    border: 1px solid #DDD;
+  }
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.clickable {
+  cursor: pointer;
+}

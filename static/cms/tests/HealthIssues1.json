@@ -1,0 +1,132 @@
+{
+    "unhealthyChecks": [
+        {
+            "entityId": "mikem-landing-2.ent.cloudera.com", 
+            "health": "YELLOW", 
+            "name": "Agent Status"
+        }, 
+        {
+            "entityId": "mikem-landing-3.ent.cloudera.com", 
+            "health": "YELLOW", 
+            "name": "Agent Status"
+        }, 
+        {
+            "entityId": "mikem-landing-4.ent.cloudera.com", 
+            "health": "YELLOW", 
+            "name": "Agent Status"
+        }, 
+        {
+            "entityId": "HBASE-1", 
+            "health": "RED", 
+            "name": "Active HBase Master Health"
+        }, 
+        {
+            "entityId": "HBASE-1-REGIONSERVER-38515fdee097e5f2142850d53bf52f03", 
+            "health": "RED", 
+            "name": "Process Status"
+        }, 
+        {
+            "entityId": "HBASE-1-REGIONSERVER-ba0aefef505c927c33974d65c4ca2ea7", 
+            "health": "RED", 
+            "name": "Process Status"
+        }, 
+        {
+            "entityId": "HBASE-1-REGIONSERVER-d2193ee5d0d07433391ff4e50c973552", 
+            "health": "RED", 
+            "name": "Process Status"
+        }, 
+        {
+            "entityId": "HBASE-1-MASTER-8c4fa969c896acef29880769dd514a58", 
+            "health": "RED", 
+            "name": "Process Status"
+        }
+    ], 
+    "unhealthyEntities": [
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "mikem-landing-2.ent.cloudera.com", 
+            "entityStatusPageURL": "/cmf/hardware/hosts/3/status", 
+            "entityType": "HOST", 
+            "health": "YELLOW", 
+            "hostName": "mikem-landing-2.ent.cloudera.com", 
+            "name": "mikem-landing-2.ent.cloudera.com"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "mikem-landing-3.ent.cloudera.com", 
+            "entityStatusPageURL": "/cmf/hardware/hosts/2/status", 
+            "entityType": "HOST", 
+            "health": "YELLOW", 
+            "hostName": "mikem-landing-3.ent.cloudera.com", 
+            "name": "mikem-landing-3.ent.cloudera.com"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "mikem-landing-4.ent.cloudera.com", 
+            "entityStatusPageURL": "/cmf/hardware/hosts/4/status", 
+            "entityType": "HOST", 
+            "health": "YELLOW", 
+            "hostName": "mikem-landing-4.ent.cloudera.com", 
+            "name": "mikem-landing-4.ent.cloudera.com"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "HBASE-1", 
+            "entityStatusPageURL": "/cmf/services/4/status", 
+            "entityType": "SERVICE", 
+            "health": "RED", 
+            "name": "HBASE-1", 
+            "serviceName": "HBASE-1", 
+            "serviceType": "HBASE"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "HBASE-1-REGIONSERVER-38515fdee097e5f2142850d53bf52f03", 
+            "entityStatusPageURL": "/cmf/services/4/instances/5/status", 
+            "entityType": "ROLE", 
+            "health": "RED", 
+            "hostName": "mikem-landing-2.ent.cloudera.com", 
+            "name": "regionserver (mikem-landing-2)", 
+            "roleType": "REGIONSERVER", 
+            "serviceName": "HBASE-1", 
+            "serviceType": "HBASE"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "HBASE-1-REGIONSERVER-ba0aefef505c927c33974d65c4ca2ea7", 
+            "entityStatusPageURL": "/cmf/services/4/instances/4/status", 
+            "entityType": "ROLE", 
+            "health": "RED", 
+            "hostName": "mikem-landing-4.ent.cloudera.com", 
+            "name": "regionserver (mikem-landing-4)", 
+            "roleType": "REGIONSERVER", 
+            "serviceName": "HBASE-1", 
+            "serviceType": "HBASE"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "HBASE-1-REGIONSERVER-d2193ee5d0d07433391ff4e50c973552", 
+            "entityStatusPageURL": "/cmf/services/4/instances/6/status", 
+            "entityType": "ROLE", 
+            "health": "RED", 
+            "hostName": "mikem-landing-3.ent.cloudera.com", 
+            "name": "regionserver (mikem-landing-3)", 
+            "roleType": "REGIONSERVER", 
+            "serviceName": "HBASE-1", 
+            "serviceType": "HBASE"
+        }, 
+        {
+            "clusterName": "Cluster 1 - CDH4", 
+            "entityId": "HBASE-1-MASTER-8c4fa969c896acef29880769dd514a58", 
+            "entityStatusPageURL": "/cmf/services/4/instances/7/status", 
+            "entityType": "ROLE", 
+            "health": "RED", 
+            "hostName": "mikem-landing-1.ent.cloudera.com", 
+            "name": "master (mikem-landing-1)", 
+            "roleType": "MASTER", 
+            "serviceName": "HBASE-1", 
+            "serviceType": "HBASE"
+        }
+    ]
+}
+

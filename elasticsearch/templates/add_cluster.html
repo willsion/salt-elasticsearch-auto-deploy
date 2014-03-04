@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+
+{% block content %}  
+ 
+<script type="text/javascript" src="/static/ext/jquery/plugins/sammy-0.7.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+      $('#continueButton').click(submit);
+
+      $('.ready_check').click(batchcheck);
+      $('.un_check').click(batchcheck);
+      $('.ac_check').click(batchcheck);
+    });
+
+
+    function batchcheck () {
+        checked = $(this).attr('checked');
+        class_name = $(this).attr('class');
+        map = {"ready_check":'.ch_no_belong_ser',
+                "un_check":'.chkServer',
+                "ac_check":'.accept_ser'}
+
+        $(map[class_name]).each(function(index, item) {
+            if (checked) {
+                $(item).attr('checked', checked);
+            }
+            else {
+                $(item).removeAttr('checked');
+            }
+      });
+    }
+
+    function submit()
+    {
+        new_name = $("#new_cluster_name").val();
+
+        unaccept_host = new Array();
+
+        ready_to_add_host = new Array();
+
+        accept_host = new Array();
+
+        $('.chkServer').each(function (index, item) {
+            if ($(item).attr('checked')) {
+                ip_address = $(item).parent().parent().find('.Unaccepted_machine_list').text();
+                unaccept_host.push(ip_address);
+            }
+        });
+
+        $('.ch_no_belong_ser').each(function (index, item) {
+            if ($(item).attr('checked')) {
+                ip_address = $(item).parent().parent().find('.ch_no_belong_ser_list').text();
+                ready_to_add_host.push(ip_address);
+            }
+        });
+
+
+        $('.accept_ser').each(function (index, item) {
+            if ($(item).attr('checked')) {
+                var parent = $(item).parent().parent();
+                var ip_address = parent.find('.accepted_machine_list').text();
+                var target     = parent.find('.target').attr("value");
+                ip_address = ip_address + "_" + target;
+                accept_host.push(ip_address);
+            }
+        });
+
+
+        
+
+        $.ajax({
+            url: '/salt/cluster/add_cluster/commit',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {new_name:new_name,unaccept_host:unaccept_host.join("&&"),ready_to_add_host:ready_to_add_host.join("&&"),accept_host:accept_host.join("&&")},
+            timeout: 5000,
+            success: function(data) {
+                if( data.status=="ok")
+                {
+
+                    alert("操作成功");
+                    window.location.href="/salt/services";
+                    return; 
+                } 
+                else
+                {
+                    alert("操作失败");
+                    window.location.href="/salt/services";
+                    return; 
+                }
+            },
+            error: function (data) {
+                alert(data);
+                window.location.href="/salt/services";
+                return;            
+            }
+        });
+    }
+
+</script>
+
+<div id="Main" style="margin-bottom: 1500px;">
+    <div class="Wizard container">
+        <h1>新建集群:</h1>
+
+
+        <div class="searchItem">
+            <label for="search_servername" class="alert alert-standalone alert-info">集群名称: </label>
+            <input id="new_cluster_name" type="text" placeholder="例如：new cluster">
+        </div>
+
+        <div id="resultContainer" style="margin-top: 50px;">
+            <label for="search_servername" class="alert alert-standalone alert-info" style="margin-bottom: 10px;" >salt-key命令显示：Unaccepted机器列表</label>
+            <table id="unaccept_host" class="DataTable resultTable" style="width: 40%;">
+                <thead>
+                    <tr>
+                        <th width="30%">
+                            <input id="unaccept_selectall" type="checkbox" class="un_check"/>
+                        </th>
+                        <th width="70%" class="defaultSort">机器名</th>
+                    </tr>
+                </thead>
+                <tbody id="scanResults"> 
+                {% for instance in Unaccepted %}
+                    {% if instance != "" %}
+                    <tr value="d">
+                        <td><input class="chkServer" type="checkbox"></td>
+                        <td class="Unaccepted_machine_list">{{instance}}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="resultContainer" style="margin-top: 50px;">
+            <label for="search_servername" class="alert alert-standalone alert-info" style="margin-bottom: 10px;" >salt-key命令显示:Accepted Keys中有,但没有录入数据库的机器</label>
+            <table id="unaccept_host" class="DataTable resultTable" style="width: 40%;">
+                <thead>
+                    <tr>
+                        <th width="30%">
+                            <input id="unaccept_selectall" type="checkbox" class="ac_check"/>
+                        </th>
+                        <th width="70%" class="defaultSort">IP Address</th>
+                    </tr>
+                </thead>
+                <tbody id="scanResults"> 
+                {% for instance in accepted %}
+                    {% if instance.0 != "" %}
+                    <tr value="d">
+                        <td><input class="accept_ser" type="checkbox"></td>
+                        <td class="accepted_machine_list">{{instance.0}}<input type='hidden' class='target' value="{{instance.1}}"/></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+                          
+        <div id="resultContainer" style="margin-top: 50px;">
+            <label for="search_servername" class="alert alert-standalone alert-info" style="margin-bottom: 10px;" >录入数据库,但不属于任何集群的机器</label>
+            <table id="raw_host" class="DataTable resultTable" style="width: 40%;">
+                <thead>
+                    <tr>
+                        <th width="1%">
+                            <input id="selectAll" type="checkbox" class="ready_check"/>
+                        </th>
+                        <th width="22%">Hostname (FQDN)</th>
+                        <th width="14%">IP Address</th>
+                    </tr>
+                </thead>
+                <tbody id="scanResults">
+                    {% for instance in machine %}
+                    <tr>
+                        <td><input class="ch_no_belong_ser" type="checkbox"></td>
+                        <td>{{instance.hostname}}</td>
+                        <td class="ch_no_belong_ser_list">{{instance.IP}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>                   
+
+</div>
+
+<div id="bottomButtons" class="toolbar">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span6 alignLeft">
+                <a class="btn" href="javascript:history.go(-1)"><i class="icon-step-backward"></i>返回</a>
+
+            </div>
+            <div class="span6 alignRight">
+                <button data-disable-after-click-once="true" class="btn btn-primary btn-large"
+                    id="continueButton" value="Continue"><i class="icon-step-forward icon-white"></i>提交</button>
+                <button data-disable-after-click-once="true" class="btn btn-primary btn-large hidden"
+                    id="continueExistingButton" value="Continue"><i class="icon-step-forward icon-white"></i> Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

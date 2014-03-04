@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+<div class="container-fluid">
+    
+
+<div    
+    class="modal  hide" style="display:none"
+    
+    id="largePlotDialog">
+    <div class="modal-header">
+        
+        <a class="close" >&times;</a>
+        
+        <h3></h3>
+    </div>
+    <div class="modal-body">
+        <div class="large-plot-container"></div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn dismissButton btn-primary" >关闭</button>
+    </div>
+</div>
+
+
+
+
+<div class="PageTitle">
+    <h1>所有主机</h1>
+</div>
+
+<div class="pull-left">
+    <span class="content" data-bind="event: { mouseover: showNow, mouseout: hideNow}, style: { position: timePosition, left: timeOffsetLeft() + 'px'}" style="position: absolute; left: 800px;">
+        <a  id="_refresh_time" class="time-label selectedTimeEndTimeLabel">上次更新状态时间 {{refresh_time}}</a>
+    </span>
+</div>
+
+<div class="page-tabs">
+
+    <ul class="nav nav-tabs">   
+        <li class="active">    
+            <a><i class="icon-home"></i> 状态</a>    
+        </li>
+    </ul>
+</div>
+
+<div id="hostContent">
+    <h2>状态</h2>
+
+    <div class="alert alert-info">        
+        <strong>主机</strong>
+        <ul class="unstyled inline">
+            <li class="inlineWide"><span class="BAD_HEALTHStatus"><span title=" 存在隐患的运行状况" class="showTooltip icon"></span>存在隐患的运行状况</span></li>
+           <li class="inlineWide"><span class="GOOD_HEALTHStatus"><span title=" 运行状况良好" class="showTooltip icon"></span>运行状况良好</span>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="toolbar">
+        <table class="width1of1">
+            <tr>
+                <td>
+                    <div class="btn-toolbar">                        
+                        <div class="btn-group actionsMenuForSelected">
+                            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-list-alt"></i>
+                                操作
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu"> 
+                                <li><a data-toggle="modal" href="#myModal" onclick="actions('add_node',1)">增加节点</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li> <a  data-toggle="modal" href="#myModal" onclick="actions('start',1)" >启动所选角色</a></li>
+                                <li> <a data-toggle="modal" href="#myModal" onclick="actions('stop',0)" >停止所选角色</a></li>
+                                <li> <a  data-toggle="modal" href="#myModal" onclick="actions('restart',1)" >重启所选角色</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group">                         
+                            <form class="hidden" action="/cmf/do" method="POST">
+                                <input type="hidden" name="command" value="Inspector"/>    
+                                <input type="hidden" name="param" value="DEFAULT"/>    
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="DataTable" id="HostsTable">
+        <thead>
+        <tr>            
+            <th class="widthMin" rowspan="2">
+                <label>
+                <input type="checkbox" title="选择所有行" class="chkAll" onclick="checkall()"/>
+                </label>
+            </th>            
+            <th rowspan="2"><div>名称</div></th>
+            <th rowspan="2"><div>IP</div></th>
+            <th rowspan="2"><div>群集</div></th>
+            <th rowspan="1" style="width: 45%;text-align:center"><div >角色</div></th>
+        </tr>
+
+        <tr>                            
+            <th rowspan="1">
+                <table style="margin:0" style="width:600px">
+                    <tbody>
+                        <td style="width: 5%"></td>
+                        <td style="width: 5%"></td>
+                        <td style="width: 30%">名称</td>
+                        <td >状态</td>
+                    </tbody>
+                </table>
+            </th>
+        </tr>
+        
+        <tr class="cmfTableFilterRow">            
+            <th class="noSort">&nbsp;</th>            
+            <th><label><input class="input-small filter" id="filterName" type="text" placeholder="任何名称"></label></th>
+            <th><label><input class="input-small filter" id="filterIp" type="text" placeholder="任何 IP"></label></th>
+            <th>
+                <label>
+                <select class="input-small filter" id="filterCluster">
+                </select>
+                </label>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>        
+    </thead>
+
+    <tbody id="scanResults"> 
+        {%for host in host_list %}
+            <tr value="d">
+                <td><input class="chkServer" type="checkbox" onclick='checkline("{{host.id}}")' id="{{host.id}}_check"></td>
+                <td class="hostname">{{host.hostname}}</td>
+                <td class="IP">{{host.IP}}</td>
+                <input type='hidden' id="{{host.id}}_id" value="0" /></td>
+                <td class="cluster">{{host.cluster}}</td>
+                <td>
+                    <span>
+                        <table class='DataTable' style='font-size: 14px;margin: 0;width="600px"'>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 5%;">
+                                        <p onclick='showroles("{{host.id}}")'>
+                                            <i id='{{host.id}}_icon' class="icon-chevron-down"></i><span>{{host.role_total}} 个角色</span>
+                                        </p>
+                                    </td>
+                                    <td style="width: 5%;"></td>
+                                    <td style="width: 30%;"></td>
+                                    <td></td>
+                                </tr>
+                                {% for r in host.role %}
+                                <tr class='{{host.id}}_table'>
+                                    <td><input class="chkRole" type="checkbox"></td>
+                                    <td>
+                                        <img border="0" class="img" src="/static/img/{{r.2}}" style="height: 16px;width: 14px">
+                                    </td>
+                                    <td><label class="name" >{{r.0}}</label><input type='hidden' class="ser_id" value='{{r.1}}' /></td>
+                                    <td class="instance_status" id="{{r.1}}_instance_status">
+                                    {% if r.3 == 1 %}
+                                    <span class="GOOD_HEALTHStatus"><span class="showTooltip icon"></span></span>
+                                    {% else %}  
+                                        <span class="BAD_HEALTHStatus"><span class="showTooltip icon"></span></span>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </span>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 650px;height:auto;left: 45%;top:40%">
+        <div class="modal-header">
+        <span id="modal-header" class="modal_head" style="font-weight:600;font-size:15px;"></span>
+        <a class="close" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="modal_body">
+      
+        </div>
+        <div class="modal-footer">
+            <button class="AjaxLink btn btn-primary" data-dismiss="modal"  data-form-selector="#hostsCommandConfirmForm" id="modal_command">提交</button>
+            <button class="btn dismissButton " data-dismiss="modal">取消</button>
+        </div>
+</div>
+    <div id="jobModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 650px;height:auto;left: 45%;top:40%">
+        <div class="modal-header">
+        <span id="modal-header" class="modal_head" style="font-weight:600;font-size:15px;"></span>
+        <a class="close" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="jobModal_body">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal"   >关闭</button>
+        </div>
+</div>
+<input type='hidden' id='ser_id' />
+
+<input type='hidden' id='ser_command' />
+
+    <script type="text/javascript">
+
+        function showroles(ul){
+            v = $("#" + ul + "_id").attr("value");
+            if (v == 0){
+                $("#" + ul + "_id").attr("value",1);
+                $("#" + ul + "_icon").attr("class","icon-chevron-right");
+
+                $("." + ul + "_table").each(function(){
+                    $(this).hide();
+                });
+            }
+            else
+            {
+                $("#" + ul + "_id").attr("value",0);
+                $("#" + ul + "_icon").attr("class","icon-chevron-down");
+                $("." + ul + "_table").each(function(){
+                    $(this).show();
+                });
+            }
+        }
+        function checkall(){
+            va = $('.chkAll').attr("checked");
+            if (va){
+            $('.chkServer').each(function (index, item){
+                $(this).attr("checked",true);
+                var id = $(this).attr("id").split("_")[0];
+                checkline(id);
+            });
+            }
+            else
+            {
+                $('.chkServer').each(function (index, item){
+                $(this).attr("checked",false);
+                var id = $(this).attr("id").split("_")[0];
+                checkline(id);
+            });
+            }
+        }
+
+        function checkline(id)
+        {
+            var check = $("#" + id + "_check").attr("checked");
+
+            $("#" + id + "_check").parent().parent().find(".chkRole").each(function (index, item)
+            {
+                if (check)
+                {
+                    $(item).attr("checked",true);
+                }
+                else
+                {
+                    $(item).attr("checked",false);
+                }
+            });
+        }
+
+
+        mapping = { "start":"启动所选角色",
+                    "stop":"停止所选角色",
+                    "restart":"重启所选角色"}
+
+        function _add_node()
+        {
+            $.ajax({
+                url: '/salt/host/add',
+                type: 'GET',
+                dataType: 'JSON',
+                timeout: 100000,
+                success: function(data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    if( data.status=="ok")
+                    {
+
+                        alert("操作成功");  
+                    } 
+                    else
+                    {
+                        alert("操作失败");
+                    }
+                },
+                error: function (data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    //alert(data); 
+                    alert("操作出错");           
+                }
+            });            
+        }
+
+        function actions(action,id){
+            if (action in mapping)
+            {
+                _actions(action,id);
+            }
+            else
+            {
+                _add_node();
+            }
+
+        }
+
+        function _actions(action,id){
+
+            var id = new Array();
+            var list = new Array();
+            var info = ''
+            $('.chkRole').each(function (index, item) {
+                var check = $(item).attr("checked");
+                if (check)
+                {
+                    var _tr_ele = $(item).parent().parent().parent().parent().parent().parent().parent();
+                    ip_address = _tr_ele.find('.IP').text();
+
+                    var _tr = $(item).parent().parent();
+
+                    if (check){
+                        role = _tr.find('.name').text();
+                        ser =  _tr.find('.ser_id').attr('value');
+                        icon = _tr.find('.img').attr('src');
+
+                        info = info + '<tr><td><img border="0" class="img" src="' + icon + '" style="height: 16px;width: 14px">'+role+'</td><td class="wrap">'+ip_address+'</td></tr>'
+                        id.push(ser);
+                        }
+                }
+            });
+
+            var dd = id.join("&");
+
+            var list = list.join("-")
+
+            if (info.length == 0)
+            {
+                info = '<tr><td><input type="hidden" name="hostId" value="2">请选择角色</td><td class="wrap">请选择主机</td></tr>'
+            } 
+            machine_info = '<table class="DataTable"><thead><tr><th>角色</th><th>主机</th></tr></thead><tbody>'+info+'</tbody></table>'                   
+            $('#modal_body').html(machine_info);     
+            $('#modal-header').text(mapping[action]);
+            $('#ser_id').attr("value",dd);
+            $('#ser_command').attr('value',action);
+        }
+
+        function hosts(){
+
+            ser = $('#ser_command').attr("value");
+            id  = $('#ser_id').attr("value");
+            $.ajax({
+                url: '/salt/host/hosts_operations',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {id:id,action:ser},
+                timeout: 100000,
+                /*success: function(data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    if( data.status=="ok")
+                    {
+
+                        alert(data.result);
+                    }
+                    else
+                    {
+                        alert("操作失败");
+                    }
+                },
+                error: function (data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    //alert(data);
+                    alert("操作出错");
+                }*/
+                success: function(data) {
+
+                    $('#jobModal').modal('show')
+                    if (data.status == "ok")
+                    {
+                        $(".job_id").attr("value",data.job_id);
+                        //$(".modal-heade_title").html("结果");
+                        $("#jobModal_body").html("job_id: " + data.job_id + "running...</br>");
+                    }
+                    else
+                    {
+                        $("#jobModal_body").html(date.result);
+                    }
+                },
+                error: function (data) {
+                    $('#jobModal').modal('show')
+                    $("#jobModal_body").html("操作失败");
+                }
+            });
+        }
+
+        function _refresh()
+        {
+            var id = new Array();
+
+            $('.ser_id').each(function (index, item) {
+                id.push($(item).attr("value"));
+            });
+
+            $.ajax({
+                url: "/salt/instance/status",
+                type: 'POST',
+                dataType: 'JSON',
+                data: {id:id.join("&")},
+                timeout: 100000,
+                success: function(data) {
+
+                    if ('_refresh_time' in data)
+                    {
+                        $('#_refresh_time').html("最新一次更新状态时间 " + data['_refresh_time']);
+                    }
+                    else
+                    {
+                        $('#_refresh_time').html("更新状态不成功");
+                    }
+
+                    if( data.status=="ok")
+                    {
+                        $('.instance_status').each(function (index, item) {
+                            var _item_id  = $(item).attr("id").split("_")[0];
+                            _item_id = parseInt(_item_id);
+                            var title = "";
+                            if (_item_id in data.result)
+                            {
+                                title = data.result[_item_id][1];
+                                $(item).attr("title",title);
+                            }
+
+                            if ((_item_id in data.result) && (data.result[_item_id][0] == 1))
+                            {
+                                $(item).html('<span class="GOOD_HEALTHStatus"><span class="showTooltip icon"></span></span>');
+                            }
+                            else
+                            {
+                               $(item).html('<span class="BAD_HEALTHStatus"><span class="showTooltip icon"></span></span>'); 
+                            }
+                        });
+                        
+                    } 
+                    else
+                    {
+                         $('.instance_status').each(function (index, item) {
+                            $(item).html('<span class="BAD_HEALTHStatus"><span class="showTooltip icon"></span></span>'); 
+                        });
+                        return; 
+                    }
+                },
+                error: function (data) {
+                 $('.instance_status').each(function (index, item) {
+                    $(item).html('<span class="CONCERNING_HEALTHStatus"><span class="showTooltip icon"></span></span>'); 
+                });           
+                }
+            });                        
+        }
+
+        function _page_refresh_status()
+        {
+            var job_id = $(".job_id").attr("value");
+            if (job_id == "NULL")
+            {
+                return;
+            }
+            else
+            {
+                var job_size = $(".job_size").attr("value");
+                $.ajax({
+                        url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        timeout: 5000,
+                        success: function(data) {
+                            //alert(data.status)
+                            if(( data.status=="ok"))
+                            {
+                               //alert(data.result);
+                               $("#jobModal_body").append(data.result);
+                               $(".job_size").attr("value",data.job_size);
+
+                               if (data.end_flag == 1)
+                               {
+                                    $(".job_id").attr("value","NULL");
+                                    $(".job_size").attr("value","0");
+                                    $("#jobModal_body").append("<br>Done!");
+                               }
+                               return;
+                            }
+                            else
+                            {
+                                $(".job_id").attr("value","NULL");
+                                $(".job_size").attr("value","0");
+                            }
+                        },
+                        error: function (data) {
+                            $(".job_id").attr("value","NULL");
+                            $(".job_size").attr("value","0");
+                            return;
+                        }
+                    });
+            }
+        }
+       $(document).ready(function() {
+
+            $('#modal_command').click(hosts);
+
+            page_light("host_page");
+            window.setInterval(_page_refresh_status, 3000);
+            window.setInterval(_refresh, 15000);
+       });
+
+    </script>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+/* Copyright (c) 2012 Cloudera, Inc. All rights reserved. */
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+
+// Make the search filter constant width
+// So the search button is always in the same spot.
+#fileSearchFilterContainer {
+  > div:first-child {
+    min-width: 480px;
+    display: inline-block;
+  }
+
+  .fileSearchBasic {
+    width: 460px;
+  }
+}
+
+// Add padding after the icon.
+#fileSearchResultTable {
+  i {
+    padding-right: 2px;
+  }
+  margin-bottom: 10px;
+}
+
+.watchedDir {
+  cursor: pointer !important;
+}
+
+.watchedDir.label-default {
+  .opacity(50);
+}

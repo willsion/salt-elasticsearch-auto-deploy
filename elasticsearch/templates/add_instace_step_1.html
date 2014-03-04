@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+
+{% block content %}  
+ 
+    <input type='hidden' class="cluster_id" value='{{cluster_id}}' />
+
+    <div id="Main">
+        <div class="Wizard container">
+            <h1>增加service</h1>
+
+            <div class="searchItem">
+                <label for="search_servername" class="alert alert-standalone alert-info">service名称: </label>
+                <input id="new_service_name" type="text" placeholder="例如：new service">
+            </div>
+
+            <div class="searchItem" style="margin-top: 40px;">
+                <label for="search_servername" class="alert alert-standalone alert-info">请选择你要增加的service的种类</label>
+            </div>
+
+            <div class="tableContainer" id="serviceSelector">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>service种类</th>
+                            <th>描述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in st %}
+                        <tr class="service">
+                            <td>
+                                <input type="radio"
+                                    class="serviceType"
+                                    name="serviceType"
+                                    value="{{item.name}}"/>
+                            </td>
+                            <td style="width:15%"><label for="serviceType_HDFS_4"><img border="0" src="/static/img/{{item.icon}}" style="height: 16px;width: 14px">{{item.name}}</label></td>
+                            <td style="width:85%" class="description wrap"><label for="serviceType_HDFS_4">{{item.description}}</label></td>
+                        </tr>
+                        {% endfor %}     
+       
+                    </tbody>
+                </table>
+            </div>                
+        </div>
+    </div>
+
+
+    <div id="Main" style="margin-bottom: 500px;">
+        <div class="Wizard container">          
+            <div class="tableContainer">        
+                <div class="alert alert-info">
+                    请选择部署该service的机器，以及对应的role
+                </div>
+
+                {% for item in ser_template_role %}
+                <table class="DataTable DependenciesTable" id="{{item.ser_template.name}}" value="{{item.ser_template.id}}">
+                    <thead>
+                        <tr>
+                            <th style="width:15%">机器IP</th>
+                            <th style="width:15%">机器健康状况</th>
+                            <th style="width:70%" class="alignCenter required">可选的role</th>          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for machine_item in ma %}
+                        <tr class="ser_tr">
+                            <td>{{machine_item.IP}}
+                                <input type='hidden' class="machine_id" value='{{machine_item.id}}' /></td>
+                            <td class="health goodHealth"><span class="icon"></span>Good</td>
+
+                            <td>                                                      
+                                <table>
+                                    <!--thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th>role名称</th>       
+                                        </tr>
+                                    </thead-->
+                                    <tbody>
+                                        {% for role in item.role %}
+                                        <tr>
+                                            <td>
+                                                <input id="unaccept_selectall" type="checkbox" class="un_check" value='{{role.id}}'/>
+                                            </td>
+                                            <td>{{role.name}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>                                                     
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="bottomButtons" class="toolbar">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span6">
+                    <a class="btn" href="javascript:history.go(-1)"><i class="icon-step-backward"></i>Back</a>
+
+                </div>
+                <div class="span6 alignRight">
+                    <form id="rollAssignmentForm" action="autoconfig" method=POST>
+                        <button data-disable-after-click-once="true" class="btn btn-primary" type="submit" name="submit" value="Continue">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+              
+
+
+    <div id="bottomButtons" class="toolbar">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span6">
+                    <a class="btn" href="javascript:history.go(-1)"><i class="icon-step-backward"></i>后退</a>
+
+                </div>
+                <div class="span6 alignRight">
+                    <button id="continueButton" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="navigatorLicenseDialog" class="modal hide">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>License Notice</h3>
+      </div>
+      <div class="modal-body">
+        <p><b>Cloudera Navigator</b> is a feature that is independently licensed from the core Cloudera Enterprise offering. Please ensure that you have sufficient licenses for this functionality or contact your Cloudera representative for additional licenses or trial licensing.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="accept-agreement btn btn-primary" data-disable-after-click-once="true">Accept</a>
+        <a href="#" data-dismiss="modal" class="btn">Cancel</a>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function command(){            
+            select_template = $("input[name='serviceType']:checked").val();
+            $(".DependenciesTable").each(function(){
+                $(this).hide();
+            });
+            $('#' + select_template).show();
+
+        }
+
+        function submit()
+        {
+            result = new Array();
+
+            select_template = $("input[name='serviceType']:checked").val();
+
+            $("#" + select_template).find(".ser_tr").each( function (index,element){
+                machine_id = $(element).find('.machine_id').val();
+                machine_role = ""
+                arr = new Array();
+                $(element).find('.un_check').each( function(index,elemen)
+                {                    
+                    var checked = $(elemen).attr('checked');
+                    if (checked)
+                    {
+                        arr.push($(elemen).val());
+                    }                    
+                })
+                machine_role = machine_id + "_" + arr.join("&");
+                result.push(machine_role);
+            })
+
+            result_string = result.join("=");
+
+            new_service_name = $('#new_service_name').val();
+
+            cluster_id = $('.cluster_id').val();
+
+            cluster_template_id = $("#" + select_template).attr("value");
+
+            $.ajax({
+                url: '/salt/cluster/add_service/commit',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {result:result_string,new_service_name:new_service_name,cluster_id:cluster_id,cluster_template_id:cluster_template_id},
+                timeout: 5000,
+                success: function(data) {
+                    if( data.status=="ok")
+                    {
+
+                        alert("操作成功");
+                        window.location.href="/salt/services";
+                        return;
+                    } 
+                    else
+                    {
+                        alert("操作失败");
+                        window.location.href="/salt/services";
+                        return;
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                    window.location.href="/salt/services";
+                    return;         
+                }
+            });
+
+        }
+
+        $(document).ready(function() {
+
+            $('#continueButton').click(submit);
+        
+            $('.serviceType').click(command);
+
+            $(".DependenciesTable").each(function(){
+                $(this).hide();
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

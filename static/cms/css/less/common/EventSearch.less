@@ -1,0 +1,394 @@
+/* Copyright (c) 2011 Cloudera, Inc. All rights reserved. */
+
+//----------------------------------------------
+// Common styles
+//----------------------------------------------
+
+//----------------------------------------------
+// Events-specific styles
+//----------------------------------------------
+
+.DataTable {
+    tbody {
+        tr.even {
+            background-color: @dataTableEven;
+        }
+        tr.odd {
+            background-color: @dataTableOdd;
+        }
+        tr.details {
+            background-color: white;
+        }
+        tr.alert td{
+            color: @alertRed;
+        }
+    }
+}
+
+//----------------------------------------------
+// Logs-specific styles
+//----------------------------------------------
+
+#events {
+    padding: 5px;
+    select {
+        width: 200px;
+    }
+    input[type=text] {
+        width: 200px;
+    }
+}
+
+.LogSearchErrors {
+    .errorHeaderRow {
+        padding-left: 19px;
+    }
+}
+
+@logSearchGutter: 20px;
+
+#logSearchControlsOuterContainer {
+
+  #sourcesSelector {
+    color: inherit;
+    border: 1px solid #ccc;
+    // Try to match the input box on the right.
+    padding: 6px 4px 7px 4px;
+    margin-right: @logSearchGutter;
+  }
+
+  #logSearchHosts, #logSearchLevel {
+    margin-right: @logSearchGutter;
+    display: inline-block;
+    label {
+      margin-right: 6px;
+    }
+  }
+
+  #logSearchSources {
+    margin-top: 7px;
+    padding: 8px;
+    border: 1px solid #ccc;
+
+    .selectAllOrNone {
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    #servicesAndRoles,
+    #logSearchTreeTableContainer {
+      margin-left: 12px;
+      .services-group {
+        padding-right: 24px;
+        display: inline-block;
+      }
+    }
+  }
+
+  #additionalSettingsPopupSelector {
+    margin-left: @logSearchGutter;
+    margin-right: @logSearchGutter;
+  }
+}
+
+.SearchResultsContainer {
+  .resultsInnerContainer {
+    .borderRadius(4px);
+    .borderAll(@generalBorderColor);
+    .resultsSummary {
+      background-color: @gray90;
+    }
+  }
+
+  #logSearchStats {
+    line-height: 38px;
+    padding-right: 6px;
+  }
+}
+
+// New search interface.
+@eventSearchItemPadding: 10px;
+@eventSearchTopMargin: 10px;
+@miniLeftColumnWidth: 140px;
+@miniColumnGutter: 10px;
+
+.service-history, .role-history, .host-history {
+  #eventFilters .event-filters {
+    margin: 0;
+  }
+}
+
+@addRemoveButtonsWidth: 60px;
+@attributeSelectorWidth: 225px;
+@operatorWidth: 80px;
+@operatorHorizontalMargin: 8px;
+@valueWidth: 500px;
+@valueMarginRight: 12px;
+@wellPadding: 19px;
+@filterBuffer: 40px;
+
+@eventFiltersWidth: @addRemoveButtonsWidth + @attributeSelectorWidth + @operatorWidth + @operatorHorizontalMargin * 2 + @valueWidth + @valueMarginRight + @filterBuffer;
+@responsiveAlignmentWidth: @eventFiltersWidth + 200px;
+
+@timestampWidth: 190px;
+@timestampAndResultMargin: 10px;
+
+.history-search {
+    #eventFilters {
+        select, input, p {
+            margin-bottom: 0;
+        }
+    }
+
+    .event-filters {
+        display: inline-block;
+        width: @eventFiltersWidth;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        select {
+            width: 100%;
+        }
+
+        .no-filters {
+            line-height: 30px;
+
+            p {
+                display: inline-block;
+                margin: 0 0 0 4px;
+            }
+        }
+        
+        .event-filter {
+            // HACK: I would rather that these aren't floating at all but when
+            // I set the divs to be "display: inline-block;" then the <ul> for
+            // the jQuery Tokeninput plugin misaligns the row for some reason
+            // that I can't figure out.
+            clear: both;
+
+            &> div {
+                float: left;
+                min-height: 30px;
+            }
+
+            &> .value {
+                margin-bottom: 8px;
+            }
+
+            &:last-child> .value {
+                margin-bottom: 0;
+            }
+
+            .add-remove-buttons {
+                width: @addRemoveButtonsWidth;
+                padding-top: 4px;
+            }
+
+            .attribute-selector {
+                width: @attributeSelectorWidth;
+            }
+
+            .operator {
+                width: @operatorWidth;
+                margin-left: @operatorHorizontalMargin;
+                margin-right: @operatorHorizontalMargin;
+
+                p {
+                    margin-top: 4px;
+                    text-align: center;
+                }
+
+                select {
+                    width: 100%;
+                }
+            }
+
+            .value {
+                width: @valueWidth;
+                margin-right: @valueMarginRight;
+
+                // input elements have a weird box model that interacts with
+                // padding in a strange way. Upshot: 100% width overruns the
+                // parent container.
+                input {
+                    width: 98%;
+                }
+
+                .token-input-token-bootstrap {
+                    background-color: #f5f5f5;
+                    border-color: #e3e3e3;
+                }
+            }
+
+            // Line up the "X" icons on the right of the filters.
+            i {
+                margin-top: -1px;
+            }
+        }
+    }
+
+    .controls {
+        display: inline-block;
+        vertical-align: top;
+
+        &> .btn-group {
+            display: inline-block;
+        }
+
+        &> button {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @media (max-width: @responsiveAlignmentWidth) {
+            .dropdown-menu {
+                left: 0;
+                right: auto;
+            }
+        }
+    }
+
+    .event-list {
+        list-style: none;
+        margin: @eventSearchTopMargin 0 0 0;
+        .borderRadius(4px, 0, 0, 4px);
+        border: 1px solid @generalBorderColor;
+
+        li {
+            padding: @eventSearchItemPadding;
+            &.default {
+                .borderBottom(@generalBorderColor);
+
+                &:nth-child(odd){
+                    background-color: WhiteSmoke;
+                }
+            }
+
+            &.alert-error {
+                margin-bottom: 0;
+
+                li {
+                    padding: 0;
+                }
+            }
+
+            a.filter {
+              visibility: hidden;
+              margin-left: -8px;
+              width: 16px;
+              height: 16px;
+              display: inline-block;
+
+              i:before {
+                font-size: 10px;
+                color: #607890;
+              }
+            }
+
+            .alerted {
+                a {
+                    text-decoration: none;
+
+                    .label-important {
+                        background-color: #b94a48;
+                    }
+                }
+            }
+
+            &:hover .filter {
+              display: inline-block;
+              visibility: visible;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            a:hover {
+                cursor: pointer;
+            }
+
+            .command {
+                text-transform: uppercase;
+            }
+
+            .result {
+                margin-left: @timestampWidth + @timestampAndResultMargin;
+                min-height: 60px;
+
+                strong, span {
+                    padding-right: 10px;
+                }
+
+                ul.healthChecks {
+                    list-style-type: none;
+
+                    li {
+                        padding: 0 0 5px 0;
+                    }
+                }
+
+                .related {
+                    font-size: 90%;
+                }
+            }
+
+            .timestamp {
+                width: @timestampWidth;
+                word-wrap: break-word;
+                float: left;
+
+                p {
+                    margin: 0;
+                }
+            }
+
+            .eventDetails {
+                font-size: 90%;
+
+                dd a.filter {
+                  margin-left: 0;
+                }
+
+                .healthTestDetails {
+                    h4, h5 {
+                        font-size: inherit;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+
+                    .resultsDetails {
+                        margin: 0 0 8px 8px;
+
+                        ul {
+                            list-style-type: none;
+                            li {
+                                padding: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.twoMiniColumns {
+    display: block;
+
+    .miniLeftColumn {
+        display: block;
+        float: left;
+        width: @miniLeftColumnWidth;
+        padding: 0;
+        margin: 0;
+    }
+
+    .miniRightColumn {
+        display: block;
+        margin-left: @miniLeftColumnWidth + @miniColumnGutter;
+    }
+}
+
+

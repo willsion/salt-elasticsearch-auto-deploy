@@ -1,0 +1,128 @@
+// Copyright (c) 2011-2012 Cloudera, Inc. All rights reserved.
+
+.AppHeader.navbar {
+
+  // disable any disabled links.
+  .dropdown-menu a.disabled,
+  a.disabled {
+    color: #555;
+  }
+  .dropdown-menu a.disabled:hover,
+  a.disabled:hover {
+    background-color: transparent;
+    color: #555;
+  }
+
+  // logo brand
+  a.appName {
+    padding: 5px 6px;
+    vertical-align: top;
+    display: inline-block;
+    height: 28px;
+  }
+  .logo {
+    border: 0;
+  }
+
+  .link-with-counter {
+    position: relative;
+    span.AutoRefreshableCounter {
+      position: absolute;
+      .opacity(80);
+      font-weight: bold;
+      top: 4px;
+      left: 10px;
+      span.label {
+        padding: 3px 5px;
+      }
+    }
+  }
+
+  .systray-container {
+    padding-right: 10px;
+  }
+
+  form.BasicSearch {
+    padding: 0;
+    margin-right: 8px;
+    position: relative;
+    input {
+      width: 120px;
+      padding-right: 24px;
+      margin-top: 8px;
+      height: 16px;
+    }
+    a.go {
+      position: absolute;
+      top: 12px;
+      right: 8px;
+    }
+  }
+
+  .nav > li > a {
+    font-weight: bold;
+    color: #BBB;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .nav > li.active > a {
+    color: #FFF;
+  }
+
+  .navbar-inner {
+    .borderRadius(0);
+    padding-right: 0;
+  }
+  margin-bottom: 0;
+
+  &.CustomGradientblack.navbar-inverse .navbar-inner {
+    .backgroundGradientY(#262626, #262626);
+    .nav  > li.active > a {
+      .backgroundGradientY(#161616, #161616);
+    }
+  }
+
+  &.CustomGradientblue.navbar-inverse .navbar-inner  {
+    .backgroundGradientY(#000048, #000048);
+    .nav  > li.active > a {
+      .backgroundGradientY(#000032, #000032);
+    }
+  }
+
+  &.CustomGradientgreen.navbar-inverse .navbar-inner  {
+    .backgroundGradientY(#004800, #004800);
+    .nav  > li.active > a {
+      .backgroundGradientY(#003200, #003200);
+    }
+  }
+
+  &.CustomGradientred.navbar-inverse .navbar-inner  {
+    .backgroundGradientY(#480000, #480000);
+    .nav  > li.active > a {
+      .backgroundGradientY(#320000, #320000);
+    }
+  }
+
+  &.CustomGradientbrown.navbar-inverse .navbar-inner {
+    .backgroundGradientY(#484800, #484800);
+    .nav  > li.active > a {
+      .backgroundGradientY(#322700, #322700);
+    }
+  }
+}
+
+.customBannerHtml {
+  padding: 8px 14px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.SubNav {
+  overflow: hidden;
+  height: 40px;
+}
+
+.CloseableAlert {
+  display: none;
+}

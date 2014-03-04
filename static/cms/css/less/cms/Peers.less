@@ -1,0 +1,107 @@
+/* Copyright (c) 2011 Cloudera, Inc. All rights reserved. */
+
+@import "../common/mixins.less";
+@import "../common/icons.less";
+
+#addPeerForm {
+  width: 220px;
+  margin: 0 auto;
+  .ssl-warning-icon, .ssl-warning {
+    display: none;
+  }
+}
+
+#peerOverview {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 700px;
+
+  h1 {
+    padding-left: 0;
+  }
+}
+
+#peers {
+  td {
+    vertical-align: middle;
+  }
+  .status {
+    .icon {
+      &.state-connected, &.state-unknown, &.state-error {
+        .sprite(16, 16);
+        .iconMixin(16px, 16px);
+      }
+      
+      &.state-testing {
+        display: inline-block;
+        width: 16px;
+      }
+      
+      &.state-connected {
+        background-position: @state_checkmark16x @state_checkmark16y;
+      }
+      
+      &.state-unknown {
+        background-position: @state_unknown16x @state_unknown16y;
+      }
+      
+      &.state-error {
+        background-position: @state_error16x @state_error16y;
+      }
+    }
+  }
+  .controls {
+    padding: 0;
+    
+    .btn-group .btn {
+      float: right;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      margin-right: 10px;
+    }
+  }
+}
+
+#addPeerDialog {
+  .no-ssl {
+    .ssl-warning-icon {
+      .IconExclamation32x32;
+      margin-left: -14px;
+      margin-top: 5px;
+      float: left;
+      display: inline-block;
+    }
+    
+    .ssl-warning {
+      display: inline-block;
+    }
+  }
+  
+  .alert {
+    margin-bottom: 10px;
+  }
+  
+  .state-update {
+    display: none;
+  }
+  
+  &.update {
+    .state-update {
+      display: block;
+    }
+    
+    .state-add {
+      display: none;
+    }
+  }
+}
+
+#peering {
+  h1 {
+    margin-top: 20px;
+    
+    a.btn {
+      margin: 10px;
+    }
+  }
+}

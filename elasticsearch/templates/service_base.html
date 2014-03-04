@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/odb-app.css">
+{% endblock %}
+
+{% block content %}  
+ 
+    <div class="container-fluid" style="margin-top: 50px;">
+        <div class="PageTitle">
+            <h1><img src='/static/img/{{services.belong_template.icon}}' style="height: 16px;width: 14px"/>{{services.name}}</h1>
+        </div>
+
+
+        <div class="page-tabs">
+            <ul class="nav nav-tabs" id="ser_ul">   
+                <li class="active" id="instance_manage">    
+                    <a href="/salt/instance?service_id={{services.id}}&cluster_id={{cluster.id}}"><i class="icon-home" ></i>实例管理</a>    
+                </li>
+                <li id="index_care">    
+                    <a href="/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}"><i class="icon-time" ></i>索引维护</a>    
+                </li>
+                <li id="update">
+                    <a href="/salt/update?service_id={{services.id}}&cluster_id={{cluster.id}}"><i class="icon-arrow-up" ></i>版本升级</a>
+                </li>
+            </ul>        
+        </div>
+
+        {% block service_content %}{% endblock %}
+    </div>
+
+    <script type="text/javascript">
+        function tag_change(ele)
+        {
+            $("#ser_ul").find("li").each( function (index,element){
+                $(element).attr("class","");
+            });
+            $("#" + ele).attr("class","active");
+
+        }        
+    </script>
+
+    {% block service_js %}{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,90 @@
+<div class = "tab-pane active">
+      <div class = "kibana-container container" >
+        <div style = "text-align:center;position:fixed;" class = "row-open" >
+          <div class = "row-tab bgPrimary" ><a href="#cluster" style="display:block;width:100%;height:100%;color:#ffffff">Cluster</a></div >
+          <div class = "row-tab bgWarning" ><a href="#nodes"  style="display:block;width:100%;height:100%;color:#ffffff">Node</a></div >
+          <div class = "bgSuccess row-tab" ><a href="#indices"  style="display:block;width:100%;height:100%;color:#ffffff">Index</a></div >
+        </div >
+    {% for type in types %}
+    <h3 id="{{ type.name }}">{{ type.name }}:</h3>
+    {% for m in type.item %}
+    <div class = "kibana-row ng-scope" >
+      <div class = "row-control" >
+      <div class = "" style = "padding:0px;margin:0px;position:relative" >
+        <div class = "row-close" data-placement = "bottom" >
+          <!--<span class = "row-button bgWarning" ><i data-placement = "right" class = "icon-cog pointer ng-scope" data-original-title = "" title = "" ></i ></span >-->
+          <span class = "row-button bgPrimary" ><i data-placement = "right" class = "icon-caret-left  ng-scope" data-original-title = "" title = "" ></i ></span >
+          <span class = "row-button row-text ng-binding pointer" >{{m.name}}</span >
+        </div >
+
+      </div >
+      <!-- ngIf: !row.collapse -->
+      <div style = "padding-top:0px;" class = "ng-scope detail" >
+      <!-- ngRepeat: (name, panel) in row.panels|filter:isPanel -->
+          {% for i in m.ele %}
+              <div class = "panel nospace ng-scope ng-pristine ng-valid ui-droppable" data-drop = "true" data-jqyoui-options = "" style = "width: 49.8%;" >
+            <div style = "position:relative" >
+              <div class = "panel-container" >
+                <kibana-panel type = "panel.type" class = "" >
+                  <div style = "min-height:150px" class = "ng-scope" >
+                    <div class = "panel-header" >
+                      <div class = "row-fluid" >
+                        <div class = "span12 alert-error panel-error ng-binding" style = "display: none;" >
+                            <a class = "close" >×</a ><i class = "icon-exclamation-sign" ></i > <strong >Oops!</strong >false
+                        </div >
+                      </div >
+                      <div class = "row-fluid panel-extra" >
+                        <div class = "panel-extra-container" >
+                          <!-- ngRepeat: task in panelMeta.modals -->
+                          <span class = "row-button extra ng-scope" >
+                              <span class = "pointer ng-scope" data-target = "#app-partials-inspector-045" data-toggle = "modal" ><i class = "pointer ng-scope icon-info-sign" data-original-title = "" title = "" ></i ></span >
+                          </span >
+                          <span class = "row-button extra" style = "display: none;" ><span ><i class = "icon-spinner icon-spin icon-large" ></i ></span ></span ><span class = "panel-text panel-title ng-binding" >{{i.0}}</span >
+                        </div >
+                      </div >
+                    </div >
+                    <div class = "panel-content" >
+                      <style >
+                          .histogram-legend{ display:inline-block; padding-right:5px }
+                          .histogram-legend-dot{ display:inline-block; height:10px; width:10px; border-radius:5px; }
+                          .histogram-legend-item{ display:inline-block; }
+                          .histogram-chart{ position:relative; }
+                          .histogram-options{ padding:5px; margin-right:15px; margin-bottom:0px; }
+                          .histogram-options label{ margin:0px 0px 0px 10px !important; }
+                          .histogram-options span{ white-space:nowrap; }
+                          /* this is actually should be in bootstrap */
+                          .form-inline .checkbox{ display:inline-block; }
+                      </style >
+                      <div class = "pointer histogram-chart" >
+                        <img src = "{{i.1}}" width = "780" >
+                      </div >
+                    </div >
+                  </div >
+                </kibana-panel >
+              </div >
+            </div >
+          </div >
+          {% endfor %}
+          <div class = "panel ng-pristine ng-valid ui-droppable" style = "margin: 5px; width: 30%; background-color: rgba(100, 100, 100, 0.498039); display: none; height: 150px; background-position: initial initial; background-repeat: initial initial;" data-drop = "true" data-jqyoui-options = "" ></div >
+      <span ><span style = "margin-top: 3px; margin-left: 5px; display: none;" class = "btn btn-mini" >Add panel to empty row</span ><div class = "clearfix" ></div ></span >
+      </div >
+
+      </div >
+      </div >
+    {% endfor %}
+    {% endfor %}
+              <div class = "row-fluid" ng-show = "dashboard.current.editable" >
+                <div class = "span12" style = "text-align:right" >
+                    <span class = "pointer btn btn-mini row-add-button" config-modal = "app/partials/dasheditor.html" kbn-model = "dashboard" >
+                        <span ng-click = "editor.index = 2" ><i class = "icon-plus-sign" ></i > ADD A ROW</span >
+                    </span >
+                </div >
+      </div >
+      </div >
+
+</div >
+<script type="text/javascript">
+    $('.row-close .bgPrimary').click(function(){
+
+    })
+</script>

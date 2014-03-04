@@ -1,0 +1,60 @@
+// (c) Copyright 2011 Cloudera, Inc. All rights reserved.
+// <span class=CapacityUsage>
+//   <span>
+//     <b>Text Content</b>
+//     <i style="width:33%"></i>
+//   </span>
+// </span>
+
+.CapacityUsage {
+  display: block;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  margin: auto 0 auto 0;
+  font-size: @fontSizeD;
+  line-height: 11px;
+  .backgroundGradientY(#777, #888);
+}
+.CapacityUsage .reading {
+  display: block;
+  position: relative;
+  z-index: 1;
+  height: 12px;
+  border: 1px solid transparent;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: #222 0 1px 2px;
+}
+
+.CapacityUsage .bluebar,
+.CapacityUsage .greenbar,
+.CapacityUsage .bar {
+  .borderRadius(4px);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.CapacityUsage.priorityLow .bar {
+  .backgroundGradientY(#62C462, #57A957);
+}
+.CapacityUsage.priorityMed .bar {
+  .backgroundGradientY(#b92, #971);
+}
+.CapacityUsage.priorityHigh .bar {
+  .backgroundGradientY(#EE5F5B, #C43C35);
+}
+// When used as a progress bar,
+// Always use the same color.
+.CapacityUsage.progress .bar,
+.CapacityUsage.progress .greenbar {
+  .backgroundGradientY(#62C462, #57A957);
+}
+
+.CapacityUsage.progress .bluebar {
+  .backgroundGradientY(#149BDF, #0480BE);
+}

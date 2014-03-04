@@ -1,0 +1,63 @@
+/* Copyright (c) 2012 Cloudera, Inc. All rights reserved. */
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+@import "../common/mixins.less";
+
+table.license-table {
+
+  margin-bottom: 20px;
+
+  .license-form {
+    .filename {
+      width: 140px;
+    }
+  }
+
+  .success, .error, .note {
+    width: 200px;
+    margin: 10px auto;
+    font-weight: normal;
+  }
+
+  tbody {
+    font-weight: bold;
+
+    td.license-feature-label {
+      font-size: 120%;
+    }
+
+    .time-limit {
+      td, label {
+        font-weight: bold;
+        font-size: 120%;
+      }
+    }
+  }
+
+  thead {
+    font-weight: bold;
+    th {
+      .standardTextColor();
+      vertical-align: top;
+      font-size: 140%;
+      line-height: 24px;
+    }
+    i {
+      display: inline-block;
+      margin-top: 5px;
+    }
+  }
+
+  .license-standard, .license-trial, .license-enterprise {
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .active, .active.hover {
+    background-color: #ddeeda;
+  }
+
+  .hover {
+    background-color: #eaf3e6;
+  }
+}

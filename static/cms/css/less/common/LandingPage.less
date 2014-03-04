@@ -1,0 +1,198 @@
+// Copyright (c) 2013 Cloudera, Inc. All rights reserved.
+
+.LandingPage {
+
+  // Make the page background whiteSmoke;
+  @pageColor: whiteSmoke;
+
+  background-color: @pageColor;
+
+  // Make the tab forground color the same
+  .page-tabs {
+    .nav-tabs {
+      .label {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  .nav-tabs > .active > a {
+    background-color: @pageColor !important;
+  }
+
+  // Make the toolbar align with the page title.
+  .h1-toolbar {
+    line-height: 24px;
+  }
+
+  // Remove background change on hover.
+  .Toggler:hover {
+    background-color: inherit;
+  }
+
+  .row-fluid {
+    margin-top: 20px;
+  }
+
+  // Make each pane white.
+  .well {
+    padding: 0 10px 10px 10px;
+    background-color: white;
+  }
+
+  .service, .hosts, .health-issues-entity-table, health-issues-check-table {
+    .display-status {
+      text-decoration: none;
+      padding-right: 10px;
+    }
+  }
+
+  .service, .hosts {
+    td.host-status-and-name,
+    td.service-status-and-name {
+      width: 1%;
+      border-right: @dataTableBorderColor solid 1px;
+      span[data-service-id-for] {
+        width: 180px;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .status-and-charts {
+    margin-top: 0;
+    clear: both;
+
+    @media (min-width: 800px) and (max-width: 1200px) {
+      .status-pane {
+        width: 310px;
+        float: left;
+
+        .service, .hosts {
+          td.host-status-and-name,
+          td.service-status-and-name {
+            span[data-service-id-for] {
+              width: 50px;
+            }
+          }
+        }
+      }
+
+      .charts-pane {
+        margin-left: 350px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .status-pane {
+        width: 400px;
+        float: left;
+
+        .service, .hosts {
+          td.host-status-and-name,
+          td.service-status-and-name {
+            span[data-service-id-for] {
+              width: 120px;
+            }
+          }
+        }
+      }
+
+      .charts-pane {
+        margin-left: 440px;
+      }
+    }
+
+    .status-pane {
+
+      .h1-toolbar {
+        margin-right: 19px;
+      }
+
+      // Add spacing between the status icon and the service link.
+      .status-table {
+        margin-left: 12px;
+        margin-right: 12px;
+        width: inherit;
+        
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .charts-pane {
+      // Make the charts title align with the status title.
+      section.chart-section {
+        .chart-section-heading {
+          padding: 10px 6px 10px 6px;
+          border-bottom-width: 0;
+        }
+      }
+    }
+  }
+
+  // Remove border around the cluster-title table.
+  .DataTable.cluster-title {
+    border-width: 0;
+    table-layout: fixed;  // we can now control width & overflow
+     
+    td {
+      border-width: 0;
+
+      .btn-group {
+        position: relative;
+        top: 2px;
+      }
+    }
+
+    td.cluster-title-name {
+        width: 80%;
+        
+        h2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    td.cell-with-icon-only {
+        width: 24px;
+    }
+  }
+
+  // Make the toggle icon aligned middle.
+  h2 {
+    .toggle-icon {
+      position: relative;
+      top: 2px;
+    }
+    .icon, i {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .toggler {
+    cursor: pointer;
+  }
+
+  .clusterListHeader {
+    ul.headerItems {
+
+      margin-bottom: 0;
+
+      li {
+        display: inline-block;
+        vertical-align: bottom;
+        padding: 0 6px 5px 0;
+      }
+    }
+
+  }
+
+  .cluster-title-container {
+    margin-left: -6px;    // pixel perfect alignment with icons in status table
+    margin-right: 13px;   // = status table margin+border
+  }
+}

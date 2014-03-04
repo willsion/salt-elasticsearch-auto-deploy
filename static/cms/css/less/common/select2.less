@@ -1,0 +1,45 @@
+// (c) Copyright 2011-2012 Cloudera, Inc. All rights reserved.
+@import "../../../../ext/select2/select2.less";
+
+@spinnerFilename: '../icons/color_sm/spinner.gif';
+@select2PngFilename: '../img/select2.png';
+@select2x2PngFilename: '../img/select2x2.png';
+
+// Override the spinner's location.
+
+.select2-search input.select2-active {
+  background-image: url(@spinnerFilename);
+}
+
+.select2-more-results.select2-active {
+  background-image: url(@spinnerFilename);
+}
+
+.select2-container-multi .select2-choices .select2-search-field input.select2-active {
+  background-image: url(@spinnerFilename);
+}
+
+// Override select2.png's location.
+
+.select2-container .select2-choice abbr {
+  background-image: url(@select2PngFilename);
+}
+
+.select2-container .select2-choice div b {
+  background-image: url(@select2PngFilename);
+}
+
+.select2-search input {
+  background-image: url(@select2PngFilename);
+}
+
+.select2-search-choice-close {
+  background-image: url(@select2PngFilename);
+}
+
+// Override select2x2.png's location.
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+  .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
+    background-image: url(@select2x2PngFilename) !important;
+  }
+}

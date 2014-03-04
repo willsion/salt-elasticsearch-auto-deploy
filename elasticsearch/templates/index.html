@@ -1,0 +1,543 @@
+{% extends "service_base.html" %}
+
+
+{% block service_content %}
+
+<input type='hidden' id='ser_id' value="{{services.id}}"/>
+<input type='hidden' id='ope_type'/>
+<input type='hidden' id='batch_id'/>
+
+
+<div style="background-color: #EEEEEE;margin: 20px 20px 5px 20px">
+    <h4 style="padding: 10px 0 10px 10px;font-size: 20px;">获取当前集群索引集方式选择</h4>
+
+    <div style="padding-left: 20px;">
+        <input type="radio" name="conntect_type" class="connect_way" value="masternode" style="margin-right: 30px;" checked="checked">从masternode上获取
+        <div style="margin: -28px 0 0 400px;">
+            索引组织方式(多种方式请用','分隔)
+            <input type="text" value="([^\d]+)[\d]{4}\.[\d]{2}\.[\d]{2}" style="width: 220px;" id="reg_way">
+        </div>
+    </div>
+
+    <div style="padding-left: 20px;">
+        <input type="radio" name="conntect_type" class="connect_way" value="url" style="margin-top: 15px;">        
+
+        <div class="input-prepend input-append" style="margin-top: -20px;width: 350px;padding-top: 5px;margin-left: 44px;">
+            <span class="add-on"><i class="icon-list"></i></span>
+            <input type="text" placeholder="Enter http://domain:port" name="connectionURL" style="width: 220px;" id="connectionURL">
+        </div>
+
+        <div>
+            <button class="btn btn-info" type="button" id="connectButton" style="margin: -65px 0 0 400px" data-toggle="modal"  href="#index_modal">同步索引集</button>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group" style="margin-left: 20px;">
+    <a id="batch_ope" class="btn btn-success" data-toggle="modal"  href="#index_modal"><i class="icon-map-marker"></i>批量操作</a>
+    <a id="commit_ope" class="btn btn-success" ><i class="icon-list"></i>提交修改</a>
+    <!--a id="modify_inital" class="btn btn-success" data-toggle="modal"  href="#index_modal"><i class="icon-search"></i>修改默认值</a-->
+</div>
+
+
+<table class="table table-bordered table-striped table-hover" id="indicesTable" style="font-size: 13px;width: 1500px;margin: 0px 20px 5px 20px;">
+    <thead>
+        <tr>
+            <th>
+                <input  type="checkbox" class="conf_check_all"/>
+            </th>                         
+            <th>
+                索引集
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in index %}
+        <tr tag="{{item.id}}" class="index_instance">
+            <td>
+                <input  type="checkbox" class="conf_check"/>
+            </td>
+
+            <td>
+                {{item.name}}
+            </td>
+
+            <td>
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+                        <td>
+                            删除 <input type="text" style="width: 30px;height: 16px;" class="date"  value="{{item.delete}}"> 天前的索引(当前值:{{item.delete}})
+                        </td>
+                        <td class="opartion">
+                            {% if item.delete_flag == 1 %}
+                                <input type='hidden' class='target' value="enable"/>
+                                <label tag="Enable" class="cb-enable selected"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable"><span>disable</span></label>
+                            {% else %}
+                                <input type='hidden' class='target' value="disable"/>
+                                <label tag="Enable" class="cb-enable"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable selected"><span>disable</span></label>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            关闭 <input type="text" style="width: 30px;height: 16px;" class="date" value="{{item.close}}"> 天前的索引(当前值:{{item.close}})
+                        </td>
+                        <td class="opartion">
+                           {% if item.close_flag == 1 %}
+                                <input type='hidden' class='target' value="enable"/>
+                                <label tag="Enable" class="cb-enable selected"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable"><span>disable</span></label>
+                            {% else %}
+                                <input type='hidden' class='target' value="disable"/>
+                                <label tag="Enable" class="cb-enable"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable selected"><span>disable</span></label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            optimize <input type="text" style="width: 30px;height: 16px;" class="date"  value="{{item.optimize}}">天前的索引(当前值:{{item.optimize}})
+                        </td>
+                        <td class="opartion">
+                           {% if item.optimize_flag == 1 %}
+                                <input type='hidden' class='target' value="enable"/>
+                                <label tag="Enable" class="cb-enable selected"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable"><span>disable</span></label>
+                            {% else %}
+                                <input type='hidden' class='target' value="disable"/>
+                                <label tag="Enable" class="cb-enable"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable selected"><span>disable</span></label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            disable bloom filter for <input type="text" style="width: 30px;height: 16px;" class="date" value="{{item.disable}}">天前的索引(当前值:{{item.disable}})
+                        </td>
+                        <td class="opartion">
+                           {% if item.disable_flag == 1 %}
+                                <input type='hidden' class='target' value="enable"/>
+                                <label tag="Enable" class="cb-enable selected"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable"><span>disable</span></label>
+                            {% else %}
+                                <input type='hidden' class='target' value="disable"/>
+                                <label tag="Enable" class="cb-enable"><span>enable</span></label>
+                                <label tag="Disable" class="cb-disable selected"><span>disable</span></label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+<div class="modal hide" style="display:none" id="index_modal">
+    <div class="modal-header">
+        <span id="index_modal-header" class="modal_head">查询结果</span>
+        <a class="close" data-dismiss="modal">×</a>
+    </div>
+
+    <div class="modal-body" id="index_modal_body">
+    </div>
+    <div class="modal-footer">
+        <a class="confirmation-button btn btn-primary" data-dismiss="modal" onclick="batch()">确认</a>
+        <a class="dismissButton btn" data-dismiss="modal">取消</a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block service_js %}
+
+    <script type="text/javascript">
+
+        function toggleDown(flag) 
+        {
+            if(flag == 1) {
+                var w = $(this).find("input").width() + 10;
+                $(this).find(".tag").css("left", w + "px");
+                $(this).find(".tag").show();
+            }
+            else {
+                $(this).find(".tag").hide();
+            }
+        };
+
+        function _batch(element)
+        {
+            var _need_add = new Array();
+
+            $("#" + element).find("tr").each(function(index,ele)
+            {
+                var checkbox = $(ele).find("input");
+
+                if (checkbox)
+                {
+                    var checked = $(checkbox).attr("checked");
+                    if ((element == "_exist_index") || (element == "_need_delete"))
+                    {
+                        if (!(checked))
+                        {
+                            _need_add.push($(ele).find(".name").text());
+                        }
+
+                    }
+                    else
+                    {
+                        if (checked)
+                        {
+                            _need_add.push($(ele).find(".name").text());
+                        }                       
+                    }                  
+                }
+            });
+
+            return _need_add.join("&_&");
+        }
+
+
+        function _batch_ope()
+        {
+            var id_list = $("#batch_id").attr("value");
+            var tr_ele = $("#indices_batch").find('tr');
+
+            var date_list = new Array();
+            var flag_list = new Array();
+
+            for (var i=0;i<4;i++)
+            {
+                var date = tr_ele.eq(i).find(".date").val();
+                var flag = tr_ele.eq(i).find(".target").attr("value");
+                date_list.push(date);
+                flag_list.push(flag);              
+            }
+            date_list = date_list.join("&");
+            flag_list = flag_list.join("&");
+            adjax("/salt/indices/modify/batch_commit",{id_list:id_list,date_list:date_list,flag_list:flag_list},0);   
+        }
+
+        function batch()
+        {
+            var type = $("#ope_type").attr("value");
+            if (type == "fetch")
+            {
+                var _need_add = _batch("_need_add");
+                var _need_delete = _batch("_need_delete");
+                var _exist_index = _batch("_exist_index");
+                var ser_id = $("#ser_id").attr("value");
+
+                adjax("/salt/indices/fetch/commit",{ser_id:ser_id,_need_add:_need_add,_need_delete:_need_delete,_exist_index:_exist_index},0);
+            }
+            if (type == "batch_ope")
+            {
+                _batch_ope();
+            }
+                  
+        }
+
+        function modify_choose()
+        {
+            var choose = $(this).find(".target").attr("value");
+            if (choose == "enable")
+            {
+                $(this).find(".cb-enable").attr("class","cb-enable");
+                $(this).find(".cb-disable").attr("class","cb-disable selected");
+                $(this).find(".target").attr("value","disable");
+            }
+            else
+            {
+                $(this).find(".cb-enable").attr("class","cb-enable selected");
+                $(this).find(".cb-disable").attr("class","cb-disable");
+                $(this).find(".target").attr("value","enable");              
+            }
+            
+        }
+
+        function adjax(url,data,return_flag)
+        {
+            $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: data,
+                    timeout: 5000,
+                    success: function(data) {
+                        if( data.status=="ok")
+                        {
+                            if (return_flag==1)
+                            {
+                                _display_index(data);
+                            }
+                            else
+                            {
+                                alert("操作成功");
+                                window.location.href="/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
+                                return;
+                            }                          
+                        }
+                        else
+                        {
+                            alert("操作失败: " + data.result);
+                            window.location.href="/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
+                            return;
+                        }
+                    },
+                    error: function (data) {
+                        alert("操作出错");
+                    }
+                });
+        }
+
+        function refresh_index()
+        {
+            var ser_id = $("#ser_id").attr("value");
+            var check_way = "masternode";
+            var url = "";
+            var check_parttern = $("#reg_way").val();
+
+            $(".connect_way").each(function(index,ele)
+            {
+                var checked = $(ele).attr("checked");
+                if (checked)
+                {
+                    var way = $(ele).attr("value");
+                    if (way == "url")
+                    {
+                        check_way = way;
+                        url = $("#connectionURL").val();
+                    }
+                    else
+                    {
+                        check_way = check_way;   
+                    }
+                }
+            });
+
+            $("#index_modal_body").html("请稍候");
+            $("#index_modal-header").html("查询结果");
+            adjax("/salt/indices/fetch/display",{ser_id:ser_id,check_way:check_way,url:url,check_parttern:check_parttern},1);
+
+            $("#ope_type").attr("value","fetch");
+        }
+
+        function batchcheck () {
+            checked = $(this).attr('checked');
+            class_name = $(this).attr('class');
+            map = {"conf_check_all":'.conf_check',
+                    "need_record":'.need_record_item',
+                    "need_delete":'.need_delete_item',
+                    "_exist_index":'._exist_index_item'}
+
+            $(map[class_name]).each(function(index, item) {
+                if (checked) {
+                    $(item).attr('checked', checked);
+                }
+                else {
+                    $(item).removeAttr('checked');
+                }
+          });
+        }
+
+        function _make_need_html(_need_add,_exist)
+        {
+            var __need_add_html = '<h3>没有录入数据库的索引集,选中则增加该索引集的维护</h3><table class="table table-bordered table-striped table-hover" style="font-size: 14px;"><thead><tr><th><input type="checkbox" class="need_record"/></th><th>索引集</th><th>对应索引</th></tr></thead><tbody id="_need_add">';
+
+            for (var i=0;i<_need_add.length;i++)
+            {
+                var _need_item = _need_add[i];
+                if (!(_need_item in _exist))
+                {
+                    continue;
+                }
+                var _indexs    = _exist[_need_item];
+                __need_add_html = __need_add_html + ' <tr><td><input type="checkbox" class="need_record_item"/></td><td class="name">' + _need_item + '</td><td>' + _indexs.join("</br>")  + '</td></tr>';
+            }
+
+            __need_add_html = __need_add_html + '</tbody></table>';
+
+            return __need_add_html;
+        }
+
+        function _exceed_html(_exceed)
+        {
+
+            var _exceed_html = '<h3>已录入数据库，但不存在实际的索引,选中则保持该索引集的维护</h3><table class="table table-bordered table-striped table-hover" style="font-size: 14px;"><thead><tr><th><input id="selectAll" type="checkbox" class="need_delete"/></th><th>索引集</th></tr></thead><tbody id="_need_delete">';
+
+            for (var i=0;i<_exceed.length;i++)
+            {
+                var _exceed_item =  _exceed[i];        
+                _exceed_html = _exceed_html + ' <tr><td><input type="checkbox" class="need_delete_item"/></td><td class="name">' + _exceed_item + '</td></tr>';
+            }
+
+            _exceed_html = _exceed_html + '</tbody></table>';
+
+            return _exceed_html;
+        }
+
+        function _exist_item(_need_add,_exist)
+        {
+            var __need_add_html = '<h3>录入数据库的索引集,选中则保持该索引集的维护</h3><table class="table table-bordered table-striped table-hover" style="font-size: 14px;"><thead><tr><th><input type="checkbox" class="_exist_index"/></th><th>索引集</th><th>对应索引</th></tr></thead><tbody id="_exist_index">';
+
+            for (var i=0;i<_need_add.length;i++)
+            {
+                var _need_item = _need_add[i];
+                if (!(_need_item in _exist))
+                {
+                    continue;
+                }
+                var _indexs    = _exist[_need_item];
+                __need_add_html = __need_add_html + ' <tr><td><input type="checkbox" class="_exist_index_item"/ checked="checked" ></td><td class="name">' + _need_item + '</td><td>' + _indexs.join("</br>")  + '</td></tr>';
+            }
+
+            __need_add_html = __need_add_html + '</tbody></table>';
+
+            return __need_add_html;
+
+        }               
+
+        function _display_index(data)
+        {
+            var _need_add = data._need_add;
+            var _exist    = data._exist;
+            var _exceed   = data._exceed;
+            var _index    = data._exist_index;
+            var _html = "";
+
+            _html = _html + _make_need_html(_need_add,_exist);
+            _html = _html + _exceed_html(_exceed);
+            _html = _html + _exist_item(_index,_exist);
+
+            $("#index_modal_body").html(_html);
+
+            $('.need_record').click(batchcheck);
+            $('.need_delete').click(batchcheck);
+            $('._exist_index').click(batchcheck); 
+        }
+
+        function trim(input) {
+            return input.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+          }
+
+        function _figure_select_machine()
+        {
+            var result = "";
+            var id_list = new Array();
+
+            var count = 0;
+            var body_ele = $("#indicesTable").find("tbody");
+            body_ele.find(".index_instance").each(function(index,ele)
+            {
+                var checked = $(ele).find(".conf_check").attr("checked");
+                if (checked)
+                {
+                    var id = $(ele).attr("tag");
+                    id_list.push(id);
+                    var name = $(ele).find("td").eq(1).html();
+                    var name = trim(name);
+                    if ((count>0) && (count/4 == 1))
+                    {
+                        result = result + "</br>";
+                    }
+                    count = count + 1;
+                    result = result + name + "&nbsp&nbsp&nbsp&nbsp";
+                }
+            });
+
+            id_list = id_list.join("&");
+            $("#batch_id").attr("value",id_list);
+            return result;
+
+        }
+
+        function batch_ope()
+        {
+            var html = '<table class="table table-bordered table-striped table-hover" id="indices_batch"><tbody><tr><td>删除 <input type="text" style="width: 30px;height: 16px;" class="date" value="7"> 天前的索引</td><td class="batch_opartion"><input type="hidden" class="target" value="enable"><label tag="Enable" class="cb-enable selected"><span>enable</span></label><label tag="Disable" class="cb-disable"><span>disable</span></label></td></tr><tr><td>关闭 <input type="text" style="width: 30px;height: 16px;" value="5" class="date"> 天前的索引</td><td class="batch_opartion">   <input type="hidden" class="target" value="enable"><label tag="Enable" class="cb-enable selected"><span>enable</span></label><label tag="Disable" class="cb-disable"><span>disable</span></label></td></tr><tr><td>optimize <input type="text" style="width: 30px;height: 16px;" value="2" class="date">天前的索引</td><td class="batch_opartion">   <input type="hidden" class="target" value="enable"><label tag="Enable" class="cb-enable selected"><span>enable</span></label><label tag="Disable" class="cb-disable"><span>disable</span></label></td></tr><tr><td>disable bloom filter for  <input type="text" style="width: 30px;height: 16px;"  value="2" class="date">天前的索引</td><td class="batch_opartion">   <input type="hidden" class="target" value="enable"><label tag="Enable" class="cb-enable selected"><span>enable</span></label><label tag="Disable" class="cb-disable"><span>disable</span></label></td></tr></tbody></table>';
+
+            var result = _figure_select_machine();
+
+            if (result == "")
+            {
+                $("#index_modal_body").html("请选择索引");
+                $("#index_modal-header").html("批量操作:");
+                return;
+            }
+
+            result = '<div style="font-size: 16px;margin: -10px 10px 20px 10px;font-weight: 500;">' + result + "</div>";
+            html = result + html;
+            $("#index_modal_body").html(html);
+            $("#index_modal-header").html("批量操作:");
+            $("#ope_type").attr("value","batch_ope");
+            $('.batch_opartion').click(modify_choose);
+        }
+
+        function _commit_ope()
+        {
+            var result = "";
+            var name_list = new Array();
+            var content = new Array();
+
+            var count = 0;
+            var body_ele = $("#indicesTable").find("tbody");
+            body_ele.find(".index_instance").each(function(index,ele)
+            {
+                var name = $(ele).find("td").eq(1).html();
+                var name = trim(name);
+                name_list.push(name);
+
+                var date_list = new Array();
+                var flag_list = new Array();
+                var tr_ele = $(ele).find("tr");
+                for (var i=0;i<4;i++)
+                {
+                    var date = tr_ele.eq(i).find(".date").val();
+                    var flag = tr_ele.eq(i).find(".target").attr("value");
+                    date_list.push(date);
+                    flag_list.push(flag);              
+                }
+                date_list = date_list.join("_");
+                flag_list = flag_list.join("_");
+                content.push(date_list + "+" + flag_list);
+            });
+
+            name_list = name_list.join("&");
+            content   = content.join("&");
+
+             adjax("/salt/indices/modify/items_commit",{name_list:name_list,content:content},0);
+        }
+
+        function commit_ope()
+        {
+            if(confirm("确认提交修改么?")){
+                _commit_ope();
+            }
+        }
+
+        $(document).ready(function() {
+            page_light("ser_page");
+            tag_change("index_care");
+            $("#connectButton").click(refresh_index);
+            $('.opartion').click(modify_choose);
+            $('.conf_check_all').click(batchcheck);
+            $('#batch_ope').click(batch_ope);
+            $("#commit_ope").click(commit_ope);                  
+       });
+
+    </script>
+{% endblock %}
+
+
+
+
+            

@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="/static/bootstrap_table.css">
+{% endblock %}
+
+
+{% block content %}  
+ 
+
+    
+    <div class="container-fluid">
+
+        <div class="pull-left">
+            <span class="content" data-bind="event: { mouseover: showNow, mouseout: hideNow}, style: { position: timePosition, left: timeOffsetLeft() + 'px'}" style="position: absolute; left: 800px;">
+                <a  id="_refresh_time" class="time-label selectedTimeEndTimeLabel">上次更新状态时间 {{refresh_time}}</a>
+            </span>
+        </div>
+
+        <div class="h1-toolbar pull-right nowrap">
+            <div class="btn-group currentModeOnly">
+                <a class="btn" title="Add Cluster" href="/salt/cluster/add_cluster/redirect_display">增加集群</a>
+            </div>
+        </div>
+
+
+        <h1>All Services</h1>
+
+        <div id="services">    
+        
+            {% for cluster in result %}
+            <div id="cluster1Container">
+
+                <div class="PageTitle" style="border-width: 0">
+
+                    <div class="buttonbar pull-right currentModeOnly">
+                
+                        <span class="cm-badge"></span>
+
+
+                        <div class="btn-group inlineBlock currentModeOnly showTooltip">
+
+                            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-list-alt"></i>
+                                    操作
+                                <b class="caret"></b>
+                            </a>
+
+                            <ul class="dropdown-menu">    
+        
+                                <li><a  href="/salt/cluster/add_serivce/display?cluster_id={{cluster.id}}">增加服务</a></li>
+           
+                                <li class="divider"></li>        
+        
+                                <li><a data-toggle="modal" 
+                                        href="#myModal"
+                                        class="AjaxLink"
+                                        onclick="actions('rename','{{cluster.name}}',{{cluster.id}},0)">重命名
+                                    </a>
+                                </li>
+
+                                <li><a data-toggle="modal" 
+                                        href="#myModal"
+                                        class="AjaxLink"
+                                        onclick="actions('delete','{{cluster.name}}',{{cluster.id}},0)">删除该集群
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li> 
+
+                                <li><a  href="/salt/cluster/redirect_display?id={{cluster.id}}">修改机器关联</a></li>    
+    
+                            </ul>
+                        </div>
+
+                        <span class="ServiceStatus "></span>
+
+                    </div>
+
+                    <h2>
+                        <a class="nodecoration AjaxLink"
+                        title="Rename Cluster">
+                        <span data-cluster-id-for="1">集群: {{cluster.name}}</span></a>
+                    </h2>
+                </div>
+
+                <table class="DataTable datatab" id="servicesTable1" style="font-size: 14px;">
+                    <thead>
+                        <tr>
+                            <th  rowspan="2" style="width: 8%"><div>名称</div></th>                           
+                            <th  rowspan="2" style="width: 2%"></th>
+                            <th  rowspan="1" style="width: 45%;text-align:center">实例</th>
+                            <th  rowspan="1" ></th>
+                        </tr>
+                        <tr>
+                            <th rowspan="1">
+                                <table style="margin:0">
+                                    <tbody>
+                                        <td style="width: 30%">IP</td>
+                                        <td style="width: 30%">Role</td>                                        
+                                    </tbody>
+                                </table>
+                            </th>
+                            <th  rowspan="1"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for service in cluster.service %}
+                        <tr class="service">                            
+                            <td>        
+                                <a class="showTooltip" href="/salt/service/instance?service_id={{service.id}}"><img border="0" src="/static/img/{{service.icon}}" style="height: 16px;width: 14px">
+                                    <span>{{service.name}}</span></a>
+                            </td>
+                            <td>
+                            </td>
+
+                            <td>
+                                <span>
+                                    <table class='DataTable' style='font-size: 14px;margin: 0; table-layout:fixed;'>
+                                        <tbody>
+                                    {% for instance in service.instance %}
+                                    <tr>
+                                        <td style="width: 30%">{{instance.machine.IP}}</td>
+
+                                        {% if service.template == "elasticsearch" %}
+                                            <td style="width: 30%;overflow:hidden;" title="{{instance.last_time}}"  id="{{instance.id}}">
+                                                <table class='DataTable' style='font-size: 14px;margin: 0'>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 30%;overflow:hidden;">
+                                                                {% for role in instance.role %}
+                                                                    <span class="label label-success">{{ role.role.name|slice:":1" }}</span>
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td style="width: 30%;overflow:hidden;">
+                                                            </td>
+                                                            <td style="width: 30%;overflow:hidden;">
+                                                                <input type='hidden' class="instance_id" value="{{service.id}}_{{instance.machine.id}}" />
+                                                                {% if instance.machine_state == 1 %}
+                                                                <span class="GOOD_HEALTHStatus" id="{{service.id}}_{{instance.machine.id}}_status"><span class="showTooltip icon"></span></span>
+                                                                {% else %}
+                                                                 <span class="CONCERNING_HEALTHStatus" id="{{service.id}}_{{instance.machine.id}}_status"><span class="showTooltip icon"></span></span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        {% else %}
+                                            <td style="width: 30%;overflow:hidden;" title="{{instance.last_time}}"  id="{{instance.id}}">
+                                                <table class='DataTable' style='font-size: 14px;margin: 0'>
+                                                    <tbody>
+                                                    {% for role in instance.role %}
+                                                    <tr>
+                                                        <td style="width: 30%">
+                                                            <span class="label label-success">{{role.role.name}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <table class='DataTable' style='font-size: 14px;margin: 0'>
+                                                                <tbody>
+                                                                {% for instance_item in role.role_conf %}
+                                                                <tr>
+                                                                    <td style="width: 30%">{{instance_item.name}}</td>
+                                                                    <td style="width: 30%" title="{{instance.last_time}}" class="instance_status" >                                                                    
+                                                                    </td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        {% endif %}                                        
+
+                                    </tr>
+                                    {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </span>
+                            </td>
+
+                            <!-- operation -->
+                            <td>        
+                                <div class="serviceCommands currentModeOnly btn-group alignRight showTooltip">
+                                    <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-list-alt"></i>
+                                        操作
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a
+                                            href="/salt/instance?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            class="AjaxLink"
+                                            href=>实例 管理
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a
+                                            href="/salt/indices?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            class="AjaxLink"
+                                            href=>索引维护
+                                            </a>
+                                        </li>
+                                        <li><a
+                                            href="/salt/update?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            class="AjaxLink"
+                                            href=>版本升级
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a data-toggle="modal" 
+                                            href="#myModal"
+                                            class="AjaxLink"
+                                            onclick="actions('rename','{{service.name}}',{{service.id}},1)">重命名
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a data-toggle="modal" 
+                                            href="#myModal"
+                                            class="AjaxLink"
+                                            onclick="actions('delete','{{service.name}}',{{service.id}},1)">删除
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                                              
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 650px;height:auto;left: 45%;top:40%">
+        <div class="modal-header">
+        <span id="modal-header" style="font-weight:600;font-size:20px;"></span>
+        <a class="close" data-dismiss="modal">×</a>
+        </div>
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="modal_body">
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn AjaxLink btn-primary" id="modal_command"></button>
+            <button class="btn dismissButton " data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+
+    <input type='hidden' id='ser_id' />
+
+    <input type='hidden' id='opera_tag' />
+
+    <input type='hidden' id='ser_command' />
+
+    <script type="text/javascript">
+
+        function actions(action,ser,id,tag) {
+
+            mapping = {1:"service",0:"cluster"}
+
+            rename = '<div class="control-group"><label class="control-label" for="serviceName">Name</label><div class="controls"><input type="text" id="modal_newName" value="oozie1" class="required valid"><span class="help-inline"></span></div></div>';
+
+            other = '<span id="modal-header" style="font-family: Helvetica,Arial,sans-serif;font-size: 14px;line-height: 20px;color: #333333;">Are you sure you want to run the <strong id="modal_com"></strong> command on the ' +  mapping[tag] + ' <strong id="modal_ser"></strong>?</span>';
+
+            if (action == "rename")
+            {
+                $('#modal_body').html(rename);
+                $('#modal_ser').text(ser);
+                $('#modal_newName').attr("value",ser); 
+            }
+            else if (action == "machine_manage")
+            {
+                $('#modal-header').text("修改关联机器");
+                $('#modal-body').html("请稍候......");
+                $.ajax({
+                url: "/salt/cluster/machine_list?id=" + id,
+                type: 'GET',
+                dataType: 'JSON',
+                timeout: 5000,
+                success: function(data) {
+                    if(( data.status=="ok") && ("machine" in data))
+                    {
+                        result =  data.machine;
+                        info = "";
+                        machine_info = "";
+
+                        for(var i=0;i < result.length;i++)
+                        {
+                            info = info + '<tr><td><input  type="checkbox" class="higstate_choose" value="'+ result[i][0] + '"/></td><td class="higstate_id">' + result[i][1] + '</td></tr>';
+                        }
+                        machine_info = '<table class="DataTable"><thead><tr><th></th><th>主机</th></tr></thead><tbody>' + info + '</tbody></table>';
+                        $("#modal-body").html(machine_info); 
+                    }
+                },
+                error: function (data) {
+                    //alert(data);
+                    alert("操作出错");
+                }
+            }); 
+
+            }
+            else
+            {
+                $('#modal_body').html(other);
+            }
+            $('#opera_tag').attr("value",tag);
+            $('#modal_ser').text(ser);
+            $('#ser_id').attr("value",id);
+            $('#ser_command').attr("value",action);
+            $('#modal-header').text(action);
+            $('#modal_com').text(action);
+            $('#modal_command').text(action);
+
+        }
+
+        function command(){
+            opera_tag =  $('#opera_tag').attr("value");
+            com = $('#ser_command').attr("value");
+            id  = $('#ser_id').attr("value");
+            new_name = "";
+
+            if (com == 'rename')
+            {
+                new_name = $('#modal_newName').attr("value");
+            }
+
+            if (opera_tag == 1)
+            {
+                url = '/salt/service/com';
+            }
+            else
+            {
+                url = '/salt/cluster/com';             
+            }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {com:com,id:id,new_name:new_name},
+                timeout: 5000,
+                success: function(data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    if( data.status=="ok")
+                    {
+
+                        alert("操作成功");
+                        window.location.href="/salt/services";
+                        return;   
+                    } 
+                    else
+                    {
+                        alert("操作失败");
+                        window.location.href="/salt/services";
+                        return; 
+                    }
+                },
+                error: function (data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    alert(data);            
+                }
+            });
+
+            
+        }
+
+
+        function _refresh()
+        {
+            var id = new Array();
+
+            $('.instance_id').each(function (index, item) {
+                id.push($(item).attr("value"));
+            });
+
+            $.ajax({
+                url: "/salt/instance/status",
+                type: 'POST',
+                dataType: 'JSON',
+                data: {id:id.join("&")},
+                timeout: 5000,
+                success: function(data) {
+
+                    if ('_refresh_time' in data)
+                    {
+                        $('#_refresh_time').html("最新一次更新状态时间 " + data['_refresh_time']);
+                    }
+                    else
+                    {
+                        $('#_refresh_time').html("更新状态不成功");
+                    }
+
+                    if( data.status=="ok")
+                    {
+                        /*
+                        $('.instance_status').each(function (index, item) {
+                            var _item_id  = $(item).attr("id").split("_")[0];
+                            _item_id = parseInt(_item_id);
+                            var title = "";
+                            if (_item_id in data.result)
+                            {
+                                title = data.result[_item_id][1];
+                                $(item).attr("title",title);
+                            }
+
+                            if ((_item_id in data.result) && (data.result[_item_id][0] == 1))
+                            {
+                                $(item).html('<span class="GOOD_HEALTHStatus"><span class="showTooltip icon"></span></span>');
+                            }
+                            else
+                            {
+                               $(item).html('<span class="CONCERNING_HEALTHStatus"><span class="showTooltip icon"></span></span>'); 
+                            }
+                        });
+                        */
+                        for(item_id in data.result) {
+                            $item = $("#"+item_id+"_status");
+                            $item.removeClass("GOOD_HEALTHStatus").removeClass("CONCERNING_HEALTHStatus")
+                            if(data.result[item_id][0] == 1)
+                            {
+                                $item.addClass("GOOD_HEALTHStatus");
+                            }
+                            else
+                            {
+                                $item.addClass("CONCERNING_HEALTHStatus");
+                            }
+                        }
+                    } 
+                    else
+                    {
+                         $('.instance_status').each(function (index, item) {
+                            $(item).html('<span class="BAD_HEALTHStatus"><span class="showTooltip icon"></span>Bad Health</span>'); 
+                        });
+                        return; 
+                    }
+                },
+                error: function (data) {
+                 $('.instance_status').each(function (index, item) {
+                    $(item).html('<span class="BAD_HEALTHStatus"><span class="showTooltip icon"></span>Bad Health</span>'); 
+                });           
+                }
+            });                        
+        }
+
+
+       $(document).ready(function() {
+
+          $('.datatab').each(function(index,ele){
+                $(ele).dataTable({
+                    "sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
+                    "sPaginationType": "full_numbers",
+                    "iDisplayLength": 15,
+                    "aLengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+                    "bFilter": false,
+                    "bPaginate":false,
+                    "bProcessing":true,
+                    "bAutoWidth":false,
+                    "oLanguage": {
+                       "sZeroRecords": "抱歉， 没有找到",
+                       "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                       "sInfoEmpty": "没有数据",
+                       "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                       "oPaginate": {
+                       "sFirst": "首页",
+                       "sPrevious": "前一页",
+                       "sNext": "后一页",
+                       "sLast": "尾页"
+                       },
+                       "sZeroRecords": "",
+                       "sProcessing": "<img src='/static/img/loading10.gif' />"
+                    },
+                    "aaSorting": [[ 0, "asc" ]]
+                });
+          });
+
+            page_light("ser_page");
+
+           $('#modal_command').click(command);
+
+            $(".row").each(function(){
+                $(this).remove();
+            });
+
+            $(".dataTables_empty").each(function(){
+                $(this).remove();
+            });
+
+            window.setInterval(_refresh, 10000);
+            
+       });
+
+    </script>
+{% endblock %}

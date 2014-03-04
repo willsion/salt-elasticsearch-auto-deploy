@@ -1,0 +1,181 @@
+// (c) Copyright 2011 Cloudera, Inc. All rights reserved.
+
+.TimeBrowser .timeControl {
+  width: 100%;
+  background-color: whiteSmoke;
+
+  .filler {
+    height: 18px;
+  }
+}
+
+.TimeBrowser td {
+  vertical-align: top;
+  background-color: whiteSmoke;
+}
+
+.dateTimeSelection td {
+  margin-right: 8px;
+}
+
+.TimeBrowser .timeControl .instantMarkerLargeIcon {
+  position: relative;
+  z-index: 500;
+  cursor: pointer;
+}
+
+.TimeBrowser td {
+  vertical-align: top;
+}
+
+.TimeBrowser .buttonContainer {
+  padding-top: 10px;
+  padding-right: 14px;
+  height: 40px;
+  background-color: whiteSmoke;
+  a {
+    padding: 0 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    color: #222;
+    border: 1px solid whiteSmoke;
+  }
+  a:hover {
+    border-color: #aaa;
+  }
+}
+
+#cmsTimeControl_marker {
+  position: absolute;
+  height: 22px;
+  z-index: 200;
+  display: inline-block;
+}
+
+#cmsTimeControl_customDateDialog {
+  top: 355px;
+  right: 0;
+  left: inherit;
+
+  // hide the Done button.
+  .ui-datepicker-close {
+    display: none;
+  }
+}
+
+#cmsTimeControl_customDateDialog.range-dialog {
+  width: 520px;
+  .modal-body {
+    max-height: 520px;
+  }
+}
+
+#cmsTimeControl_customDateDialog.marker-dialog {
+  width: 260px;
+  .modal-body {
+    max-height: 520px;
+  }
+}
+
+#cmsTimeControl {
+  height: 40px;
+  position: relative;
+  display: inline-block;
+  .chart-title {
+    // we need to do this because
+    // the chart-title could have
+    // inline style="display: block"
+    // because of $.show();
+    display: none !important;
+  }
+  path.area {
+    fill: #53abdb !important;
+  }
+  .plot-container {
+    position: absolute;
+    display: block;
+    height: 40px;
+    top: 0;
+  }
+  .chart-container {
+    padding: 0;
+    .chart {
+      left: 0;
+    }
+    .yAxis {
+      display: none;
+    }
+  }
+  .chart-container:hover {
+    background-color: inherit;
+  }
+  // Make the time more obvious.
+  .rickshaw_graph .x_tick {
+    z-index: 200;
+    bottom: 20px;
+    color: #000;
+    height: 40px;
+    .title {
+      position: relative;
+      top: 0;
+      .opacity(100);
+    }
+  }
+
+  .yAxisLabel {
+    visibility: hidden;
+    display: none;
+  }
+
+  .rickshaw_graph .x_tick:last-child {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  // .mask covers the background
+  // .left is shown when range selection is enabled
+  // .right is shown when range selection is enabled.
+  .mask, .left, .right {
+    height: 38px;
+    display: inline-block;
+    position: absolute;
+    top: inherited !important;
+  }
+
+  .left, .right {
+    border: 1px #111 solid;
+    background-color: #ccc;
+    .opacity(70);
+    i {
+      position: absolute;
+      top: 10px;
+    }
+  }
+
+  .mask {
+    z-index: 150;
+    left: 0;
+    right: 0;
+    border-width: 1px 0 0 0;
+  }
+
+  .left {
+    z-index: 100;
+    left: 0;
+    border-width: 1px 1px 0 0;
+    i {
+      right: -5px;
+    }
+  }
+
+  .right {
+    z-index: 100;
+    border-width: 1px 0 0 1px;
+    i {
+      left: -5px;
+    }
+  }
+}

@@ -1,0 +1,85 @@
+// (c) Copyright 2012 Cloudera, Inc. All rights reserved.
+
+@healthHistoryRowHeight: 30px;
+
+.health-history-container {
+  // We want to show six rows of content at a time. The height of a row can
+  // increase if more than one health test is failing, but this provides a
+  // nice vertical size in the simple case.
+  max-height: @healthHistoryRowHeight * 6;
+  overflow-y: auto;
+  border: 1px solid @dataTableOuterBorderColor;
+}
+
+.health-history-table {
+  margin: 0;
+  width: 100%;
+
+  a {
+    cursor: pointer;
+  }
+
+  tbody {
+    tr {
+      td {
+        color: inherit;
+        line-height: @healthHistoryRowHeight;
+        vertical-align: baseline;
+
+        .expansion-link {
+          text-decoration: none;
+        }
+
+        ul.health-checks {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+
+      td:first-child {
+        // Line up the disclosure arrow with service health check table.
+        padding-left: 5px;
+      }
+    }
+
+    .goodHealth {
+        .healthStatus(@greenStatusTopBg, @greenStatusBottomBg, @state_checkmark16y);
+    }
+
+    .concerningHealth {
+        .healthStatus(@yellowStatusTopBg, @yellowStatusBottomBg, @state_warning16y);
+    }
+
+    .badHealth {
+        .healthStatus(@redStatusTopBg, @redStatusBottomBg, @state_error16y);
+    }
+
+    .nohistoryHealth,
+    .unknownHealth {
+        .healthStatus(@greyStatusTopBg, @greyStatusBottomBg, @state_unknown16y);
+    }
+
+    .disabledHealth {
+        .healthStatus(@greyStatusTopBg, @greyStatusBottomBg, @state_moon16y);
+    }
+  }
+
+  i {
+    margin-top: -1px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0 25px 10px 25px;
+
+    li {
+      padding: 4px 10px 4px 10px;
+    }
+  }
+}

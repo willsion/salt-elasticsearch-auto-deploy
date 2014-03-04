@@ -1,0 +1,353 @@
+@import "../common/mixins.less";
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+
+@resultPanelWidth: 250px;
+@resultPanelBuffer: 20px;
+
+.rickshaw_legend {
+  // Undo Rickshaw CSS' damage.
+  display: block;
+  background: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+
+  width: 100%;
+  padding: 36px 0 0 0;
+
+  ul {
+    width: 100%;
+    margin: 0;
+
+    overflow: hidden;
+
+    li.line {
+      display: inline;
+      width: 33%;
+      float: left;
+      line-height: inherit;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      clear: none;
+
+      .action {
+        color: inherit;
+        .opacity(100);
+        text-decoration: none;
+
+        &:hover {
+          opacity: inherit;
+        }
+      }
+
+      .label {
+        // Conflicting with a lot of Bootstrap's styles here.
+        // Undo Bootstrap CSS' damage.
+        padding: inherit;
+        border-radius: 0;
+        font-size: inherit;
+        font-weight: normal;
+        line-height: inherit;
+        color: inherit;
+        text-shadow: 0 0 0;
+        background-color: inherit;
+      }
+    }
+
+    .disabled {
+      a.action {
+        .opacity(0);
+      }
+    }
+  }
+}
+
+.plot-container {
+  display: inline-block;
+}
+
+.charts-container {
+  h2, h3 {
+    line-height: 24px;
+    margin: 10px 25px 0 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.form-horizontal.charts-search-form .controls {
+  margin-left: 100px;
+}
+
+.charts-container {
+  position: relative;
+  // the links above the charts,
+  // this could cover the title,
+  // so make it non-transparent.
+  .chart-toolbar {
+    background-color: #fff;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    visibility: hidden;
+    .btn-group {
+      z-index: 100;
+    }
+  }
+}
+
+.chart-container.empty {
+  .x_tick {
+    border-color: #ebebeb;
+  }
+  .chart .y_grid {
+    opacity: 0.4;
+  }
+  .empty-chart-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    top: 50%;
+    height: 20px;
+    margin-top: -33px;
+    text-align: center;
+    color: #999;
+  }
+}
+
+.chart-container {
+  position: relative;
+  padding: 5px 10px 15px 0;
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
+
+  .chart-toolbar {
+    // the links below the charts,
+    // this appears within the highlighted area
+    // so we need a transparent color.
+    background-color: inherit;
+    right: 5px;
+    bottom: -10px;
+    top: inherit;
+  }
+
+  .chart {
+    position: relative;
+  }
+
+  .yAxis {
+    position: absolute;
+  }
+
+  .yAxisLabel {
+    color: #666;
+    text-overflow: ellipsis;
+    position: relative;
+    font-size: 90%;
+    top: -10px;
+    left: 5px;
+  }
+}
+
+.charts-container:hover > div > .chart-toolbar {
+  visibility: visible;
+}
+
+.chart-container.enlargeable:hover,
+.plot-container.selectable:hover
+{
+  .borderRadius(4px);
+  background-color: @hoverColor;
+  cursor: pointer;
+  > div > .chart-toolbar {
+    visibility: visible;
+  }
+}
+
+.plot-container.selectable {
+  border: #fff 2px solid;
+}
+
+.plot-container.selectable.selected {
+  border: #ccc 2px solid;
+}
+
+#largePlotDialog {
+  width: 90%;
+  margin-left: -45%;
+  margin-top: -280px;
+
+  .modal-body {
+    max-height: 600px;
+
+    h3 {
+      margin: 20px 0 0 0;
+    }
+  }
+
+  .chart-container:hover {
+    background-color: inherit;
+    cursor: inherit;
+  }
+}
+
+.chart-legend .label {
+  background-color: inherit;
+  color: #111;
+}
+
+.row-fluid .chart-container {
+  margin-left: 0;
+}
+
+.chart-control {
+  overflow-x: hidden;
+}
+
+.chart-title {
+  overflow-x: hidden;
+  font-size: 110%;
+}
+
+h3.chart-title {
+  font-weight: normal;
+}
+
+.well.charts-result-panel {
+  padding: 10px 0 10px 0;
+  width: @resultPanelWidth;
+  float: left;
+}
+
+.charts-result-panel {
+  a {
+    text-decoration: none;
+    word-wrap: break-word;
+  }
+  
+  .chart-type-selector, .facets-container > div {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.charts-main-panel {
+  margin-left: @resultPanelWidth + @resultPanelBuffer;
+}
+
+.charts-main-panel .plot-title {
+  width: 470px;
+}
+
+.rickshaw_graph .detail .x_label {
+  z-index: 100;
+  font-weight: bold;
+  padding: 0 5px;
+  background-color: whiteSmoke;
+  .opacity(90);
+}
+
+.rickshaw_graph .x_tick {
+  bottom: -20px;
+}
+
+.detail_swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px 0 0;
+}
+
+.charts-search-form {
+
+  .help-link-container,
+  .metrics-link-container {
+    margin-left: 12px;
+  }
+
+  .radio {
+    padding-top: 4px;
+  }
+
+  textarea {
+    margin-right: 12px;
+  }
+}
+
+.metrics-list-container {
+  .other-filters {
+    margin-top: 4px;
+    margin-bottom: 12px;
+
+    label {
+      margin-right: 8px;
+    }
+  }
+
+  ol.metrics-list {
+    list-style-type: none;
+    
+    li {
+      dl {
+        margin: 6px 0 0 18px;
+
+        dt {
+          font-weight: normal;
+        }
+
+        dd {
+          margin: 0 0 10px 18px;
+
+          p {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    em {
+      font-weight: bold;
+      font-style: normal;
+    }
+  }
+}
+
+.saved-view-link-container {
+  font-weight: bold;
+  margin-right: 10px;
+  padding: 4px 14px;
+  vertical-align: middle;
+}
+
+small {
+  margin-left: 6px;
+}
+
+section.chart-section {
+  margin-top: 6px;
+  
+  &> div {
+    margin-left: 12px;
+  }
+
+  .chart-section-heading {
+    border-bottom: 1px solid #ccc;
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.stackarea-chart-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+

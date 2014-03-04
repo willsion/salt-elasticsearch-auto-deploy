@@ -1,0 +1,5 @@
+endlesscode  Mon, 13 Jan 2014 11:43:33 ERROR    ser_command Traceback (most recent call last):
+  File "E:\git-code\salt\elasticsearch\cluster.py", line 41, in add_cluster
+    accept_ma_info = __fetch_machine_info(accept_ma_list)
+UnboundLocalError: local variable 'accept_ma_list' referenced before assignment
+

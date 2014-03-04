@@ -1,0 +1,75 @@
+.Fill{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}
+.close{text-decoration:none;}
+.ellipsis{white-space:nowrap;width:100%;overflow:hidden;text-overflow:ellipsis;}
+#replication h2{padding:10px;margin:0;}
+#replication #replicationOverview{margin-left:auto;margin-right:auto;max-width:700px;}#replication #replicationOverview h2{padding-left:0;}
+#replication .return-to-details{color:#666;cursor:pointer;}
+#replication .controls{padding:0;}#replication .controls .btn-group .btn{float:right;margin-top:4px;margin-bottom:4px;margin-right:10px;}
+#sourceService{width:280px;}
+#replication .align-middle{position:absolute;top:50%;}
+#replication .state-disabled,#replication .state-expired,#replication .state-active,#replication .state-failed,#replication .state-scheduled{display:none;}#replication .state-disabled.IconSpinner24x24,#replication .state-expired.IconSpinner24x24,#replication .state-active.IconSpinner24x24,#replication .state-failed.IconSpinner24x24,#replication .state-scheduled.IconSpinner24x24,#replication .state-disabled.IconError24x24,#replication .state-expired.IconError24x24,#replication .state-active.IconError24x24,#replication .state-failed.IconError24x24,#replication .state-scheduled.IconError24x24,#replication .state-disabled.IconStopped24x24,#replication .state-expired.IconStopped24x24,#replication .state-active.IconStopped24x24,#replication .state-failed.IconStopped24x24,#replication .state-scheduled.IconStopped24x24,#replication .state-disabled.glyphicon,#replication .state-expired.glyphicon,#replication .state-active.glyphicon,#replication .state-failed.glyphicon,#replication .state-scheduled.glyphicon{margin-top:-12px;}
+#replication .disabled .summary,#replication .expired .summary{color:#aaa;}
+#replication .disabled.active .summary,#replication .expired.active .summary{color:#000;}
+#replication .expired .state-expired{display:inline-block;}
+#replication .scheduled .state-scheduled{display:inline-block;}
+#replication .failed header,#replication .failed .summary{color:#c0131b;}
+#replication .failed .state-failed{display:inline-block;}
+#replication .failed .state-scheduled{display:none;}
+#replication .disabled .state-disabled{display:inline-block;}
+#replication .disabled .state-failed{display:none;}
+#replication .disabled .state-scheduled{display:none;}
+#replication .active .state-active{display:inline-block;}
+#replication .active .state-failed{display:none;}
+#replication .active .state-scheduled{display:none;}
+#replication .active .state-disabled{display:none;}
+#replication .replication-source h3{padding-left:10px;margin:0;}
+#replication ul{list-style:none;margin:0;}
+#replication ul.replication-schedules{padding:0 10px 10px 10px;}#replication ul.replication-schedules>li{margin:-1px 0 0 0;}#replication ul.replication-schedules>li .replica{position:relative;}#replication ul.replication-schedules>li .replica .btn-group{margin-top:-15px;right:0;}
+#replication ul.replication-schedules>li .summary{padding:10px;border:1px solid #ddd;cursor:pointer;}#replication ul.replication-schedules>li .summary:hover{background-color:#f5f5f5;}
+#replication ul.replication-schedules>li .summary .replica{min-height:40px;}#replication ul.replication-schedules>li .summary .replica .target{min-height:40px;}
+#replication ul.replication-schedules>li .summary header,#replication ul.replication-schedules>li .summary section.status{margin-left:24px;padding-left:10px;}
+#replication ul.replication-schedules>li .summary header{padding-right:130px;}#replication ul.replication-schedules>li .summary header .status-paths{font-weight:bolder;}
+#replication ul.replication-schedules>li .summary header .message{margin-left:10px;}
+#replication ul.replication-schedules>li .summary section.status{font-size:90%;}#replication ul.replication-schedules>li .summary section.status>*{margin-right:10px;}
+#replication ul.replication-schedules>li .failed{color:#c0131b;}
+#replication ul.replication-schedules li:first-child{margin:0;}
+#replication .counter-value{display:inline-block;min-width:60px;}
+#replication .state-dry-run{display:none;}
+#replication .dry-run .state-dry-run{display:inline-block;}
+#replication .dry-run .state-run{display:none;}
+#replication .command-focused{border:1px solid #ddd;margin-top:-1px;margin-left:25px;}
+#replication .table-filter-list{max-width:250px;}#replication .table-filter-list .seperator:last-child{display:none;}
+#replication .error-table-name{padding-right:10px;}
+#replication .replica:last-child .replication-history{max-height:auto;}
+#replication div.replication-history{border:1px solid #ddd;border-top:0;padding:10px;}
+#replication .replication-history{display:none;padding-top:0;padding-right:0;margin-left:25px;max-height:300px;overflow-y:auto;padding-bottom:10px;}#replication .replication-history li{border:1px solid #ddd;border-top:0;padding:10px;cursor:pointer;}#replication .replication-history li:hover{background-color:#f5f5f5;}
+#replication .replication-history li .date-time{display:inline-block;min-width:160px;}
+#replication .replication-history li:last-child{border:1px solid #ddd;border-top:0;margin-bottom:1px;}
+#replication .expanded .disabled .summary,#replication .expanded .expired .summary{color:#000;}
+#replication .expanded .replication-history{display:block;}
+#replication .state-command-summary .status-message{min-width:112px;display:inline-block;}
+#replication .state-command-summary label{display:inline;margin-left:10px;margin-bottom:0;}
+#replication .state-command-details,#replication .state-command-listing,#replication .state-command-failed,#replication .state-command-not-copied,#replication .state-command-tables{display:none;min-height:400px;overflow-y:auto;}#replication .state-command-details label,#replication .state-command-listing label,#replication .state-command-failed label,#replication .state-command-not-copied label,#replication .state-command-tables label{display:inline-block;min-width:120px;text-align:right;padding-right:10px;cursor:text;}
+#replication .state-command-details a.details-link,#replication .state-command-listing a.details-link,#replication .state-command-failed a.details-link,#replication .state-command-not-copied a.details-link,#replication .state-command-tables a.details-link{text-transform:lowercase;}
+#replication .command-focused{padding:10px;color:#000;}
+#replication .command-focused .state-command-summary{display:none;}
+#replication .command-details .command-focused .state-command-details{display:block;}
+#replication .command-listing .command-focused .state-command-listing{display:block;}
+#replication .command-not-copied .command-focused .state-command-not-copied{display:block;}
+#replication .command-failed .command-focused .state-command-failed{display:block;}
+#replication .command-tables .command-focused .state-command-tables{display:block;}
+#replication .path-listing{height:325px;}#replication .path-listing span{padding:0 10px;}
+#replication .path-listing span.file-status{display:inline-block;width:75px;text-align:right;}
+#scheduleReplicationDialog{min-width:660px;}#scheduleReplicationDialog .alert{margin-bottom:10px;}
+#scheduleReplicationDialog .state-update{display:none;}
+#scheduleReplicationDialog.update .state-update{display:block;}
+#scheduleReplicationDialog.update .state-add{display:none;}
+#scheduleReplicationDialog #moreOptions i{margin-top:5px;margin-left:10px;}
+#scheduleReplicationDialog .controls label{padding-top:5px;}
+#databases{list-style:none;margin-left:0;}#databases textarea{width:312px;height:60px;}
+#databases .icon-plus{display:none;}
+#databases li{margin-bottom:15px;}#databases li input{margin-bottom:10px;}
+#databases li:last-child .icon-plus{display:inline-block;}
+#Main>.primary{padding:10px;}#Main>.primary table.table>tbody{border:1px solid #DDD;}
+.normal{font-weight:normal;}
+.clickable{cursor:pointer;}

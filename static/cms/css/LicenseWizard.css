@@ -1,0 +1,15 @@
+.clearfix{*zoom:1;}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0;}
+.clearfix:after{clear:both;}
+.hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;}
+.input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.Fill{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}
+.close{text-decoration:none;}
+table.license-table{margin-bottom:20px;}table.license-table .license-form .filename{width:140px;}
+table.license-table .success,table.license-table .error,table.license-table .note{width:200px;margin:10px auto;font-weight:normal;}
+table.license-table tbody{font-weight:bold;}table.license-table tbody td.license-feature-label{font-size:120%;}
+table.license-table tbody .time-limit td,table.license-table tbody .time-limit label{font-weight:bold;font-size:120%;}
+table.license-table thead{font-weight:bold;}table.license-table thead th{color:#111;vertical-align:top;font-size:140%;line-height:24px;}
+table.license-table thead i{display:inline-block;margin-top:5px;}
+table.license-table .license-standard,table.license-table .license-trial,table.license-table .license-enterprise{cursor:pointer;text-align:center;}
+table.license-table .active,table.license-table .active.hover{background-color:#ddeeda;}
+table.license-table .hover{background-color:#eaf3e6;}

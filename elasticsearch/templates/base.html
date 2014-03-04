@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js no-ie"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <title>elasticsearch</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/ext/jquery/css/bootstrap/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/static/cms/css/bootstrap.css?v=4.8.0">
+    <link rel="stylesheet" href="/static/cms/css/bootstrap-responsive.css?v=4.8.0">
+    <link rel="stylesheet" href="/static/cms/css/cms.css?v=4.8.0">
+    <script type="text/javascript" src="/static/ext/modernizr-1.6.min.js"></script>    
+    <script type="text/javascript" src="/static/ext/jquery/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/static/ext/require.js"></script>
+    <script type="text/javascript" src="/static/ext/Class.js"></script>    
+    <script type="text/javascript" src="/static/ext/jquery/plugins/bootstrap-2.1.1.min.js"></script>    
+    <script type="text/javascript" src="/static/ext/jquery/plugins/jquery-plugins-all-4.7.min.js"></script>
+    <script type="text/javascript" src="/static/ext/jquery/plugins/moment.min.js"></script>
+
+    <script type="text/javascript">
+
+    function commit_refresh()
+    {
+        var idarray = new Array();
+
+        $(".higstate_choose").each( function (index,element){
+            var che = $(element).attr('checked');
+            if (che)
+            {
+                var id = $(element).parent().parent().find(".higstate_id").text();
+                idarray.push(id);                
+            }
+        });
+
+        $.ajax({
+                url: "/salt/highstate/commit",
+                type: 'POST',
+                data: {id:idarray.join("&")},
+                dataType: 'JSON',
+                timeout: 50000,
+                success: function(data) {
+                    if (data.status == "ok")
+                    {
+                        $(".job_id").attr("value",data.job_id);
+                        //$(".modal-heade_title").html("结果");
+                        $("#confirmationDialog_body").html("job_id: " + data.job_id + "</br>");                        
+                    }
+                    else
+                    {
+                        $("#confirmationDialog_body").html("操作失败");
+                    }
+                },
+                error: function (data) {
+                    $("#confirmationDialog_body").html("操作失败");
+                }
+            });
+
+    }
+
+    function page_light(ele)
+    {
+        $("#main_page").find("li").each( function (index,element){
+            $(element).attr("class","");
+        });
+        $("#" + ele).attr("class","active");
+    }
+
+    function highstate()
+    {
+        $.ajax({
+                url: "/salt/highstate",
+                type: 'GET',
+                dataType: 'JSON',
+                timeout: 5000,
+                success: function(data) {
+                    if(( data.status=="ok") && ("machine" in data))
+                    {
+                        result =  data.machine;
+                        info = "";
+                        machine_info = "";
+
+                        for(var i=0;i < result.length;i++)
+                        {
+                            info = info + '<tr><td><input  type="checkbox" class="higstate_choose" value="'+ result[i][0] + '"/></td><td class="higstate_id">' + result[i][1] + '</td></tr>';
+                        }
+                        machine_info = '<table class="DataTable"><thead><tr><th></th><th>主机</th></tr></thead><tbody>' + info + '</tbody></table>';
+                        $("#confirmationDialog_body").html(machine_info); 
+                    }
+                },
+                error: function (data) {
+                    //alert(data);
+                    alert("操作出错");
+                }
+            });                
+    }
+
+    function _refresh_status()
+    {
+        var job_id = $(".job_id").attr("value");
+        if (job_id == "NULL")
+        {
+            return;
+        }
+        else
+        {
+            var job_size = $(".job_size").attr("value");
+            $.ajax({
+                    url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    timeout: 5000,
+                    success: function(data) {
+                        if(( data.status=="ok"))
+                        {
+                           $("#confirmationDialog_body").append(data.result);
+                           $(".job_size").attr("value",data.job_size);
+
+                           if (data.end_flag == 1)
+                           {
+                                $(".job_id").attr("value","NULL");
+                                $(".job_size").attr("value","0");
+                           }
+                           return;
+                        }
+                        else
+                        {
+                            $(".job_id").attr("value","NULL");
+                            $(".job_size").attr("value","0");                            
+                        }
+                    },
+                    error: function (data) {
+                        $(".job_id").attr("value","NULL");
+                        $(".job_size").attr("value","0");
+                        return;
+                    }
+                });   
+        }
+    }
+
+    window.setInterval(_refresh_status, 3000);
+    </script>
+    
+
+    {% block head %}{% endblock %}
+</head>
+
+
+
+<body class="Fill LandingPage">
+<input type='hidden' class="job_id" value="NULL" />
+<input type='hidden' class="job_size" value="0" />
+<div class="navbar navbar-inverse AppHeader CustomGradientblack">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand appName" href="/" style="text-decoration:none"><img border="0" src="/static/img/logo.png" style="height: 35px;width: 35px">ELK Manager<span class="hidden productName" >ELK managered</span></a>
+
+            
+            <ul class="nav pull-right">
+                <li>
+                    <ul class="nav nowrap systray-container">
+                        <li onclick="highstate()" style="cursor: pointer;"
+                        data-toggle="modal" 
+                        href="#confirmationDialog">
+                            <a class="link-with-counter" title="配置同步" id="highstate"
+                              >配置同步
+                                <i class="icon-play-circle icon-white"></i>
+                            </a>
+                        </li>                    
+                    
+                        <li>
+                            <a class="AjaxLink link-with-counter" title="退出登录"
+                                    href="/salt/status">退出登录
+                                <i class="icon-text-width icon-white"></i>
+                            </a>
+                        </li>
+
+                    
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav" id="main_page">    
+                <li class="active" >    
+                        <a
+                    href="/salt/index"
+                    >
+                    主页</a>    
+                </li>
+
+                <li id="ser_page">    
+                    <a
+                    href="/salt/services"
+                    >
+                    集群</a>    
+                </li>
+    
+                <li id="host_page">    
+                    <a
+                    href="/salt/host"
+                    >
+                    主机</a>    
+                </li>
+
+                <li id="template_page">
+                    <a
+                    href="/salt/template"
+                    >
+                    模板</a>    
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+<div class="modal modal-medium hide" style="display:none" id="errorDialog">
+    <div class="modal-header">
+        <h3 class="title"></h3>
+    </div>
+    <div class="modal-body"></div>
+    <div class="modal-footer">
+        <a class="closeButton btn btn-primary">Close</a>
+    </div>
+</div>
+
+    <div class="modal hide" style="display:none" id="confirmationDialog">
+    <div class="modal-header">
+        <!--3 class="modal-heade_title">请选择机器：</h3-->
+    </div>
+    <div class="modal-body" id="confirmationDialog_body">
+        <h3>没有录入数据库的索引集</h3>
+        <h3>已录入数据库，但不存在实际的索引</h3>
+    </div>
+    <div class="modal-footer">
+        <a class="confirmation-button btn btn-primary" onclick="commit_refresh()">确认</a>
+        <a class="dismissButton btn" data-dismiss="modal">取消</a>
+    </div>
+</div>
+
+
+<div>
+    {% block content %}{% endblock %}
+</div>
+
+
+
+</body>
+</html>

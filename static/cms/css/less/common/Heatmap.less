@@ -1,0 +1,161 @@
+
+.heatmap {
+  .range-0 {
+    background-color: #5BADF9;
+    border-color: #5BADF9;
+  }
+  
+  &.highlight-range-0 .range-0, .range-0:hover {
+    border-color: #999;
+  }
+  
+  .range-1 {
+    background-color: #418ED9;
+    border-color: #418ED9;
+  }
+  
+  &.highlight-range-1 .range-1, .range-1:hover {
+    border-color: #999;
+  }
+  
+  .range-2 {
+    background-color: #266CB4;
+    border-color: #266CB4;
+  }
+  
+  &.highlight-range-2 .range-2, .range-2:hover {
+    border-color: #999;
+  }
+  
+  .range-3 {
+    background-color: #0B498F;
+    border-color: #0B498F;
+  }
+  
+  &.highlight-range-3 .range-3, .range-3:hover {
+    border-color: #999;
+  }
+  
+  .range-4 {
+    background-color: #003370;
+    border-color: #003370;
+  }
+  
+  &.highlight-range-4 .range-4, .range-4:hover {
+    border-color: #999;
+  }
+  
+  .state-good {
+    background-color: #089E23;
+    border-color: #089E23;
+  }
+  
+  &.highlight-good .state-good, .state-good:hover {
+    border-color: #066E18;
+    .box-shadow(inset 1px 1px 10px rgba(0,0,0,.25));
+  }
+  
+  .state-concerning {
+    background-color: #FFC600;
+    border-color: #FFC600;
+  }
+  
+  &.highlight-concerning .state-concerning, .state-concerning:hover {
+    border-color: #CC9E00;
+    .box-shadow(inset 1px 1px 10px rgba(0,0,0,.25));
+  }
+  
+  .state-bad {
+    background-color: #C40000;
+    border-color: #C40000;
+  }
+  
+  &.highlight-bad .state-bad, .state-bad:hover {
+    border-color: #910000;
+    .box-shadow(inset 1px 1px 10px rgba(0,0,0,.25));
+  }
+  
+  .state-unknown {
+    background-color: #CCC;
+    border-color: #CCC;
+  }
+  
+  &.highlight-unknown .state-unknown, .state-unknown:hover {
+    border-color: #AAA;
+    .box-shadow(inset 1px 1px 10px rgba(0,0,0,.25));
+  }
+  
+  .state-disabled {
+    background-color: #FFF;
+    border-color: #CCC;
+  }
+  
+  &.highlight-disabled .state-disabled, .state-disabled:hover {
+    border-color: #AAA;
+    .box-shadow(inset 1px 1px 10px rgba(0,0,0,.25));
+  }
+  
+  .state-standby {
+    background-color: #266CB4;
+    border-color: #266CB4;
+  }
+  
+  &.highlight-standby .state-standby, .state-standby:hover {
+    border-color: #999;
+  }
+  
+  .legend {
+    margin-bottom: 5px;
+    span {
+    }
+    
+    label {
+      display: inline-block;
+      vertical-align: middle;
+      height: 20px;
+    }
+    
+    .sample {
+      display: inline-block;
+      height: 14px;
+      width: 15px;
+      .borderRadius(4px);
+      border-style: solid;
+      border-width: 1px;
+    }
+  }
+  
+  .cells {
+    line-height: 16px;
+    
+    .group {
+      display: inline-block;
+      margin-top: 2px;
+      margin-left: 2px;
+    }
+    
+    .cell {
+      margin-right: 3px;
+      /* margin-bottom: 3px; */
+      border-style: solid;
+      display: inline-block;
+      border-width: 3px;
+      .borderRadius(2px);
+      width: 20px;
+      height: 20px;
+      
+      &.active {
+        border-color: #033D0E;
+        .box-shadow(inset 1px 1px 10px rgba(0,0,0,.35));
+      }
+    }
+  }
+  
+  label {
+    color: #333;
+  }
+}
+
+.popover {
+  z-index: 1060;
+}

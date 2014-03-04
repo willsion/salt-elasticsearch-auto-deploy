@@ -1,0 +1,21 @@
+termcapinfo vt100 dl=5\E[M
+startup_message off
+vbell off
+autodetach on
+altscreen on
+defscrollback 10000
+defutf8 on
+nonblock on
+
+hardstatus string "SCREEN @ %H: %-n - %t"
+caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %M %d | %c |%?%F%{-b 4w}%?  %L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+
+bind 1 select 1
+bind 2 select 2
+bind 3 select 3
+bind 4 select 4
+bind 5 select 5
+bind 6 select 6
+bind 7 select 7
+bind 8 select 8
+bind 9 select 9

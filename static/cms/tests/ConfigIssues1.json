@@ -1,0 +1,128 @@
+[
+    {
+        "details": "Java Heap Size of Namenode in Bytes is recommended to be at least 1GB for every million HDFS blocks. Suggested minimum value: 1073741824", 
+        "level": "WARN", 
+        "link": "/cmf/services/3/config?q=namenode_java_heapsize", 
+        "message": "Java Heap Size of Namenode in Bytes", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "ROLE_CONFIG_GROUP", 
+            "hostName": null, 
+            "messageType": "Validation", 
+            "roleConfigGroup": "NameNode (Default)", 
+            "roleDisplayName": null, 
+            "roleType": "NAMENODE", 
+            "serviceDisplayName": "HDFS-1", 
+            "serviceName": "HDFS-1", 
+            "serviceType": "HDFS"
+        }
+    }, 
+    {
+        "details": "I/O Sort Memory Buffer (MiB) is recommended to be between 25% to 70% of the value of MapReduce Child Java Maximum Heap Size. Suggested range: [16‥39]", 
+        "level": "WARN", 
+        "link": "/cmf/services/5/config?q=io_sort_mb", 
+        "message": "I/O Sort Memory Buffer (MiB)", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "ROLE_CONFIG_GROUP", 
+            "hostName": null, 
+            "messageType": "Validation", 
+            "roleConfigGroup": "Gateway (Default)", 
+            "roleDisplayName": null, 
+            "roleType": "GATEWAY", 
+            "serviceDisplayName": "MAPREDUCE-1", 
+            "serviceName": "MAPREDUCE-1", 
+            "serviceType": "MAPREDUCE"
+        }
+    }, 
+    {
+        "details": "-1.0 less than 0.0", 
+        "level": "ERROR", 
+        "link": "/cmf/hardware/hosts/1/config?q=memory_overcommit_threshold", 
+        "message": "Memory Overcommit Validation Threshold", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "HOST", 
+            "hostName": "mikem-landing-1.ent.cloudera.com", 
+            "messageType": "Validation", 
+            "roleConfigGroup": null, 
+            "roleDisplayName": null, 
+            "roleType": null, 
+            "serviceDisplayName": null, 
+            "serviceName": null, 
+            "serviceType": null
+        }
+    }, 
+    {
+        "details": "Memory on host mikem-landing-1.ent.cloudera.com is overcommitted. The total memory allocation is 19.8 GiB bytes but there are only 4.7 GiB bytes of RAM (9.5 GiB bytes of which are reserved for the system). Visit the Resources tab on the Host page for allocation details. Reconfigure the roles on the host to lower the overall memory allocation. Note: Java maximum heap sizes are multiplied by 1.3 to approximate JVM overhead.", 
+        "level": "WARN", 
+        "link": "/cmf/hardware/hosts/1/config?q=memory_overcommit_threshold", 
+        "message": "Memory Overcommit Validation Threshold", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "HOST", 
+            "hostName": "mikem-landing-1.ent.cloudera.com", 
+            "messageType": "Validation", 
+            "roleConfigGroup": null, 
+            "roleDisplayName": null, 
+            "roleType": null, 
+            "serviceDisplayName": null, 
+            "serviceName": null, 
+            "serviceType": null
+        }
+    }, 
+    {
+        "details": "Memory on host mikem-landing-3.ent.cloudera.com is overcommitted. The total memory allocation is 11.4 GiB bytes but there are only 4.7 GiB bytes of RAM (968.2 MiB bytes of which are reserved for the system). Visit the Resources tab on the Host page for allocation details. Reconfigure the roles on the host to lower the overall memory allocation. Note: Java maximum heap sizes are multiplied by 1.3 to approximate JVM overhead.", 
+        "level": "WARN", 
+        "link": "/cmf/hardware/hosts/2/config?q=memory_overcommit_threshold", 
+        "message": "Memory Overcommit Validation Threshold", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "HOST", 
+            "hostName": "mikem-landing-3.ent.cloudera.com", 
+            "messageType": "Validation", 
+            "roleConfigGroup": null, 
+            "roleDisplayName": null, 
+            "roleType": null, 
+            "serviceDisplayName": null, 
+            "serviceName": null, 
+            "serviceType": null
+        }
+    }, 
+    {
+        "details": "Memory on host mikem-landing-2.ent.cloudera.com is overcommitted. The total memory allocation is 11.4 GiB bytes but there are only 4.7 GiB bytes of RAM (968.2 MiB bytes of which are reserved for the system). Visit the Resources tab on the Host page for allocation details. Reconfigure the roles on the host to lower the overall memory allocation. Note: Java maximum heap sizes are multiplied by 1.3 to approximate JVM overhead.", 
+        "level": "WARN", 
+        "link": "/cmf/hardware/hosts/3/config?q=memory_overcommit_threshold", 
+        "message": "Memory Overcommit Validation Threshold", 
+        "metadata": {
+            "clusterDisplayName": "Cluster 1 - CDH4", 
+            "entityType": "HOST", 
+            "hostName": "mikem-landing-2.ent.cloudera.com", 
+            "messageType": "Validation", 
+            "roleConfigGroup": null, 
+            "roleDisplayName": null, 
+            "roleType": null, 
+            "serviceDisplayName": null, 
+            "serviceName": null, 
+            "serviceType": null
+        }
+    }, 
+    {
+        "details": "Memory on host mikem-landing-4.ent.cloudera.com is overcommitted. The total memory allocation is 11.4 GiB bytes but there are only 4.7 GiB bytes of RAM (968.2 MiB bytes of which are reserved for the system). Visit the Resources tab on the Host page for allocation details. Reconfigure the roles on the host to lower the overall memory allocation. Note: Java maximum heap sizes are multiplied by 1.3 to approximate JVM overhead.", 
+        "level": "WARN", 
+        "link": "/cmf/hardware/hosts/4/config?q=memory_overcommit_threshold", 
+        "message": "Memory Overcommit Validation Threshold", 
+        "metadata": {
+            "clusterDisplayName": null, 
+            "entityType": "HOST", 
+            "hostName": "mikem-landing-4.ent.cloudera.com", 
+            "messageType": "Validation", 
+            "roleConfigGroup": null, 
+            "roleDisplayName": null, 
+            "roleType": null, 
+            "serviceDisplayName": null, 
+            "serviceName": null, 
+            "serviceType": null
+        }
+    }
+]

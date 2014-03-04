@@ -1,0 +1,1287 @@
+// Copyright (c) 2011 Cloudera, Inc. All rights reserved.
+// Y positions for sprite14x14
+@status_down14y: 0;
+@status_stopped14y: -28px;
+@status_good_health14y: -56px;
+@status_none14y: -56px;
+@status_concerning_health14y: -84px;
+@status_bad_health14y: -112px;
+@status_unknown14y: -140px;
+@status_unknown_health14y: -168px;
+@status_disabled_health14y: -196px;
+@outdated_config14y: -224px;
+
+// X positions for sprite14x14
+@status_down14x: 0;
+@status_stopped14x: 0;
+@status_good_health14x: 0;
+@status_concerning_health14x: 0;
+@status_bad_health14x: 0;
+@status_none14x: 0;
+@status_unknown14x: 0;
+@status_unknown_health14x: 0;
+@status_disabled_health14x: 0;
+@outdated_config14x: 0;
+
+// Y positions for sprite16x16
+@erase16y: -32px;
+@health_disabled16y: -64px;
+@health_green16y: -96px;
+@health_history_not_avail16y: -128px;
+@health_not_avail16y: -160px;
+@health_red16y: -192px;
+@health_yellow16y: -224px;
+@service_hbase16y: -256px;
+@service_hdfs16y: -288px;
+@service_hue16y: -320px;
+@service_mapreduce16y: -352px;
+@service_mgmt16y: -384px;
+@service_zookeeper16y: -416px;
+@state_checkmark16y: -448px;
+@state_error16y: -480px;
+@state_hourglass16y: -512px;
+@state_moon16y: -544px;
+@state_unknown16y: -576px;
+@state_warning16y: -608px;
+@state_nohistory16y: @health_history_not_avail16y;
+
+@activity_status_failed16y: -640px;
+@activity_status_killed16y: -672px;
+@activity_status_started16y: -704px;
+@activity_status_submitted16y: -736px;
+@activity_status_succeeded16y: -768px;
+@activity_status_suspended16y: -800px;
+@activity_status_warning16y: -832px;
+@activity_status_cmf_succeeded16y: -1024px;
+@activity_status_cmf_unknown16y: -1056px;
+
+@attempt_status_running16y:   @activity_status_started16y;
+@attempt_status_succeeded16y: @activity_status_succeeded16y;
+@attempt_status_failed16y:    @activity_status_failed16y;
+@attempt_status_unassigned16y:@activity_status_submitted16y;
+@attempt_status_killed16y:    @activity_status_killed16y;
+@attempt_status_commit_pending16y: @state_hourglass16y;
+@attempt_status_failed_unclean16y: @activity_status_failed16y;
+@attempt_status_killed_unclean16y: @activity_status_killed16y;
+@attempt_status_cmf_succeeded16y: @activity_status_cmf_succeeded16y;
+@attempt_status_cmf_unknown16y: @activity_status_cmf_unknown16y;
+
+@service_oozie16y: -864px;
+@service_flume16y: -1088px;
+
+@activity_oozie16y: @service_oozie16y;
+@activity_pig16y: -896px;
+@activity_hive16y: -928px;
+@activity_mr16y: @service_mapreduce16y;
+@activity_streaming16y: -960px;
+
+@maintenance_mode16y: -1120px;
+@maintenance_mode_effective16y: -1152px;
+@service_impala16y: -1184px;
+@commission_state_decommissioning16y: -1216px;
+@commission_state_decommissioned16y: -1248px;
+@commission_state_unknown16y: -1280px;
+@outdated_config16y: -1312px;
+@column_filter16y: -1344px;
+@state_na16y: -1376px;
+@state_info16y: -1408px;
+@service_sqoop16y: -1440px;
+@service_solr16y: -1472px;
+@range_small16y: -992px;
+@service_ks_indexer16y: -1504px;
+
+// X positions for sprite16x16.
+@erase16x: 0;
+@health_disabled16x: 0;
+@health_green16x: 0;
+@health_history_not_avail16x: 0;
+@health_not_avail16x: 0;
+@health_red16x: 0;
+@health_yellow16x: 0;
+@service_hbase16x: 0;
+@service_hdfs16x: 0;
+@service_hue16x: 0;
+@service_mapreduce16x: 0;
+@service_mgmt16x: 0;
+@service_zookeeper16x: 0;
+@service_flume16x: 0;
+@service_sqoop16x: 0;
+@service_solr16x: 0;
+@service_ks_indexer16x: 0;
+
+@state_checkmark16x: 0;
+@state_error16x: 0;
+@state_hourglass16x: 0;
+@state_moon16x: 0;
+@state_unknown16x: 0;
+@state_warning16x: 0;
+@state_nohistory16x: 0;
+@state_na16x: 0;
+@state_info16x: 0;
+
+@activity_status_failed16x: 0;
+@activity_status_killed16x: 0;
+@activity_status_started16x: 0;
+@activity_status_submitted16x: 0;
+@activity_status_succeeded16x: 0;
+@activity_status_suspended16x: 0;
+@activity_status_warning16x: 0;
+@activity_status_cmf_succeeded16x: 0;
+@activity_status_cmf_unknown16x: 0;
+
+@attempt_status_running16x: 0;
+@attempt_status_succeeded16x: 0;
+@attempt_status_failed16x: 0;
+@attempt_status_unassigned16x: 0;
+@attempt_status_killed16x: 0;
+@attempt_status_commit_pending16x: 0;
+@attempt_status_failed_unclean16x: 0;
+@attempt_status_killed_unclean16x: 0;
+@attempt_status_cmf_succeeded16x: 0;
+@attempt_status_cmf_unknown16x: 0;
+
+
+@service_oozie16x: 0;
+@service_impala16x: 0;
+
+@activity_oozie16x: 0;
+@activity_pig16x: 0;
+@activity_hive16x: 0;
+@activity_mr16x: 0;
+@activity_streaming16x: 0;
+@range_small16x: 0;
+
+
+@exclamation32y: -160px;
+
+@exclamation32x: 0;
+
+// positions for sprite24x24
+@checkmark24y:-96px;
+@error24y:-120px;
+@hourglass24y:-144px;
+@moon24y:-168px;
+@unknown24y:-192px;
+@notavail24y:-216px;
+@warning24y:-240px;
+@questionCircle24y: -264px;
+@question24y: -288px;
+@maintenance_mode24y: -312px;
+@maintenance_mode_effective24y: -336px;
+@commission_state_decommissioning24y: -360px;
+@commission_state_decommissioned24y: -384px;
+@commission_state_unknown24y: -408px;
+@outdated_config24y: -432px;
+@status_down24y: -480px;
+@status_stopped24y: -504px;
+@status_good_health24y: -528px;
+@status_none24y: -528px;
+@status_concerning_health24y: -552px;
+@status_bad_health24y: -576px;
+@status_unknown24y: -600px;
+@status_unknown_health24y: -624px;
+@status_disabled_health24y: -648px;
+
+@product_enterprise_x: 0;
+@product_enterprise_y: 0;
+@instantMarkerRedL_x: -0;
+@instantMarkerRedM_x: -64px;
+@instantMarkerRedS_x: -96px;
+@instantMarkerRedL_y: -64px;
+@instantMarkerRedM_y: -64px;
+@instantMarkerRedS_y: -64px;
+@instantMarkerBlueL_x: -0;
+@instantMarkerBlueM_x: -64px;
+@instantMarkerBlueS_x: -96px;
+@instantMarkerBlueL_y: -96px;
+@instantMarkerBlueM_y: -96px;
+@instantMarkerBlueS_y: -96px;
+@instantMarkerL_w: 18px;
+@instantMarkerL_h: 22px;
+@instantMarkerM_w: 18px;
+@instantMarkerM_h: 22px;
+@instantMarkerS_w: 14px;
+@instantMarkerS_h: 16px;
+@rangeHandleIcon_x: -112px;
+@rangeHandleIcon_y: -64px;
+@rangeHandleIcon_w: 9px;
+@rangeHandleIcon_h: 16px;
+
+.icon(@width, @height) {
+  .iconMixin(@width, @height);
+}
+
+.iconMixin(@width, @height) {
+  background-repeat: no-repeat;
+  text-align: center;
+  width: @width;
+  height: @height;
+  display: inline-block;
+}
+
+.sprite(@width, @height) {
+  background-image: url('/static/cms/icons/sprite@{width}x@{height}.png');
+}
+
+.Icon24x24 {
+  .icon(24px, 24px);
+}
+
+.IconErase16x16,
+.IconCheckmark16x16,
+.IconWarning16x16,
+.IconError16x16,
+.IconInfo16x16,
+.IconSpinner16x16,
+.IconSpinnerLightBlueBg16x16 {
+  .icon(16px, 16px);
+  vertical-align: text-top;
+}
+
+.IconErase16x16 {
+  .sprite(16, 16);
+  background-position: @erase16x @erase16y;
+}
+
+.IconCheckmark16x16 {
+  .sprite(16, 16);
+  background-position: @state_checkmark16x @state_checkmark16y;
+}
+.IconWarning16x16 {
+  .sprite(16, 16);
+  background-position: @state_warning16x @state_warning16y;
+}
+.IconError16x16 {
+  .sprite(16, 16);
+  background-position: @state_error16x @state_error16y;
+}
+.IconInfo16x16 {
+  .sprite(16, 16);
+  background-position: @state_info16x @state_info16y;
+}
+.IconSpinner16x16 {
+  background-image: url(/static/cms/icons/color_sm/spinner.gif);
+}
+.IconSpinnerLightBlueBg16x16 {
+  background-image: url(/static/cms/icons/color_sm/spinner.gif);
+}
+
+.IconSpinner24x24 {
+  .icon(24px, 24px);
+  vertical-align: middle;
+  background-image: url(/static/cms/icons/color/spinner.gif);
+}
+
+.IconSpinner32x32Dark {
+  .icon(32px, 32px);
+  vertical-align: middle;
+  background-image: url(/static/cms/icons/spinner32x32-dark.gif);
+}
+
+.IconGood24x24 {
+  background-color: transparent;
+  .sprite(24, 24);
+  vertical-align: text-top;
+  .iconMixin(24px, 24px);
+  background-position: 0 @checkmark24y;
+}
+
+.IconError24x24 {
+  background-color: transparent;
+  .sprite(24, 24);
+  vertical-align: text-top;
+  .iconMixin(24px, 24px);
+  background-position: 0 @error24y;
+}
+
+.IconStopped24x24 {
+  background-color: transparent;
+  .sprite(24, 24);
+  vertical-align: text-top;
+  .iconMixin(24px, 24px);
+  background-position: 0 @moon24y;
+}
+
+.IconExclamation32x32 {
+  .icon(10px, 32px);
+  .sprite(32, 32);
+  background-position: @exclamation32x @exclamation32y;
+}
+
+// @group Commands
+
+.ValidationBlock .heading .icon,
+.health .icon,
+.service .icon,
+.Icon.iCommandState {
+  .icon(16px, 16px);
+  padding: 0 2px;
+}
+
+.Icon.iCommandState.isActive,
+.isActive .Icon.iCommandState {
+  .sprite(16, 16);
+  background-image: url(/static/cms/icons/color_sm/spinner.gif);
+}
+
+.Icon.iCommandState.notActive.isSuccess,
+.notActive.isSuccess .Icon.iCommandState {
+  .sprite(16, 16);
+  background-position: @state_checkmark16x @state_checkmark16y;
+}
+
+.Icon.iCommandState.notActive.notSuccess,
+.notActive.notSuccess .Icon.iCommandState {
+  .sprite(16, 16);
+  background-position: @state_error16x @state_error16y;
+}
+
+// @end
+
+// @group Table Sorting
+
+.table-th-sort-span {
+  display: inline-block;
+  min-height: 5px;
+  width: 9px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  cursor: inherit;
+}
+
+.table-th-sort .table-th-sort-span {
+  background-image: url(/static/cms/icons/bullet_arrow_up.png);
+}
+
+.table-th-sort-rev .table-th-sort-span {
+  background-image: url(/static/cms/icons/bullet_arrow_down.png);
+}
+
+// @end
+
+.hdfsService .icon,
+.hdfsServiceIcon,
+.mapreduceService .icon,
+.mapreduceServiceIcon,
+.yarnService .icon,
+.yarnServiceIcon,
+.hbaseService .icon,
+.hbaseServiceIcon,
+.hiveService .icon,
+.hiveServiceIcon,
+.hueService .icon,
+.hueServiceIcon,
+.zookeeperService .icon,
+.zookeeperServiceIcon,
+.flumeService .icon,
+.flumeServiceIcon,
+.mgmtService .icon,
+.mgmtServiceIcon,
+.oozieService .icon,
+.oozieServiceIcon,
+.impalaService .icon,
+.impalaServiceIcon,
+.sqoopService .icon,
+.sqoopServiceIcon,
+.solrService .icon,
+.solrServiceIcon,
+.ks_indexerService .icon,
+.ks_indexerServiceIcon {
+  vertical-align: text-top;
+  .sprite(16, 16);
+  .iconMixin(16px, 16px);
+  padding: 0 2px;
+}
+
+.hdfsService .icon,
+.hdfsServiceIcon {
+  background-position: @service_hdfs16x @service_hdfs16y;
+}
+
+.yarnService .icon,
+.yarnServiceIcon,
+.mapreduceService .icon,
+.mapreduceServiceIcon {
+  background-position: @service_mapreduce16x @service_mapreduce16y;
+}
+
+.hbaseService .icon,
+.hbaseServiceIcon {
+  background-position: @service_hbase16x @service_hbase16y;
+}
+
+.hiveService .icon,
+.hiveServiceIcon {
+  background-position: @activity_hive16x @activity_hive16y;
+}
+
+.hueService .icon,
+.hueServiceIcon {
+  background-position: @service_hue16x @service_hue16y;
+}
+
+.zookeeperService .icon,
+.zookeeperServiceIcon {
+  background-position: @service_zookeeper16x @service_zookeeper16y;
+}
+
+.flumeService .icon,
+.flumeServiceIcon {
+  background-position: @service_flume16x @service_flume16y;
+}
+
+.mgmtService .icon,
+.mgmtServiceIcon {
+  background-position: @service_mgmt16x @service_mgmt16y;
+}
+
+.oozieService .icon,
+.oozieServiceIcon {
+  background-position: @service_oozie16x @service_oozie16y;
+}
+
+.impalaService .icon,
+.impalaServiceIcon {
+  background-position: @service_impala16x @service_impala16y;
+}
+
+.sqoopService .icon,
+.sqoopServiceIcon {
+  background-position: @service_sqoop16x @service_sqoop16y;
+}
+
+.solrService .icon,
+.solrServiceIcon {
+  background-position: @service_solr16x @service_solr16y;
+}
+
+.ks_indexerService .icon,
+.ks_indexerServiceIcon {
+  background-position: @service_ks_indexer16x @service_ks_indexer16y;
+}
+
+// CMONSchema.ActivityType:
+// Do not re-arrange or delete these, as the ordinals
+// are persisted to the DB.
+//
+// OOZIE,
+// PIG,
+// HIVE,
+// MR,
+// STREAMING
+.activityType0 .icon,
+.activityType1 .icon,
+.activityType2 .icon,
+.activityType3 .icon,
+.activityType4 .icon,
+.activityTypeOOZIE .icon,
+.activityTypePIG .icon,
+.activityTypeHIVE .icon,
+.activityTypeMR .icon,
+.activityTypeSTREAMING .icon {
+  vertical-align: text-top;
+  .sprite(16, 16);
+  .iconMixin(16px, 16px);
+  padding: 0 2px;
+}
+
+.activityType0 .icon,
+.activityTypeOOZIE .icon {
+  background-position: @activity_oozie16x @activity_oozie16y; 
+}
+
+.activityType1 .icon,
+.activityTypePIG .icon {
+  background-position: @activity_pig16x @activity_pig16y; 
+}
+
+.activityType2 .icon,
+.activityTypeHIVE .icon {
+  background-position: @activity_hive16x @activity_hive16y; 
+}
+
+.activityType3 .icon,
+.activityTypeMR .icon {
+  background-position: @activity_mr16x @activity_mr16y; 
+}
+
+.activityType4 .icon,
+.activityTypeSTREAMING .icon {
+  background-position: @activity_streaming16x @activity_streaming16y; 
+}
+
+/**
+ * public enum ActivityStatus {
+ *   SUBMITTED,
+ *   STARTED,
+ *   SUSPENDED,
+ *   FAILED,
+ *   KILLED,
+ *   SUCCEEDED;
+ * }
+ *
+ * public enum CMONSchema.AttemptStatus {
+ *   RUNNING,
+ *   SUCCEEDED,
+ *   FAILED,
+ *   UNASSIGNED,
+ *   KILLED,
+ *   COMMIT_PENDING,
+ *   FAILED_UNCLEAN,
+ *   KILLED_UNCLEAN;
+ * }
+ */
+ 
+.activity_status_submitted,
+.activity_status_started,
+.activity_status_suspended,
+.activity_status_failed,
+.activity_status_killed,
+.activity_status_succeeded,
+.activity_status_cmf_succeeded,
+.activity_status_cmf_unknown,
+.attempt_status_running,
+.attempt_status_succeeded,
+.attempt_status_failed,
+.attempt_status_unassigned,
+.attempt_status_killed,
+.attempt_status_commit_pending,
+.attempt_status_failed_unclean,
+.attempt_status_killed_unclean,
+.attempt_status_cmf_succeeded,
+.attempt_status_cmf_unknown {
+  .icon {
+     vertical-align: text-top;
+     .sprite(16, 16);
+     .iconMixin(16px, 16px);
+     padding: 0 2px;
+  }
+}
+
+.activity_status_submitted .icon {
+  background-position: @activity_status_submitted16x @activity_status_submitted16y;
+}
+
+.activity_status_started .icon {
+  background-position: @activity_status_started16x @activity_status_started16y;
+}
+.activity_status_suspended .icon {
+  background-position: @activity_status_suspended16x @activity_status_suspended16y;
+}
+.activity_status_failed .icon {
+  background-position: @activity_status_failed16x @activity_status_failed16y;
+}
+.activity_status_killed .icon {
+  background-position: @activity_status_killed16x @activity_status_killed16y;
+}
+.activity_status_succeeded .icon {
+  background-position: @activity_status_succeeded16x @activity_status_succeeded16y;
+}
+.activity_status_cmf_succeeded .icon {
+  background-position: @activity_status_cmf_succeeded16x @activity_status_cmf_succeeded16y;
+}
+.activity_status_cmf_unknown .icon {
+  background-position: @activity_status_cmf_unknown16x @activity_status_cmf_unknown16y;
+}
+
+.attempt_status_running .icon {
+  background-position: @attempt_status_running16x @attempt_status_running16y;
+}
+.attempt_status_succeeded .icon {
+  background-position: @attempt_status_succeeded16x @attempt_status_succeeded16y;
+}
+.attempt_status_failed .icon {
+  background-position: @attempt_status_failed16x @attempt_status_failed16y;
+}
+.attempt_status_unassigned .icon {
+  background-position: @attempt_status_unassigned16x @attempt_status_unassigned16y;
+}
+.attempt_status_killed .icon {
+  background-position: @attempt_status_killed16x @attempt_status_killed16y;
+}
+.attempt_status_commit_pending .icon {
+  background-position: @attempt_status_commit_pending16x @attempt_status_commit_pending16y;
+}
+.attempt_status_failed_unclean .icon {
+  background-position: @attempt_status_failed_unclean16x @attempt_status_failed_unclean16y;
+}
+.attempt_status_killed_unclean .icon {
+  background-position: @attempt_status_killed_unclean16x @attempt_status_killed_unclean16y;
+}
+.attempt_status_cmf_succeeded .icon {
+  background-position: @attempt_status_cmf_succeeded16x @attempt_status_cmf_succeeded16y;
+}
+.attempt_status_cmf_unknown .icon {
+  background-position: @attempt_status_cmf_unknown16x @attempt_status_cmf_unknown16y;
+}
+
+@commission-state-decommissioning16y: @commission_state_decommissioning16y;
+@commission-state-decommissioned16y: @commission_state_decommissioned16y;
+@commission-state-unknown16y: @commission_state_unknown16y;
+
+@commission-state-decommissioning24y: @commission_state_decommissioning24y;
+@commission-state-decommissioned24y: @commission_state_decommissioned24y;
+@commission-state-unknown24y: @commission_state_unknown24y;
+
+.commission-state-decommissioning & .icon,
+.commission-state-decommissioning > .icon,
+.commission-state-decommissioned & .icon,
+.commission-state-decommissioned > .icon,
+.commission-state-unknown & .icon,
+.commission-state-unknown > .icon {
+  vertical-align: text-top;
+  .sprite(16, 16);
+  .iconMixin(16px, 16px);
+  padding: 0 2px;
+}
+
+.commission-state-decommissioning > .icon {
+  background-position: 0 @commission-state-decommissioning16y;
+}
+
+.commission-state-decommissioned > .icon {
+  background-position: 0 @commission-state-decommissioned16y;
+}
+
+.commission-state-unknown > .icon {
+  background-position: 0 @commission-state-unknown16y;
+}
+
+.PageTitle {
+
+  .commission-state-decommissioning > .icon,
+  .commission-state-decommissioned > .icon,
+  .commission-state-unknown > .icon {
+    .sprite(24, 24);
+    .iconMixin(24px, 24px);
+    padding: 0 2px;
+  }
+
+  .commission-state-decommissioning > .icon {
+    background-position: 0 @commission-state-decommissioning24y;
+  }
+
+  .commission-state-decommissioned > .icon {
+    background-position: 0 @commission-state-decommissioned24y;
+  }
+
+  .commission-state-unknown > .icon {
+    background-position: 0 @commission-state-unknown24y;
+  }
+}
+
+/**
+ * All entries of HealthTestResult.Summary.tag()
+ * goodHealth
+ * concerningHealth
+ * badHealth
+ * disabledHealth
+ * nohistoryHealth
+ * unknownHealth
+ */
+.goodHealth,
+.concerningHealth,
+.badHealth,
+.disabledHealth,
+.nohistoryHealth,
+.unknownHealth {
+  .icon {
+    vertical-align: text-top;
+    .sprite(16, 16);
+    .iconMixin(16px, 16px);
+    padding: 0 2px;
+  }
+}
+
+.goodHealth {
+  color: #060;
+  .icon {
+    background-position: @state_checkmark16x @state_checkmark16y;
+  }
+}
+.concerningHealth {
+  color: #960;
+  .icon {
+    background-position: @state_warning16x @state_warning16y;
+  }
+}
+.badHealth {
+  color: #c21;
+  .icon {
+    background-position: @state_error16x @state_error16y;
+  }
+}
+.unknownHealth {
+  color: #960;
+  .icon {
+    background-position: @state_unknown16x @state_unknown16y;
+  }
+}
+.nohistoryHealth {
+  color: #333355;
+  .icon {
+    background-position: @health_history_not_avail16x @health_history_not_avail16y;
+  }
+}
+
+.disabledHealth {
+  color: #333355;
+  .icon {
+    background-position: @health_disabled16x @health_disabled16y;
+  }
+}
+
+// DisplayStatus:
+// UNKNOWN
+// NONE
+// STOPPED
+// DOWN
+// UNKNOWN_HEALTH
+// DISABLED_HEALTH
+// CONCERNING_HEALTH
+// BAD_HEALTH
+// GOOD_HEALTH
+// STARTING
+// STOPPING
+// HISTORY_NOT_AVAILABLE
+.UNKNOWNStatus,
+.unknownStatus,
+.NONEStatus,
+.noneStatus,
+.STOPPEDStatus,
+.stoppedStatus,
+.DOWNStatus,
+.downStatus,
+.UNKNOWN_HEALTHStatus,
+.unknown_healthStatus,
+.DISABLED_HEALTHStatus,
+.disabled_healthStatus,
+.CONCERNING_HEALTHStatus,
+.concerning_healthStatus,
+.BAD_HEALTHStatus,
+.bad_healthStatus,
+.GOOD_HEALTHStatus,
+.good_healthStatus {
+  .icon {
+    vertical-align: text-top;
+    .sprite(14, 14);
+    .iconMixin(14px, 14px);
+    margin-top: 2px;
+    padding: 0 3px 0 0;
+  }
+
+  .iconLarge {
+    vertical-align: middle;
+    .sprite(24, 24);
+    .iconMixin(24px, 24px);
+  }
+}
+
+// Special case this -- there is no icon.
+.HISTORY_NOT_AVAILABLEStatus,
+.history_not_availableStatus {
+  .icon,
+  .iconLarge {
+    display: none;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+// Special case these -- they are animated.
+.STARTINGStatus,
+.startingStatus,
+.STOPPINGStatus,
+.stoppingStatus {
+  .icon {
+    vertical-align: text-top;
+    .iconMixin(14px, 14px);
+    margin-top: 2px;
+    padding-right: 0 3px 0 0;
+    background-image: url('/static/cms/icons/spinner14x14.gif');
+  }
+
+  .iconLarge {
+    vertical-align: text-top;
+    .iconMixin(24px, 24px);
+    background-image: url(/static/cms/icons/color/spinner.gif);
+  }
+
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.UNKNOWNStatus,
+.unknownStatus {
+  .icon {
+    background-position: @status_unknown14x @status_unknown14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_unknown24y;
+  }
+  .summary {
+    color: @redStatusColor;
+  }
+}
+
+.NONEStatus,
+.noneStatus {
+  .icon {
+    background-position: @status_none14x @status_none14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_none24y;
+  }
+  .summary {
+    color: @redStatusColor;
+  }
+}
+
+.STOPPEDStatus,
+.stoppedStatus {
+  .icon {
+    background-position: @status_stopped14x @status_stopped14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_stopped24y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.DOWNStatus,
+.downStatus {
+  .icon {
+    background-position: @status_down14x @status_down14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_down24y;
+  }
+  .summary {
+    color: @redStatusColor;
+  }
+}
+
+.UNKNOWN_HEALTHStatus,
+.unknown_healthStatus {
+  .icon {
+    background-position: @status_unknown_health14x @status_unknown_health14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_unknown_health24y;
+  }
+  .summary {
+    color: @redStatusColor;
+  }
+}
+
+.DISABLED_HEALTHStatus,
+.disabled_healthStatus {
+  .icon {
+    background-position: @status_disabled_health14x @status_disabled_health14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_disabled_health24y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.CONCERNING_HEALTHStatus,
+.concerning_healthStatus {
+  .icon {
+    background-position: @status_concerning_health14x @status_concerning_health14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_concerning_health24y;
+  }
+  .summary {
+    color: @yellowStatusColor;
+  }
+}
+
+.BAD_HEALTHStatus,
+.bad_healthStatus {
+  .icon {
+    background-position: @status_bad_health14x @status_bad_health14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_bad_health24y;
+  }
+  .summary {
+    color: @redStatusColor;
+  }
+}
+
+.GOOD_HEALTHStatus,
+.good_healthStatus {
+  .icon {
+    background-position: @status_good_health14x @status_good_health14y;
+  }
+  .iconLarge {
+    background-position: 0 @status_good_health24y;
+  }
+  .summary {
+    color: @greenStatusColor;
+  }
+}
+
+
+// RoleState:
+// HISTORY_NOT_AVAILABLE(0),
+// UNKNOWN(1),
+// STARTING(2),
+// RUNNING(3),
+// BUSY(4),
+// STOPPING(5),
+// STOPPED(6);
+
+// ProcessState:
+// UNKNOWN,
+// STOPPED,
+// STARTING,
+// RUNNING,
+// BACKOFF,
+// STOPPING,
+// EXITED,
+// FATAL,
+
+// ServiceState:
+// UNKNOWN,
+// STARTING,
+// RUNNING,
+// STOPPING,
+// STOPPED,
+
+// CommandState:
+// UNKNOWN,
+// STARTED,
+// FINISHED,
+// CANCELLED,
+
+
+.HISTORY_NOT_AVAILABLEState,
+.history_not_availableState,
+.UNKNOWNState,
+.unknownState,
+.STARTINGState,
+.startingState,
+.NAState,
+.naState,
+.RUNNINGState,
+.runningState,
+.BUSYState,
+.busyState,
+.STOPPINGState,
+.stoppingState,
+.STOPPEDState,
+.stoppedState,
+.BACKOFFState,
+.backoffState,
+.EXITEDState,
+.exitedState,
+.FATALState,
+.fatalState,
+.OUTDATEDState,
+.outdatedState {
+  .icon {
+    vertical-align: text-top;
+    .sprite(16, 16);
+    .iconMixin(16px, 16px);
+    padding: 0 2px 0 0;
+  }
+}
+
+.NAState,
+.naState {
+  .icon {
+    background-position: @state_na16x @state_na16y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.HISTORY_NOT_AVAILABLEState,
+.history_not_availableState {
+  .icon {
+    background-position: @state_nohistory16x @state_nohistory16y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+
+}
+
+.UNKNOWNState,
+.unknownState {
+  .icon {
+    background-position: @state_unknown16x @state_unknown16y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.RUNNINGState,
+.runningState {
+  .icon {
+    background-position: @state_checkmark16x @state_checkmark16y;
+  }
+  .summary {
+    color: @greenStatusColor;
+  }
+}
+
+.STARTINGState,
+.startingState,
+.BUSYState,
+.busyState,
+.STOPPINGState,
+.stoppingState {
+  .icon {
+    background-position: 0 0;
+    background-image: url(/static/cms/icons/color_sm/spinner.gif);
+  }
+  .summary {
+    color: @khakiStatusColor;
+  }
+}
+
+.EXITEDState,
+.exitedState {
+  .icon {
+    background-position: @state_moon16x @state_moon16y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.STOPPEDState,
+.stoppedState {
+  .icon {
+    background-position: @state_moon16x @state_moon16y;
+  }
+  .summary {
+    color: @greyStatusColor;
+  }
+}
+
+.OUTDATEDState,
+.OUTDATEDState,
+.BACKOFFState,
+.backoffState {
+  .icon {
+    background-position: 0 @outdated_config16y;
+  }
+  .summary {
+    color: #yellowStatusColor;
+  }
+}
+
+.FATALState,
+.fatalState {
+  .icon {
+    background-position: @state_error16x @state_error16y;
+  }
+  .summary {
+    color: #redStatusColor;
+  }
+}
+
+.ValidationBlock {
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #ccc;
+}
+.ValidationBlock .heading {
+  color: #111;
+  display: inline-block;
+  text-decoration: none;
+  padding: 3px 8px 4px 8px;
+  font-weight: bold;
+}
+.ValidationBlock ul {
+  padding: 2px 8px 4px 12px;
+}
+.ValidationBlock .heading .icon {
+  margin: -1px 3px -3px -2px;
+}
+
+.ValidationBlock.check {
+  background-color: #e6ffdd;
+}
+.ValidationBlock.check .icon {
+  .sprite(16, 16);
+  background-position: @state_checkmark16x @state_checkmark16y;
+}
+.ValidationBlock.warning {
+  background-color: #fec;
+}
+.ValidationBlock.warning .icon {
+  .sprite(16, 16);
+  background-position: @state_warning16x @state_warning16y;
+}
+.ValidationBlock.error {
+  background-color: #fcc;
+}
+.ValidationBlock.error .icon {
+  .sprite(16, 16);
+  background-position: @state_error16x @state_error16y;
+}
+
+.FirstRunProgressRow.SUCCEEDED .progressCell .Icon24x24 {
+  background-color: transparent;
+  .sprite(24, 24);
+  background-position: 0 @checkmark24y;
+}
+
+.FirstRunProgressRow.RUNNING .progressCell .Icon24x24 {
+  background-color: transparent;
+  background-image: url(/static/cms/icons/color/spinner.gif);
+  background-position: 0 0;
+}
+
+.FirstRunProgressRow.FAILED .progressCell .Icon24x24 {
+  background-color: transparent;
+  .sprite(24, 24);
+  background-position: 0 @error24y;
+}
+
+.rangeHandleIcon,
+.label_productName_express,
+.label_productName_enterprise,
+.instantMarkerLargeIcon,
+.instantMarkerMediumIcon,
+.instantMarkerSmallIcon {
+  background-image: url('/static/cms/icons/sprite.png');
+  display: inline-block;
+  background-repeat: no-repeat;
+}
+
+.label_productName_express,
+.label_productName_enterprise {
+  background-position: @product_enterprise_x @product_enterprise_y;
+  width: 210px;
+  height: 28px;
+}
+
+.currentMode .instantMarkerLargeIcon {
+  background-position: @instantMarkerBlueL_x @instantMarkerBlueL_y;
+  width: @instantMarkerL_w;
+  height: @instantMarkerL_h;
+}
+
+.currentMode .ui-draggable-dragging .instantMarkerLargeIcon,
+.historicalMode .instantMarkerLargeIcon {
+  background-position: @instantMarkerRedL_x @instantMarkerRedL_y;
+  width: @instantMarkerL_w;
+  height: @instantMarkerL_h;
+}
+
+.currentMode .instantMarkerMediumIcon {
+  background-position: @instantMarkerBlueM_x @instantMarkerBlueM_y;
+  width: @instantMarkerM_w;
+  height: @instantMarkerM_h;
+}
+
+.currentMode .ui-draggable-dragging .instantMarkerMediumIcon,
+.historicalMode .instantMarkerMediumIcon {
+  background-position: @instantMarkerRedM_x @instantMarkerRedM_y;
+  width: @instantMarkerM_w;
+  height: @instantMarkerM_h;
+}
+
+.currentMode .instantMarkerSmallIcon {
+  .iconMixin(@instantMarkerS_w, @instantMarkerS_h);
+  margin: 0 4px;
+  background-position: @instantMarkerBlueS_x @instantMarkerBlueS_y;
+  vertical-align: middle;
+}
+
+.currentMode .ui-draggable-dragging .instantMarkerSmallIcon,
+.historicalMode .instantMarkerSmallIcon {
+  .iconMixin(@instantMarkerS_w, @instantMarkerS_h);
+  margin: 0 4px;
+  background-position: @instantMarkerRedS_x @instantMarkerRedS_y;
+  vertical-align: middle;
+}
+
+.rangeHandleIcon {
+  .iconMixin(@rangeHandleIcon_w, @rangeHandleIcon_h);
+  padding: 0;
+  background-position: @rangeHandleIcon_x @rangeHandleIcon_y;
+  vertical-align: middle;
+}
+
+.rangeMarkerSmallIcon {
+  // Y positions for sprite16x16
+  .sprite(16,16);
+  .iconMixin(16px, 16px);
+  margin: 0 4px;
+  background-position: @range_small16x @range_small16y;
+  vertical-align: middle;
+}
+
+.outdated_config24x24,
+.maintenanceIconActual24x24,
+.maintenanceIconEffective24x24 {
+  .sprite(24,24);
+  .iconMixin(24px, 24px);
+}
+
+.maintenanceIconActual24x24 {
+  background-position: 0 @maintenance_mode24y;
+}
+
+.maintenanceIconEffective24x24 {
+  background-position: 0 @maintenance_mode_effective24y;
+}
+
+.column_filter16x16,
+.outdated_config16x16,
+.maintenanceIconActual16x16,
+.maintenanceIconEffective16x16 {
+  .sprite(16,16);
+  .iconMixin(16px, 16px);
+}
+
+.outdated_config14x14 {
+  .sprite(14,14);
+  .iconMixin(14px, 14px);
+  margin-top: 1px;
+  vertical-align: text-top;
+}
+
+.maintenanceIconActual16x16 {
+  background-position: 0 @maintenance_mode16y;
+}
+
+.maintenanceIconEffective16x16 {
+  background-position: 0 @maintenance_mode_effective16y;
+}
+
+.outdated_config24x24 {
+  background-position: 0 @outdated_config24y;
+}
+
+.outdated_config14x14 {
+  background-position: @outdated_config14x @outdated_config14y;
+}
+
+.outdated_config16x16 {
+  background-position: 0 @outdated_config16y;
+}
+
+.column_filter16x16 {
+  background-position: 0 @column_filter16y;
+  cursor: pointer;
+}
+
+[class^="icon-"] {
+  cursor: pointer;
+}

@@ -1,0 +1,182 @@
+.Fill{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}
+.close{text-decoration:none;}
+.Icon24x24{background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;}
+.IconErase16x16,.IconCheckmark16x16,.IconWarning16x16,.IconError16x16,.IconInfo16x16,.IconSpinner16x16,.IconSpinnerLightBlueBg16x16{background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;vertical-align:text-top;}
+.IconErase16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -32px;}
+.IconCheckmark16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -448px;}
+.IconWarning16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -608px;}
+.IconError16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -480px;}
+.IconInfo16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -1408px;}
+.IconSpinner16x16{background-image:url(/static/cms/icons/color_sm/spinner.gif);}
+.IconSpinnerLightBlueBg16x16{background-image:url(/static/cms/icons/color_sm/spinner.gif);}
+.IconSpinner24x24{background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;vertical-align:middle;background-image:url(/static/cms/icons/color/spinner.gif);}
+.IconSpinner32x32Dark{background-repeat:no-repeat;text-align:center;width:32px;height:32px;display:inline-block;vertical-align:middle;background-image:url(/static/cms/icons/spinner32x32-dark.gif);}
+.IconGood24x24{background-color:transparent;background-image:url('/static/cms/icons/sprite24x24.png');vertical-align:text-top;background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;background-position:0 -96px;}
+.IconError24x24{background-color:transparent;background-image:url('/static/cms/icons/sprite24x24.png');vertical-align:text-top;background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;background-position:0 -120px;}
+.IconStopped24x24{background-color:transparent;background-image:url('/static/cms/icons/sprite24x24.png');vertical-align:text-top;background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;background-position:0 -168px;}
+.IconExclamation32x32{background-repeat:no-repeat;text-align:center;width:10px;height:32px;display:inline-block;background-image:url('/static/cms/icons/sprite32x32.png');background-position:0 -160px;}
+.ValidationBlock .heading .icon,.health .icon,.service .icon,.Icon.iCommandState{background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.Icon.iCommandState.isActive,.isActive .Icon.iCommandState{background-image:url('/static/cms/icons/sprite16x16.png');background-image:url(/static/cms/icons/color_sm/spinner.gif);}
+.Icon.iCommandState.notActive.isSuccess,.notActive.isSuccess .Icon.iCommandState{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -448px;}
+.Icon.iCommandState.notActive.notSuccess,.notActive.notSuccess .Icon.iCommandState{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -480px;}
+.table-th-sort-span{display:inline-block;min-height:5px;width:9px;background-repeat:no-repeat;background-position:50% 50%;cursor:inherit;}
+.table-th-sort .table-th-sort-span{background-image:url(/static/cms/icons/bullet_arrow_up.png);}
+.table-th-sort-rev .table-th-sort-span{background-image:url(/static/cms/icons/bullet_arrow_down.png);}
+.hdfsService .icon,.hdfsServiceIcon,.mapreduceService .icon,.mapreduceServiceIcon,.yarnService .icon,.yarnServiceIcon,.hbaseService .icon,.hbaseServiceIcon,.hiveService .icon,.hiveServiceIcon,.hueService .icon,.hueServiceIcon,.zookeeperService .icon,.zookeeperServiceIcon,.flumeService .icon,.flumeServiceIcon,.mgmtService .icon,.mgmtServiceIcon,.oozieService .icon,.oozieServiceIcon,.impalaService .icon,.impalaServiceIcon,.sqoopService .icon,.sqoopServiceIcon,.solrService .icon,.solrServiceIcon,.ks_indexerService .icon,.ks_indexerServiceIcon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.hdfsService .icon,.hdfsServiceIcon{background-position:0 -288px;}
+.yarnService .icon,.yarnServiceIcon,.mapreduceService .icon,.mapreduceServiceIcon{background-position:0 -352px;}
+.hbaseService .icon,.hbaseServiceIcon{background-position:0 -256px;}
+.hiveService .icon,.hiveServiceIcon{background-position:0 -928px;}
+.hueService .icon,.hueServiceIcon{background-position:0 -320px;}
+.zookeeperService .icon,.zookeeperServiceIcon{background-position:0 -416px;}
+.flumeService .icon,.flumeServiceIcon{background-position:0 -1088px;}
+.mgmtService .icon,.mgmtServiceIcon{background-position:0 -384px;}
+.oozieService .icon,.oozieServiceIcon{background-position:0 -864px;}
+.impalaService .icon,.impalaServiceIcon{background-position:0 -1184px;}
+.sqoopService .icon,.sqoopServiceIcon{background-position:0 -1440px;}
+.solrService .icon,.solrServiceIcon{background-position:0 -1472px;}
+.ks_indexerService .icon,.ks_indexerServiceIcon{background-position:0 -1504px;}
+.activityType0 .icon,.activityType1 .icon,.activityType2 .icon,.activityType3 .icon,.activityType4 .icon,.activityTypeOOZIE .icon,.activityTypePIG .icon,.activityTypeHIVE .icon,.activityTypeMR .icon,.activityTypeSTREAMING .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.activityType0 .icon,.activityTypeOOZIE .icon{background-position:0 -864px;}
+.activityType1 .icon,.activityTypePIG .icon{background-position:0 -896px;}
+.activityType2 .icon,.activityTypeHIVE .icon{background-position:0 -928px;}
+.activityType3 .icon,.activityTypeMR .icon{background-position:0 -352px;}
+.activityType4 .icon,.activityTypeSTREAMING .icon{background-position:0 -960px;}
+.activity_status_submitted .icon,.activity_status_started .icon,.activity_status_suspended .icon,.activity_status_failed .icon,.activity_status_killed .icon,.activity_status_succeeded .icon,.activity_status_cmf_succeeded .icon,.activity_status_cmf_unknown .icon,.attempt_status_running .icon,.attempt_status_succeeded .icon,.attempt_status_failed .icon,.attempt_status_unassigned .icon,.attempt_status_killed .icon,.attempt_status_commit_pending .icon,.attempt_status_failed_unclean .icon,.attempt_status_killed_unclean .icon,.attempt_status_cmf_succeeded .icon,.attempt_status_cmf_unknown .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.activity_status_submitted .icon{background-position:0 -736px;}
+.activity_status_started .icon{background-position:0 -704px;}
+.activity_status_suspended .icon{background-position:0 -800px;}
+.activity_status_failed .icon{background-position:0 -640px;}
+.activity_status_killed .icon{background-position:0 -672px;}
+.activity_status_succeeded .icon{background-position:0 -768px;}
+.activity_status_cmf_succeeded .icon{background-position:0 -1024px;}
+.activity_status_cmf_unknown .icon{background-position:0 -1056px;}
+.attempt_status_running .icon{background-position:0 -704px;}
+.attempt_status_succeeded .icon{background-position:0 -768px;}
+.attempt_status_failed .icon{background-position:0 -640px;}
+.attempt_status_unassigned .icon{background-position:0 -736px;}
+.attempt_status_killed .icon{background-position:0 -672px;}
+.attempt_status_commit_pending .icon{background-position:0 -512px;}
+.attempt_status_failed_unclean .icon{background-position:0 -640px;}
+.attempt_status_killed_unclean .icon{background-position:0 -672px;}
+.attempt_status_cmf_succeeded .icon{background-position:0 -1024px;}
+.attempt_status_cmf_unknown .icon{background-position:0 -1056px;}
+.commission-state-decommissioning .icon,.commission-state-decommissioning>.icon,.commission-state-decommissioned .icon,.commission-state-decommissioned>.icon,.commission-state-unknown .icon,.commission-state-unknown>.icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.commission-state-decommissioning>.icon{background-position:0 -1216px;}
+.commission-state-decommissioned>.icon{background-position:0 -1248px;}
+.commission-state-unknown>.icon{background-position:0 -1280px;}
+.PageTitle .commission-state-decommissioning>.icon,.PageTitle .commission-state-decommissioned>.icon,.PageTitle .commission-state-unknown>.icon{background-image:url('/static/cms/icons/sprite24x24.png');background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;padding:0 2px;}
+.PageTitle .commission-state-decommissioning>.icon{background-position:0 -360px;}
+.PageTitle .commission-state-decommissioned>.icon{background-position:0 -384px;}
+.PageTitle .commission-state-unknown>.icon{background-position:0 -408px;}
+.goodHealth .icon,.concerningHealth .icon,.badHealth .icon,.disabledHealth .icon,.nohistoryHealth .icon,.unknownHealth .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
+.goodHealth{color:#060;}.goodHealth .icon{background-position:0 -448px;}
+.concerningHealth{color:#960;}.concerningHealth .icon{background-position:0 -608px;}
+.badHealth{color:#c21;}.badHealth .icon{background-position:0 -480px;}
+.unknownHealth{color:#960;}.unknownHealth .icon{background-position:0 -576px;}
+.nohistoryHealth{color:#333355;}.nohistoryHealth .icon{background-position:0 -128px;}
+.disabledHealth{color:#333355;}.disabledHealth .icon{background-position:0 -64px;}
+.UNKNOWNStatus .icon,.unknownStatus .icon,.NONEStatus .icon,.noneStatus .icon,.STOPPEDStatus .icon,.stoppedStatus .icon,.DOWNStatus .icon,.downStatus .icon,.UNKNOWN_HEALTHStatus .icon,.unknown_healthStatus .icon,.DISABLED_HEALTHStatus .icon,.disabled_healthStatus .icon,.CONCERNING_HEALTHStatus .icon,.concerning_healthStatus .icon,.BAD_HEALTHStatus .icon,.bad_healthStatus .icon,.GOOD_HEALTHStatus .icon,.good_healthStatus .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:2px;padding:0 3px 0 0;}
+.UNKNOWNStatus .iconLarge,.unknownStatus .iconLarge,.NONEStatus .iconLarge,.noneStatus .iconLarge,.STOPPEDStatus .iconLarge,.stoppedStatus .iconLarge,.DOWNStatus .iconLarge,.downStatus .iconLarge,.UNKNOWN_HEALTHStatus .iconLarge,.unknown_healthStatus .iconLarge,.DISABLED_HEALTHStatus .iconLarge,.disabled_healthStatus .iconLarge,.CONCERNING_HEALTHStatus .iconLarge,.concerning_healthStatus .iconLarge,.BAD_HEALTHStatus .iconLarge,.bad_healthStatus .iconLarge,.GOOD_HEALTHStatus .iconLarge,.good_healthStatus .iconLarge{vertical-align:middle;background-image:url('/static/cms/icons/sprite24x24.png');background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;}
+.HISTORY_NOT_AVAILABLEStatus .icon,.history_not_availableStatus .icon,.HISTORY_NOT_AVAILABLEStatus .iconLarge,.history_not_availableStatus .iconLarge{display:none;}
+.HISTORY_NOT_AVAILABLEStatus .summary,.history_not_availableStatus .summary{color:#111111;}
+.STARTINGStatus .icon,.startingStatus .icon,.STOPPINGStatus .icon,.stoppingStatus .icon{vertical-align:text-top;background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:2px;padding-right:0 3px 0 0;background-image:url('/static/cms/icons/spinner14x14.gif');}
+.STARTINGStatus .iconLarge,.startingStatus .iconLarge,.STOPPINGStatus .iconLarge,.stoppingStatus .iconLarge{vertical-align:text-top;background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;background-image:url(/static/cms/icons/color/spinner.gif);}
+.STARTINGStatus .summary,.startingStatus .summary,.STOPPINGStatus .summary,.stoppingStatus .summary{color:#111111;}
+.UNKNOWNStatus .icon,.unknownStatus .icon{background-position:0 -140px;}
+.UNKNOWNStatus .iconLarge,.unknownStatus .iconLarge{background-position:0 -600px;}
+.UNKNOWNStatus .summary,.unknownStatus .summary{color:#cc0f0c;}
+.NONEStatus .icon,.noneStatus .icon{background-position:0 -56px;}
+.NONEStatus .iconLarge,.noneStatus .iconLarge{background-position:0 -528px;}
+.NONEStatus .summary,.noneStatus .summary{color:#cc0f0c;}
+.STOPPEDStatus .icon,.stoppedStatus .icon{background-position:0 -28px;}
+.STOPPEDStatus .iconLarge,.stoppedStatus .iconLarge{background-position:0 -504px;}
+.STOPPEDStatus .summary,.stoppedStatus .summary{color:#111111;}
+.DOWNStatus .icon,.downStatus .icon{background-position:0 0;}
+.DOWNStatus .iconLarge,.downStatus .iconLarge{background-position:0 -480px;}
+.DOWNStatus .summary,.downStatus .summary{color:#cc0f0c;}
+.UNKNOWN_HEALTHStatus .icon,.unknown_healthStatus .icon{background-position:0 -168px;}
+.UNKNOWN_HEALTHStatus .iconLarge,.unknown_healthStatus .iconLarge{background-position:0 -624px;}
+.UNKNOWN_HEALTHStatus .summary,.unknown_healthStatus .summary{color:#cc0f0c;}
+.DISABLED_HEALTHStatus .icon,.disabled_healthStatus .icon{background-position:0 -196px;}
+.DISABLED_HEALTHStatus .iconLarge,.disabled_healthStatus .iconLarge{background-position:0 -648px;}
+.DISABLED_HEALTHStatus .summary,.disabled_healthStatus .summary{color:#111111;}
+.CONCERNING_HEALTHStatus .icon,.concerning_healthStatus .icon{background-position:0 -84px;}
+.CONCERNING_HEALTHStatus .iconLarge,.concerning_healthStatus .iconLarge{background-position:0 -552px;}
+.CONCERNING_HEALTHStatus .summary,.concerning_healthStatus .summary{color:#a98b2b;}
+.BAD_HEALTHStatus .icon,.bad_healthStatus .icon{background-position:0 -112px;}
+.BAD_HEALTHStatus .iconLarge,.bad_healthStatus .iconLarge{background-position:0 -576px;}
+.BAD_HEALTHStatus .summary,.bad_healthStatus .summary{color:#cc0f0c;}
+.GOOD_HEALTHStatus .icon,.good_healthStatus .icon{background-position:0 -56px;}
+.GOOD_HEALTHStatus .iconLarge,.good_healthStatus .iconLarge{background-position:0 -528px;}
+.GOOD_HEALTHStatus .summary,.good_healthStatus .summary{color:#078c9a;}
+.HISTORY_NOT_AVAILABLEState .icon,.history_not_availableState .icon,.UNKNOWNState .icon,.unknownState .icon,.STARTINGState .icon,.startingState .icon,.NAState .icon,.naState .icon,.RUNNINGState .icon,.runningState .icon,.BUSYState .icon,.busyState .icon,.STOPPINGState .icon,.stoppingState .icon,.STOPPEDState .icon,.stoppedState .icon,.BACKOFFState .icon,.backoffState .icon,.EXITEDState .icon,.exitedState .icon,.FATALState .icon,.fatalState .icon,.OUTDATEDState .icon,.outdatedState .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px 0 0;}
+.NAState .icon,.naState .icon{background-position:0 -1376px;}
+.NAState .summary,.naState .summary{color:#111111;}
+.HISTORY_NOT_AVAILABLEState .icon,.history_not_availableState .icon{background-position:0 -128px;}
+.HISTORY_NOT_AVAILABLEState .summary,.history_not_availableState .summary{color:#111111;}
+.UNKNOWNState .icon,.unknownState .icon{background-position:0 -576px;}
+.UNKNOWNState .summary,.unknownState .summary{color:#111111;}
+.RUNNINGState .icon,.runningState .icon{background-position:0 -448px;}
+.RUNNINGState .summary,.runningState .summary{color:#078c9a;}
+.STARTINGState .icon,.startingState .icon,.BUSYState .icon,.busyState .icon,.STOPPINGState .icon,.stoppingState .icon{background-position:0 0;background-image:url(/static/cms/icons/color_sm/spinner.gif);}
+.STARTINGState .summary,.startingState .summary,.BUSYState .summary,.busyState .summary,.STOPPINGState .summary,.stoppingState .summary{color:#967c5a;}
+.EXITEDState .icon,.exitedState .icon{background-position:0 -544px;}
+.EXITEDState .summary,.exitedState .summary{color:#111111;}
+.STOPPEDState .icon,.stoppedState .icon{background-position:0 -544px;}
+.STOPPEDState .summary,.stoppedState .summary{color:#111111;}
+.OUTDATEDState .icon,.OUTDATEDState .icon,.BACKOFFState .icon,.backoffState .icon{background-position:0 -1312px;}
+.OUTDATEDState .summary,.OUTDATEDState .summary,.BACKOFFState .summary,.backoffState .summary{color:#yellowStatusColor;}
+.FATALState .icon,.fatalState .icon{background-position:0 -480px;}
+.FATALState .summary,.fatalState .summary{color:#redStatusColor;}
+.ValidationBlock{background-color:#f6f6f6;border-bottom:1px solid #ccc;}
+.ValidationBlock .heading{color:#111;display:inline-block;text-decoration:none;padding:3px 8px 4px 8px;font-weight:bold;}
+.ValidationBlock ul{padding:2px 8px 4px 12px;}
+.ValidationBlock .heading .icon{margin:-1px 3px -3px -2px;}
+.ValidationBlock.check{background-color:#e6ffdd;}
+.ValidationBlock.check .icon{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -448px;}
+.ValidationBlock.warning{background-color:#fec;}
+.ValidationBlock.warning .icon{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -608px;}
+.ValidationBlock.error{background-color:#fcc;}
+.ValidationBlock.error .icon{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -480px;}
+.FirstRunProgressRow.SUCCEEDED .progressCell .Icon24x24{background-color:transparent;background-image:url('/static/cms/icons/sprite24x24.png');background-position:0 -96px;}
+.FirstRunProgressRow.RUNNING .progressCell .Icon24x24{background-color:transparent;background-image:url(/static/cms/icons/color/spinner.gif);background-position:0 0;}
+.FirstRunProgressRow.FAILED .progressCell .Icon24x24{background-color:transparent;background-image:url('/static/cms/icons/sprite24x24.png');background-position:0 -120px;}
+.rangeHandleIcon,.label_productName_express,.label_productName_enterprise,.instantMarkerLargeIcon,.instantMarkerMediumIcon,.instantMarkerSmallIcon{background-image:url('/static/cms/icons/sprite.png');display:inline-block;background-repeat:no-repeat;}
+.label_productName_express,.label_productName_enterprise{background-position:0 0;width:210px;height:28px;}
+.currentMode .instantMarkerLargeIcon{background-position:0 -96px;width:18px;height:22px;}
+.currentMode .ui-draggable-dragging .instantMarkerLargeIcon,.historicalMode .instantMarkerLargeIcon{background-position:0 -64px;width:18px;height:22px;}
+.currentMode .instantMarkerMediumIcon{background-position:-64px -96px;width:18px;height:22px;}
+.currentMode .ui-draggable-dragging .instantMarkerMediumIcon,.historicalMode .instantMarkerMediumIcon{background-position:-64px -64px;width:18px;height:22px;}
+.currentMode .instantMarkerSmallIcon{background-repeat:no-repeat;text-align:center;width:14px;height:16px;display:inline-block;margin:0 4px;background-position:-96px -96px;vertical-align:middle;}
+.currentMode .ui-draggable-dragging .instantMarkerSmallIcon,.historicalMode .instantMarkerSmallIcon{background-repeat:no-repeat;text-align:center;width:14px;height:16px;display:inline-block;margin:0 4px;background-position:-96px -64px;vertical-align:middle;}
+.rangeHandleIcon{background-repeat:no-repeat;text-align:center;width:9px;height:16px;display:inline-block;padding:0;background-position:-112px -64px;vertical-align:middle;}
+.rangeMarkerSmallIcon{background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;margin:0 4px;background-position:0 -992px;vertical-align:middle;}
+.outdated_config24x24,.maintenanceIconActual24x24,.maintenanceIconEffective24x24{background-image:url('/static/cms/icons/sprite24x24.png');background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;}
+.maintenanceIconActual24x24{background-position:0 -312px;}
+.maintenanceIconEffective24x24{background-position:0 -336px;}
+.column_filter16x16,.outdated_config16x16,.maintenanceIconActual16x16,.maintenanceIconEffective16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;}
+.outdated_config14x14{background-image:url('/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:1px;vertical-align:text-top;}
+.maintenanceIconActual16x16{background-position:0 -1120px;}
+.maintenanceIconEffective16x16{background-position:0 -1152px;}
+.outdated_config24x24{background-position:0 -432px;}
+.outdated_config14x14{background-position:0 -224px;}
+.outdated_config16x16{background-position:0 -1312px;}
+.column_filter16x16{background-position:0 -1344px;cursor:pointer;}
+[class^="icon-"]{cursor:pointer;}
+#addPeerForm{width:220px;margin:0 auto;}#addPeerForm .ssl-warning-icon,#addPeerForm .ssl-warning{display:none;}
+#peerOverview{margin-left:auto;margin-right:auto;max-width:700px;}#peerOverview h1{padding-left:0;}
+#peers td{vertical-align:middle;}
+#peers .status .icon.state-connected,#peers .status .icon.state-unknown,#peers .status .icon.state-error{background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;}
+#peers .status .icon.state-testing{display:inline-block;width:16px;}
+#peers .status .icon.state-connected{background-position:0 -448px;}
+#peers .status .icon.state-unknown{background-position:0 -576px;}
+#peers .status .icon.state-error{background-position:0 -480px;}
+#peers .controls{padding:0;}#peers .controls .btn-group .btn{float:right;margin-top:4px;margin-bottom:4px;margin-right:10px;}
+#addPeerDialog .no-ssl .ssl-warning-icon{background-repeat:no-repeat;text-align:center;width:10px;height:32px;background-image:url('/static/cms/icons/sprite32x32.png');background-position:0 -160px;margin-left:-14px;margin-top:5px;float:left;display:inline-block;}
+#addPeerDialog .no-ssl .ssl-warning{display:inline-block;}
+#addPeerDialog .alert{margin-bottom:10px;}
+#addPeerDialog .state-update{display:none;}
+#addPeerDialog.update .state-update{display:block;}
+#addPeerDialog.update .state-add{display:none;}
+#peering h1{margin-top:20px;}#peering h1 a.btn{margin:10px;}

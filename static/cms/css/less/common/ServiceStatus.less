@@ -1,0 +1,205 @@
+// (c) Copyright 2011 Cloudera, Inc. All rights reserved.
+
+@pageTitleHeight: 40px;
+
+.PageTitle {
+  border-top: 1px solid @generalBorderColor;
+  border-bottom: 1px solid @generalBorderColor;
+
+  h1 {
+    margin: 0;
+    white-space: nowrap;
+    line-height: @pageTitleHeight;
+    i, .icon {
+      vertical-align: middle;
+      line-height: @pageTitleHeight;
+      display: inline-block;
+      padding-right: 2px;
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .btn-group {
+    margin: 0;
+  }
+
+  .time-range-selection {
+    margin: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .summary {
+    vertical-align: middle;
+    font-weight: bold;
+    text-align: left;
+    display: inline-block;
+    padding-right: 4px;
+    line-height: @pageTitleHeight;
+  }
+
+  &.GOOD_HEALTHDisplayStatus {
+    .backgroundGradientY(@greenStatusTopBg, @greenStatusBottomBg);
+  }
+
+  .goodHealth {
+    > .icon {
+      background-position: 0 @checkmark24y;
+      .iconMixin(24px, 24px);
+      .sprite(24,24);
+    }
+    > .summary {
+      color: @greenStatusColor;
+    }
+  }
+
+  &.CONCERNING_HEALTHDisplayStatus {
+    .backgroundGradientY(@yellowStatusTopBg, @yellowStatusBottomBg);
+  }
+
+  .concerningHealth {
+    > .icon {
+      background-position: 0 @warning24y;
+      .iconMixin(24px, 24px);
+      .sprite(24,24);
+    }
+    > .summary {
+      color: @yellowStatusColor;
+    }
+  }
+
+  &.DOWNDisplayStatus,
+  &.BAD_HEALTHDisplayStatus {
+    .backgroundGradientY(@redStatusTopBg, @redStatusBottomBg);
+  }
+
+  .badHealth {
+    > .icon {
+      .iconMixin(24px, 24px);
+      .sprite(24,24);
+      background-position: 0 @error24y;
+    }
+    > .summary {
+      color: @redStatusColor;
+    }
+  }
+
+  &.NONEDisplayStatus,
+  &.HISTORY_NOT_AVAILABLEDisplayStatus,
+  &.UNKNOWN_HEALTHDisplayStatus
+  &.UNKNOWNDisplayStatus {
+    .backgroundGradientY(@greyStatusTopBg, @greyStatusBottomBg);
+  }
+
+  .nohistoryHealth,
+  .unknownHealth {
+    > .icon {
+      .iconMixin(24px, 24px);
+      .sprite(24,24);
+      background-position: 0 @unknown24y;
+    }
+    > .summary {
+      color: @greyStatusColor;
+    }
+  }
+
+  &.DISABLED_HEALTHDisplayStatus,
+  &.STOPPEDDisplayStatus {
+    .backgroundGradientY(@greyStatusTopBg, @greyStatusBottomBg);
+  }
+
+  .disabledHealth,
+  .stoppedState {
+    > .icon {
+      .iconMixin(24px, 24px);
+      .sprite(24,24);
+      background-position: 0 @moon24y;
+    }
+    > .summary {
+      color: @greyStatusColor;
+    }
+  }
+
+  &.STOPPINGDisplayStatus,
+  &.STOPPINGDisplayStatus {
+    .backgroundGradientY(@khakiStatusTopBg, @khakiStatusBottomBg);
+  }
+
+  .pendingHealth,
+  .busyState,
+  .stoppingState,
+  .startingState {
+    > .icon {
+      background-position: 0 0;
+      background-image: url(/static/cms/icons/color/spinner.gif);
+    }
+    .summary {
+      color: @khakiStatusColor;
+    }
+  }
+}
+
+.LicenseStatus {
+  padding: 8px;
+  margin: 0;
+  .summary {
+    display: inline-block;
+    font-weight: bold;
+    padding-right: 20px;
+  }
+}
+
+.PageTitle {
+  .ServiceStatus a,
+  .ServiceStatus a:visited {
+    text-decoration: none;
+  }
+
+  .buttonbar {
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 0;
+    text-align: right;
+
+    .cm-badge {
+      padding: 0 2px;
+      > a, i, span {
+        line-height: @pageTitleHeight;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    .btn-group {
+      padding-left: 12px;
+    }
+  }
+
+  .buttonbar ul {
+    text-align: left;
+  }
+
+  .buttonbar .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+}
+
+.container-fluid, .container {
+  .PageTitle, .breadcrumb, .SubNav, .page-tabs {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  .PageTitle {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.redStatus {
+  color: @redStatusColor;
+}
+

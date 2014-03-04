@@ -1,0 +1,222 @@
+-- (c) Copyright 2012-2013 Cloudera, Inc. All rights reserved.
+
+CLOUDERA-MANAGER-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, enterprises
+                                                        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, DateAndTime                     FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+                                                        FROM SNMPv2-CONF
+    ;
+
+clouderaManagerMIB MODULE-IDENTITY
+    LAST-UPDATED "201305290000Z"
+    ORGANIZATION "www.cloudera.com"
+    CONTACT-INFO
+        "email: support@cloudera.com"
+    DESCRIPTION
+        "Cloudera Manager MIB Module"
+    -- Revision history
+    REVISION "201305290000Z"
+    DESCRIPTION
+        "Add event code to trap body. Add new categories for hbase and system."
+    REVISION "201210290000Z"
+    DESCRIPTION
+        "Initial version"
+    ::= { cloudera 1 }
+
+cloudera                        OBJECT IDENTIFIER ::= { enterprises 38374 }
+
+--
+-- Textual conventions
+--
+
+EventCategory   ::= TEXTUAL-CONVENTION
+    STATUS      current
+    DESCRIPTION
+        "Category of an event"
+    SYNTAX      INTEGER {
+                    unknown(0),
+                    healthEvent(1),
+                    logEvent(2),
+                    auditEvent(3),
+                    activityEvent(4),
+                    hbaseEvent(5),
+                    systemEvent(6)
+                }
+
+EventSeverity   ::= TEXTUAL-CONVENTION
+    STATUS      current
+    DESCRIPTION
+        "Severity of an event"
+    SYNTAX      INTEGER {
+                    unknown(0),
+                    informational(1),
+                    important(2),
+                    critical(3)
+                }
+
+--
+-- Notifications
+--
+
+clouderaManagerMIBNotificationPrefix OBJECT IDENTIFIER ::=
+    { clouderaManagerMIB 1 }
+clouderaManagerMIBNotifications OBJECT IDENTIFIER ::=
+    { clouderaManagerMIBNotificationPrefix 1 }
+clouderaManagerMIBNotificationObjects OBJECT IDENTIFIER ::=
+    { clouderaManagerMIBNotificationPrefix 2 }
+
+
+notifEventId         OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (1..128))
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Identifier of an event"
+    ::= { clouderaManagerMIBNotificationObjects 1 }
+
+notifEventOccurredTime       OBJECT-TYPE
+    SYNTAX      DateAndTime
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Time when the event occurred"
+    ::= { clouderaManagerMIBNotificationObjects 2 }
+
+notifEventContent    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Free-form content for the event"
+    ::= { clouderaManagerMIBNotificationObjects 3 }
+
+notifEventCategory   OBJECT-TYPE
+    SYNTAX      EventCategory
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Category of an event"
+    ::= { clouderaManagerMIBNotificationObjects 4 }
+
+notifEventSeverity   OBJECT-TYPE
+    SYNTAX      EventSeverity
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Severity of an event"
+    ::= { clouderaManagerMIBNotificationObjects 5 }
+
+notifEventUrl    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "CM Url for the event"
+    ::= { clouderaManagerMIBNotificationObjects 6 }
+
+notifEventHost    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Host to which this event applies"
+    ::= { clouderaManagerMIBNotificationObjects 7 }
+
+notifEventService    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Name of sevice to which this event applies"
+    ::= { clouderaManagerMIBNotificationObjects 8 }
+
+notifEventRole    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "Name of the role to which this event applies"
+    ::= { clouderaManagerMIBNotificationObjects 9 }
+
+notifEventCode    OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION
+        "A comma separated list of code(s), for the condition(s) represented by this event"
+    ::= { clouderaManagerMIBNotificationObjects 10 }
+
+clouderaManagerAlert NOTIFICATION-TYPE
+    OBJECTS {
+              notifEventId,
+              notifEventOccurredTime,
+              notifEventContent,
+              notifEventCategory,
+              notifEventSeverity,
+              notifEventUrl,
+              notifEventHost,
+              notifEventService,
+              notifEventRole,
+              notifEventCode
+            }
+    STATUS current
+    DESCRIPTION
+            "An event from Cloudera Manager configured to trigger an alert."
+    ::= { clouderaManagerMIBNotifications 1 }
+
+--
+-- Conformance
+--
+
+clouderaManagerMIBConformance   OBJECT IDENTIFIER ::=
+    { clouderaManagerMIB 3 }
+clouderaManagerMIBCompliances OBJECT IDENTIFIER ::=
+    { clouderaManagerMIBConformance 1 }
+clouderaManagerMIBGroups      OBJECT IDENTIFIER ::=
+    { clouderaManagerMIBConformance 2 }
+
+
+clodueraManagerMIBCompliance MODULE-COMPLIANCE
+    STATUS current
+    DESCRIPTION
+        "Compliance statement for entities which implement this MIB."
+    MODULE
+        MANDATORY-GROUPS {
+            clouderaManagerNotificationGroup,
+            clouderaManagerNotificationObjectGroup
+        }
+
+    ::= { clouderaManagerMIBCompliances 1 }
+
+
+clouderaManagerNotificationGroup NOTIFICATION-GROUP
+    NOTIFICATIONS {
+        clouderaManagerAlert
+    }
+    STATUS current
+    DESCRIPTION
+        "Notification objects."
+    ::= { clouderaManagerMIBGroups 2 }
+
+clouderaManagerNotificationObjectGroup OBJECT-GROUP
+    OBJECTS {
+        notifEventId,
+        notifEventOccurredTime,
+        notifEventContent,
+        notifEventCategory,
+        notifEventSeverity,
+        notifEventUrl,
+        notifEventHost,
+        notifEventService,
+        notifEventRole,
+        notifEventCode
+    }
+    STATUS current
+    DESCRIPTION
+        "Event objects."
+    ::= { clouderaManagerMIBGroups 3 }
+
+END

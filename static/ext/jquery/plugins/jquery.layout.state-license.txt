@@ -1,0 +1,5 @@
+/**
+ * LAYOUT STATE MANAGEMENT
+ * http://layout.jquery-dev.net/demos/js/jquery.layout.state.js
+ * @requires json2.js - http://www.json.org/json2.js
+ */

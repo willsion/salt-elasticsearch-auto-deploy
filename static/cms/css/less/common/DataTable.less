@@ -1,0 +1,374 @@
+// Copyright (c) 2011-2012 Cloudera, Inc. All rights reserved.
+.DataTable {
+  .borderBox;
+  border: 1px solid @dataTableOuterBorderColor;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+}
+
+.DataTable label {
+  text-align: left;
+  float: none;
+  margin: 0;
+}
+
+.DataTable th {
+  font-weight: bold;
+}
+
+.DataTable td,
+.DataTable th {
+  padding: 4px 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 20px;
+}
+
+.DataTable td.wrap,
+.DataTable th.wrap {
+  white-space: normal;
+}
+
+.DataTable th {
+  color: #595959;
+  padding: 4px 6px;
+  text-align: left;
+  background-color: whiteSmoke;
+  border: 1px solid @dataTableBorderColor;
+  border-width: 1px 0 1px 0;
+}
+
+.DataTable th.alignRight {
+        text-align: right;
+}
+
+.DataTable tbody tr {
+  background-color: #eee;
+  border-bottom: 1px solid @dataTableBorderColor;
+}
+
+.DataTable tbody tr:last-child {
+  border-width: 0;
+}
+
+.DataTable tbody tr.even,
+.DataTable tbody tr:nth-child(even) {
+  background-color: @dataTableEven;
+}
+
+.DataTable tbody tr.odd,
+.DataTable tbody tr:nth-child(odd) {
+  background-color: @dataTableOdd;
+}
+
+.DataTable tbody.noStripe,
+.DataTable.noStripe tbody {
+  tr.even,
+  tr:nth-child(even),
+  tr.odd,
+  tr:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+
+/**
+ * Nested table should not have alternating color
+ * and borders.
+ */
+.DataTable table,
+.DataTable table tr:nth-child(even),
+.DataTable table tr:nth-child(odd),
+.DataTable table tr,
+.DataTable table tbody td {
+  background-color: transparent;
+  border-width: 0;
+}
+
+.DataTable table,
+.DataTable table tr ,
+.DataTable table th ,
+.DataTable table td {
+  border: none;
+}
+
+.DataTable p {
+  margin: 0;
+}
+
+/* sorting_asc and sorting_desc belong to DataTables */
+.DataTable th.sorting_asc,
+.DataTable th.sorting_desc {
+  text-align: left;
+  div {
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-right: 12px;
+    margin-left: 0;
+    width: 100%;
+    &.alignRight {
+      background-position: left;
+    }
+  }
+}
+
+.DataTable th.sorting_asc {
+  .backgroundGradientY(#f5f5f5, #ddd);
+}
+
+.DataTable th.sorting_desc {
+  .backgroundGradientY(#ddd, #f5f5f5);
+}
+
+.DataTable th.sorting_asc,
+.DataTable th.sorting_desc,
+.DataTable th.sorting {
+  cursor: pointer;
+}
+
+.DataTable.defaultRight th,
+.DataTable.defaultRight td {
+  text-align: right;
+}
+
+.DataTable.defaultRight th.alignLeft,
+.DataTable.defaultRight td.alignLeft {
+  text-align: left;
+}
+
+// Reverse the sort icon for defaultRight DataTables.
+.DataTable.defaultRight th.sorting_desc,
+.DataTable.defaultRight th.sorting_asc {
+  text-align: right;
+  div {
+    margin-right: 12px;
+    margin-left: 0;
+    background-position: left;
+    &.alignLeft {
+      background-position: right;
+    }
+  }
+}
+
+.DataTable th.sorting_asc div {
+  background-image: url('/static/cms/icons/bullet_arrow_up.png');
+}
+
+.DataTable th.sorting_desc div {
+  background-image: url('/static/cms/icons/bullet_arrow_down.png');
+}
+
+.DataTable .cmfTableFilterRow {
+  th,
+  td {
+    .backgroundGradientY(#666, #888);
+  }
+}
+
+.DataTable .cmfTableFilterRow > th {
+  .backgroundGradientY(#666, #888);
+}
+
+.DataTable td p {
+  padding-top: 0;
+}
+
+.DataTable .selectable {
+  cursor: pointer;
+}
+
+.DataTable tr.selected,
+.DataTable td.selected {
+    .backgroundGradientY(#2c7fb3, @darkBlueBackground);
+    td {
+      color: #FFF;
+    }
+    color: #FFF;
+}
+
+.DataTable .sectionHead,
+.sectionHead {
+  padding: 6px 8px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 0 #333;
+  .backgroundGradientY(#666, #888);
+}
+
+.sectionHead .notSelected {
+  font-weight: normal;
+  color: #ccc;
+}
+
+.sectionHead .selected a,
+.sectionHead .selected a:visited {
+  color: #fff;
+  text-decoration: none;
+  cursor: default;
+}
+
+.sectionHead a,
+.sectionHead .notSelected a,
+.sectionHead .notSelected a:visited {
+  color: #ccc;
+}
+
+.SimplePaddedTable td,
+.SimplePaddedTable th {
+  padding: 4px 6px;
+  white-space: nowrap;
+  line-height: 20px;
+}
+
+.DataTable.wrap td,
+.DataTable.wrap th,
+.DataTable td.wrap,
+.DataTable th.wrap,
+.SimplePaddedTable.wrap td,
+.SimplePaddedTable.wrap th,
+.SimplePaddedTable td.wrap,
+.SimplePaddedTable th.wrap {
+  white-space: normal;
+}
+
+.SimplePaddedTable table,
+.SimplePaddedTable table tr:nth-child(even),
+.SimplePaddedTable table tr:nth-child(odd),
+.SimplePaddedTable table tr,
+.SimplePaddedTable table tbody td {
+  background-color: transparent;
+  border-width: 0;
+}
+
+.SimplePaddedTable table,
+.SimplePaddedTable table tr ,
+.SimplePaddedTable table th ,
+.SimplePaddedTable table td {
+  padding: 0;
+  border: none;
+}
+
+.dataTables_paginate {
+  padding: 6px 8px;
+  display: inline-block;
+}
+
+.dataTables_paginate .paginate_button_disabled {
+  padding: 4px 6px;
+  color: #ccc;
+}
+
+.dataTables_paginate .paginate_active,
+.dataTables_paginate .paginate_button {
+  padding: 4px 6px;
+}
+
+.dataTables_paginate .paginate_button {
+  cursor: pointer;
+}
+
+.dataTables_paginate .paginate_active {
+  background-color: #fff;
+  font-weight: bold;
+}
+
+.dataTables_length {
+  display: inline-block;
+}
+
+.dataTables_info {
+  display: inline-block;
+}
+
+.dataTables_wrapper .toolbar {
+  text-align: right;
+}
+
+@commandTableIndent1: 23px;	// = icon width + small gap to account for inline
+
+.commandDetailsWell {   // customized .well
+  margin-left: @commandTableIndent1;
+  margin-bottom: 0;
+  padding: 8px;
+  background-color: @gray95;
+  border: 1px solid rgba(190,190,190,.3);
+  .box-shadow(rgba(128,128,128,.1) 0px 0px 5px inset);   
+}
+
+.DataTable.command-datatable {
+  border: 0;
+  
+  .normal-weight {
+    font-weight: normal;
+  }
+  
+  thead th {
+    border: 0;
+    background-color: inherit;
+    color: black;
+  }
+  thead tr:last-child {
+    border-bottom: 1px solid black;
+  }
+  tbody {
+    tr {
+      border: 0;
+      background-color: inherit;
+    }
+    tr.command-info {
+      td {
+        padding-top: 1em;
+        padding-right: 1em;
+        vertical-align: bottom;
+      }
+      td.cmfTime {
+        max-width: 12em;
+      }
+    }
+    tr.command-result {
+      td {
+        padding-top: .5em;
+
+        .well {
+          .commandDetailsWell;
+        }
+
+        pre {
+          border:0;
+          padding: 0px;
+          font-size: 0.85em;
+          background-color: @gray95;
+        }
+      }
+    }
+  }
+
+  .Icon {
+    vertical-align: text-top;
+    margin-top: 1px; // because it looks good
+  }
+}
+
+.child-commands-container {
+
+  .borderBox;
+  margin-top: 2em;
+  padding: 0 5px;
+  border: 1px solid @gray85;
+  .borderRadius(5px);
+
+  .child-commands-title h2 {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  .child-commands-content {
+    @mrg: (@commandTableIndent1 - 5);	// subtract container padding
+    margin-left: @mrg;
+    margin-right: @mrg;
+
+    .command-datatable {
+      margin-top: 1.5em;
+    }
+  }
+}

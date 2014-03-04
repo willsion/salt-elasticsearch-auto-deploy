@@ -1,0 +1,855 @@
+// Copyright (c) 2011-2012 Cloudera, Inc. All rights reserved.
+
+@import "mixins.less";
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+@import "normal.less";
+@import "glyphicons.less";
+@import "CapacityUsage.less";
+@import "layout.less";
+@import "header.less";
+@import "jquery-ui-timepicker.less";
+@import "ServiceAdvice.less";
+@import "EventSearch.less";
+@import "select2.less";
+@import "Heatmap.less";
+@import "HealthHistory.less";
+
+// Used on the Config Screen.
+.toolbar {
+  padding: 6px 8px;
+  background-color: #EBEBEB;
+  border: 1px solid @dataTableOuterBorderColor;
+  border-width: 1px;
+  margin: 0;
+  form {
+    display: inline;
+  }
+}
+
+.toolbar + .toolbar,
+.toolbar + .dataTables_wrapper,
+.toolbar + .DataTable,
+.dataTables_wrapper + .toolbar,
+.dataTables_wrapper + .dataTables_wrapper,
+.dataTables_wrapper + .DataTable,
+.DataTable + .toolbar,
+.DataTable + .dataTables_wrapper,
+.DataTable + .DataTable {
+  border-top-width: 0px;
+  > thead > tr > th {
+    border-top-width: 0px;
+  }
+}
+
+.ExceptionReport .exceptionType {
+  font-style: italic;
+  font-weight: normal;
+  color: @alertRed;
+}
+
+.ExceptionReport .exceptionMessage {
+  font-size: @fontSizeB;
+  font-weight: bold;
+  color: @alertRed;
+}
+
+.cmfStdout {
+  width: auto;
+  overflow: auto;
+}
+
+.cmfStdout > pre {
+  overflow: auto;
+}
+
+.LogTails pre {
+  word-break: break-all;
+  background-color: white;
+  border-top-width: 0;
+  .borderRadius(0);
+}
+
+.cmfTime {
+  min-width: 14ex;
+}
+
+.description {
+  min-width: 10em;
+  max-width: 33em;
+  margin-right: auto;
+}
+
+@import "wizard.less";
+@import "form-validation.less";
+@import "CMFValue.less";
+@import "icons.less";
+@import "tables.less";
+@import "ServiceStatus.less";
+@import "HealthCheckTable.less";
+@import "SendDiagnosticsTable.less";
+@import "time-browser.less";
+@import "normal-forms.less";
+@import "normal-links.less";
+@import "normal-text.less";
+@import "widths.less";
+@import "jquery.treeTable.less";
+@import "ConfigTable.less";
+@import "LandingPage.less";
+
+html,
+html body {
+  margin: 0;
+  // allow split layout to work
+  // width: 100%;
+  // height: 100%;
+  // Disable Native Scrolling
+  // overflow: hidden;
+}
+
+@import "DataTable.less";
+@import "RulesBuilder.less";
+
+// @end   Global CMS Rules
+
+.XScroll {
+  overflow-x: auto;
+}
+
+.YScroll {
+  overflow-y: auto;
+}
+
+// Override what is in bootstrap.css
+.breadcrumb {
+  margin: 0;
+  padding: 2px 10px;
+}
+
+.lastRefreshed,
+.time-label {
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 15px;
+  color: #222;
+  text-shadow: none;
+  i {
+    .opacity(80);
+  }
+}
+
+#timeControlMini {
+  position: relative;
+  a {
+    text-decoration: none;
+    padding: 0 4px 0 4px;
+    // Making the border transparent.
+    border: 1px solid whiteSmoke;
+  }
+
+  .read-only a:hover,
+  .time-only a:hover {
+    border-color: whiteSmoke;
+    cursor: default;
+  }
+
+  a:hover {
+    border-color: #aaa;
+  }
+  .switchToCurrent {
+    color: #0088cc;
+  }
+}
+
+.breadcrumb .dropdown-calendar {
+  padding: 0 4px 0 4px;
+  cursor: pointer;
+}
+
+.dropdown-calendar .caret,
+.dropdown-calendar .dropdown-calendar-icon {
+  vertical-align: middle;
+}
+
+.modal .lastRefreshed {
+  padding-right: 4px;
+}
+
+.selectedTimeEndTimeLabel,
+.selectedTimeRangeLabel {
+  padding: 0 4px 0 0;
+}
+
+.currentMode #timeControlMini a.selectedTimeEndTimeLabel,
+.currentMode #timeControlMini a.selectedTimeRangeLabel,
+#timeControlMini a.selectedTimeEndTimeLabel,
+#timeControlMini a.selectedTimeRangeLabel {
+  color: #222;
+}
+
+.currentMode #timeControlMini .switchToCurrent {
+  visibility: hidden;
+}
+
+.historicalMode #timeControlMini a.selectedTimeEndTimeLabel,
+.historicalMode #timeControlMini a.selectedTimeRangeLabel {
+  color: #222;
+  background-color: #DFDFD0;
+  border-color: #111;
+}
+
+.selectedTimeEndTimeLabel .instantMarkerSmallIcon {
+  margin-left: 4px;
+}
+
+.selectedTimeRangeLabel .rangeMarkerSmallIcon {
+  margin-left: 4px;
+}
+
+body.historicalMode .currentModeOnly,
+body.currentMode .historicalModeOnly {
+  .opacity(50);
+}
+
+body.currentMode .historicalModeOnly .btn,
+body.currentMode .historicalModeOnly .dropdown-menu,
+body.historicalMode .currentModeOnly .btn,
+body.historicalMode .currentModeOnly .dropdown-menu {
+  display: none;
+}
+
+body.currentMode .historicalModeOnly,
+body.historicalMode .currentModeOnly {
+  .btn {
+    &.dropdown-toggle {
+      display: inherit;
+    }
+  }
+}
+
+.switchToCurrentTip {
+  display: none;
+  line-height: 24px;
+}
+
+body.historicalMode .switchToCurrentTip {
+  display: inline;
+}
+
+.LogWithContext {
+  .highlight td {
+    background-color: @mustardYellow;
+  }
+}
+
+.tip {
+  color: @greenStatusColor;
+  padding: 2px 4px 2px 2px;
+}
+
+// override bootstrap.css
+.btn-group,
+.dropdown-menu {
+  a {
+    text-decoration: none;
+  }
+}
+
+
+a.btn {
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.alignRight .dropdown-menu,
+.pull-right .dropdown-menu {
+  left: auto;
+  right: 0;
+  &:before {
+    left: auto;
+    right: 12px;
+  }
+  &:after {
+    left: auto;
+    right: 13px;
+  }
+  li {
+    text-align: left;
+  }
+}
+
+.hoverable:hover {
+  background: @hoverColor;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  max-width: 800px;
+  overflow-x: hidden;
+  
+  .nav-header {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+  li a {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+  }
+}
+
+// Commands can be quite wide. Make the dialog wider.
+.modal-wide {
+  width: 1000px;
+  margin-left: -500px;
+}
+
+.modal-medium {
+  width: 800px;
+  margin-left: -400px;
+}
+
+// on shorter screens we cannot use tall modals (with fixed positioning)
+@media screen and (min-height: 800px) {
+  .modal-tall {
+    max-height: 720px;
+    margin-top: -360px;
+    .modal-body {
+      max-height: 570px;
+    }   
+  }
+}
+
+#errorDialog {
+    z-index: 2000;
+}
+
+.modal-wider {
+  width: 90%;
+  margin-left: -45%;
+}
+
+.warn {
+  color: @yellowStatusColor;
+}
+
+.error, .fatal {
+  color: @redStatusColor;
+}
+
+.logToolbar {
+  
+  margin-top: 4px;
+  
+  & > div {
+    display: inline-block;
+  }
+  .dateRange {
+    vertical-align: top;
+    padding-top: 6px;
+    margin-left: 5px;
+  }
+}
+
+pre.message {
+  padding: 0;
+  margin: 0;
+  border-width: 0;
+  background-color: transparent;
+}
+
+.nav {
+  margin-bottom: 0;
+}
+
+.nav-header {
+  color: #111;
+}
+
+.pagination {
+  margin: 4px;
+  .active a:hover,
+  .disabled a:hover {
+    text-decoration: none;
+  }
+}
+
+.alert {
+  color: #331;
+}
+
+.alert-success {
+  color: #131;
+}
+
+.alert-info {
+  color: #113;
+}
+
+.alert-error {
+  color: #311;
+}
+
+code {
+  color: #111;
+  background: transparent;
+  padding: 0;
+}
+
+pre {
+  margin: 0;
+  word-break: normal;
+}
+
+.modal {
+  h3 {
+    line-height: @baseLineHeight * 1.5;
+    font-size: @fontSizeB;
+    font-weight: bold;
+  }
+}
+
+#installDetailsDialog {
+
+  .modal-header h3 {
+    font-size: @fontSizeB;
+  }
+
+  .modal-body h3 {
+    font-size: @fontSizeB;
+    margin: 6px -4px 4px -4px;
+    padding: 1px 4px;
+    .backgroundGradientY(@greyStatusTopBg, @greyStatusBottomBg);
+    border-top: 1px solid @generalBorderColor;
+    font-family: @baseFontFamily;
+  }
+
+  .modal-body h3.error {
+    .backgroundGradientY(@redStatusTopBg, @redStatusBottomBg);
+    color: @redStatusColor;
+  }
+
+  .failedState, .currentState {
+    cursor: pointer;
+  }
+
+  .failedState span,
+  .currentState span {
+    text-decoration: underline;
+  }
+
+  .modal-body .detailsContent {
+    border: 1px solid @generalBorderColor;
+    padding: 4px;
+    font-family: Courier, Verdana, Arial, monospace;
+    overflow-x: hidden;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.modal-body {
+  clear: both;
+}
+
+// bootstrap annoyingly puts an 18px
+// margin at the bottom of form elements
+form {
+  margin-bottom: 0;
+}
+
+#searchFilterContainer {
+  > div:first-child {
+    min-width: 480px;
+  }
+}
+
+#serviceStatusHealthTablePopup {
+  ol.orderedHealthChecks {
+    display: inline;
+    margin-left: 4px;
+    // NOTE: Note this will not place commas between elements in IE, but 
+    // will degrade nicely.
+    li {
+      display: inline;
+
+      &:after {
+        content: ',';
+      }
+
+      &:last-child:after {
+        content: '';
+      }
+    }
+
+    .currentFilter {
+      font-weight: bold;
+    }
+
+    a, a:visited {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.bar-table {
+  width: 100%;
+
+  td.legend {
+    padding: 0 10px;
+  }
+
+  td.bar {
+    .progress, .CapacityUsage, .CapacityUsage .bar {
+      .borderRadius(0);
+    }
+  
+    a, a:visited {
+      text-decoration: none;
+    }
+  
+    a:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+/**
+ * Renders the page level tabs.
+ * There is bug in bootstrap that
+ * the selected tab's icon does not show up.
+ */
+.page-tabs {
+  background-color: #e9e9e9;
+  padding-top: 4px;
+  padding-left: 10px;
+  .nav-tabs > .active > a > [class^="icon-"] {
+    background-image: url("../img/glyphicons-halflings.png");
+  }
+}
+
+.nav-tabs > li {
+  > a {
+    font-weight: bold;
+  }
+  > a, > a:visited, > a:hover {
+    text-decoration: none;
+  }
+}
+
+#taskTrackerTableContainer {
+  padding-top: 10px;
+}
+
+@heatmapCellSize: 50px;
+@heatmapCellRowOffset: -25px;
+@heatmapCellColumnOffset: -25px;
+@rowLabelWidth: 80px;
+
+.task-distribution {
+  margin-top: 10px;
+  padding: 10px;
+
+  span.row-label {
+    position: relative;
+    top: @heatmapCellRowOffset;
+    display: inline-block;
+    width: @rowLabelWidth;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  span.column-label {
+    position: relative;
+    left: @heatmapCellColumnOffset;
+    display: inline-block;
+  }
+
+  td.value {
+    border: 1px solid @dataTableBorderColor;
+    span {
+      display: inline-block;
+    }
+  }
+  td.value:hover {
+    background-color: @hoverColor !important;
+    cursor: pointer;
+  }
+
+  td {
+    text-align: center;
+    span {
+      line-height: @heatmapCellSize;
+      width: @heatmapCellSize;
+    }
+  }
+}
+
+ol.ordered-link-list {
+  display: inline;
+  margin-left: 4px;
+  // NOTE: Note this will not place commas between elements in IE, but 
+  // will degrade nicely.
+  & > li {
+    display: inline;
+
+    &:after {
+      content: ',';
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+  }  
+}
+
+.time-range-selection {
+  display: inline-block;
+  margin: 0 15px;
+  li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 3px;
+  }
+}
+
+.cm-nav-list-well {
+  padding: 8px 0;
+}
+
+.cm-nav-list {
+  a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.actionables {
+  .level-1 {
+    padding-top: 10px;
+    > span {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  .level-2 {
+    white-space: nowrap;
+    max-width: 1000px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+    padding-left: 15px;
+  }
+}
+
+#clusterUpgradePopup {
+  width: 1000px;
+  margin-left: -500px;
+
+  .parcelList {
+    height: 55px;
+    overflow: auto;
+    width: 300px;
+    border: 1px solid gray;
+    padding: 5px 7px;
+  }
+}
+
+.license-form {
+  .filename {
+    cursor: pointer;
+  }
+  .license-input, .success, .error {
+    margin: 10px auto;
+  }
+}
+
+.field-label {
+  width: 1%;
+  white-space: nowrap;
+  color: #595959;
+}
+
+.field-value {
+  white-space: wrap;
+  font-weight: bold;
+}
+
+.DataTable.wrap td.field-label {
+  white-space: nowrap;
+}
+
+h2 .search-box {
+  position: relative;
+  margin-left: 20px;
+  top: -6px;
+}
+
+h2 small {
+  font-size: 80%;
+}
+
+.showTooltip {
+  cursor: pointer;
+}
+
+/**
+ * This cannot be further scoped because
+ * the dropdown menu does not live within the container
+ * of the typeahead input field.
+ */
+.typeahead.dropdown-menu {
+  max-width: 800px;
+  overflow-x: hidden;
+  a {
+    text-decoration: none;
+  }
+}
+
+.tooltip {
+  font-size: @fontSizeC;
+  z-index: 3000;
+}
+
+.nav-header {
+  text-transform: none;
+  font-size: @fontSizeC;
+}
+
+.label-important {
+  background-color: #FE0A00;
+}
+
+table.progressBarRow {
+  td {
+    margin: 0;
+    width: 1%;
+    padding: 0px 5px;
+    vertical-align: middle;
+  }
+
+  .left {
+    padding-left: 0px;
+  }
+
+  .right {
+    padding-right: 0px;
+  }
+
+  #scanResultSummary,
+  .progressContainer {
+    width: auto;
+  }
+}
+
+.FirstRunProgressRow.RUNNING .stepLabel {
+  font-weight: bold;
+}
+
+ul.counter-icon-list {
+
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0;
+
+  li {
+    display: inline;
+    line-height: 20px;
+
+    a.link-with-counter {
+      text-decoration: none;
+      margin-left: 10px;
+      span.counter.label {
+        .opacity(80);
+        font-weight: bold;
+        position: relative;
+        left: -2px;
+      }
+    }
+  }
+}
+
+ul.issues-list {
+  margin-left: 0;
+  list-style-type: none;
+
+  li {
+    white-space: wrap;
+    .details {
+      margin-left: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+#allHealthIssuesPanel,
+#allConfigIssuesPanel {
+  ul.issues-list {
+    li {
+      padding-left: 20px;
+    }
+  }
+}
+
+.query-feedback {
+  text-shadow: none;
+  h4 {
+    a {
+      color: @black;
+      text-decoration: none;
+    }
+
+    .collapse-link {}
+
+    .expand-link {
+      display: none;
+    }
+  }
+
+  ul {
+    margin-top: 6px;
+
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+.query-errors {
+  display: none;
+}
+
+.query-warnings {
+  display: none;
+}
+
+.global-spinner-well.well {
+  background-color: #111;
+  color: white;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: -24px;
+  .opacity(100);
+  i {
+    margin: 8px;
+  }
+}
+
+.no-parcels-message {
+  display: inline-block;
+  width: 300px;
+  white-space: normal;
+}

@@ -1,0 +1,496 @@
+[ {
+  "link" : "/cmf/services/2/config",
+  "message" : "Recommended config combination: {Hadoop Secure Authentication=kerberos, Hadoop Secure Authorization=true}",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "SERVICE",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : null,
+    "roleDisplayName" : null,
+    "roleType" : null,
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : null,
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : null,
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : null,
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : null,
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config?q=dfs_client_use_trash",
+  "message" : "Use Trash - HDFS Trash is disabled. Deleted files will be unrecoverable.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "Gateway (Base)",
+    "roleDisplayName" : null,
+    "roleType" : "GATEWAY",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/config?q=namenode_java_heapsize",
+  "message" : "Java Heap Size of Namenode in Bytes. - Java Heap Size of Namenode in Bytes. is recommended to be at least 1GB for every million HDFS blocks. Suggested minimum value: 1073741824",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE_CONFIG_GROUP",
+    "hostName" : null,
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "NameNode (Base)",
+    "roleDisplayName" : null,
+    "roleType" : "NAMENODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/9/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "SecondaryNameNode (Base)",
+    "roleDisplayName" : "secondarynamenode (host00000)",
+    "roleType" : "SECONDARYNAMENODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/9/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "SecondaryNameNode (Base)",
+    "roleDisplayName" : "secondarynamenode (host00000)",
+    "roleType" : "SECONDARYNAMENODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/12/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00004",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00004)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/12/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00004",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00004)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/12/status",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00004",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00004)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/12/status",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00004",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00004)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/13/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "ERROR",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00002",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00002)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/13/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00002",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00002)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/13/status",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00002",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00002)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/13/status",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00002",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00002)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/10/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "NameNode (Base)",
+    "roleDisplayName" : "namenode (host00000)",
+    "roleType" : "NAMENODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/10/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "NameNode (Base)",
+    "roleDisplayName" : "namenode (host00000)",
+    "roleType" : "NAMENODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/11/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "Balancer (Base)",
+    "roleDisplayName" : "balancer (host00000)",
+    "roleType" : "BALANCER",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/11/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "Balancer (Base)",
+    "roleDisplayName" : "balancer (host00000)",
+    "roleType" : "BALANCER",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/15/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00003",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00003)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/15/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00003",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00003)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/15/status",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00003",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00003)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/15/status",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00003",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00003)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/14/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00001",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00001)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/14/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00001",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00001)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/14/status",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00001",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00001)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/14/status",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00001",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (Base)",
+    "roleDisplayName" : "datanode (host00001)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/16/status",
+  "message" : "Role is missing Kerberos keytab.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : "datanode (host00000)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/16/status",
+  "message" : "No host heartbeat; CDH versions cannot be verified.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : "datanode (host00000)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/16/status",
+  "message" : "DataNode Transceiver Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : "datanode (host00000)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+}, {
+  "link" : "/cmf/services/2/instances/16/status",
+  "message" : "DataNode HTTP Web UI Port must be < 1024 if kerberos security is on.",
+  "level" : "WARN",
+  "metadata" : {
+    "clusterDisplayName" : "Cluster 1 - CDH4",
+    "entityType" : "ROLE",
+    "hostName" : "host00000",
+    "messageType" : "VALIDATION",
+    "roleConfigGroup" : "DataNode (1)",
+    "roleDisplayName" : "datanode (host00000)",
+    "roleType" : "DATANODE",
+    "serviceDisplayName" : "hdfs1",
+    "serviceType" : "HDFS"
+  }
+} ]

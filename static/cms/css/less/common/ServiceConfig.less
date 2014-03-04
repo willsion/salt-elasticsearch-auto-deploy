@@ -1,0 +1,108 @@
+// Copyright (c) 2012 Cloudera, Inc. All rights reserved.
+
+@import "mixins.less";
+@import "CMFValue.less";
+
+#cmfConfigSearch {
+  padding: 10px 30px 10px 10px;
+  border-bottom: 1px solid @generalBorderColor;
+  background-color: @dataTableOdd;
+}
+
+#cmfConfigCategoryFilter {
+  padding: 10px;
+}
+
+#cmfConfigNavTree {
+  padding: 0;
+  min-width: 200px;
+  background-color: @dataTableOdd;
+  cursor: pointer;
+}
+
+#cmfConfigNavTree a,
+#cmfConfigNavTree a:hover,
+#cmfConfigNavTree a:visited,
+#cmfConfigNavTree a:focus {
+  text-decoration: none;
+}
+
+#cmfConfigNavTree table tr td {
+  // This is a really dumb hack to get treeTable to show expansion
+  // icons properly.
+  //
+  // http://stackoverflow.com/questions/1758066/jquery-treetable-root-node-expander-image-is-hidden-in-ie6-why
+  //
+  // Note that this is a problem in Chrome as well, not just (yuck) IE6.
+  padding-left: 19px;
+}
+
+#cmfConfigLeftBarContent {
+  // added so that horizontal scrolling
+  // doesn't appear when the screen
+  // size is small.
+  overflow-x: hidden;
+}
+
+#cmfConfigLeftBar {
+  // border-right: 1px solid @generalBorderColor;
+  // emulates accordion
+  padding: 0;
+  .toolbar {
+    font-weight: bold;
+    a {
+      .standardTextColor();
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+#cmfConfigMain {
+  padding: 0;
+}
+
+#cmfConfigMain a.filterLink {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#cmfConfigMainContent {
+  // border-left: 1px solid @generalBorderColor;
+}
+
+.hover {
+  background: #f5f6c2;
+  cursor: pointer;
+}
+
+.cmfConfig {
+  margin: 0;
+  .alert {
+    margin: 0;
+    .borderRadius(0);
+  }
+}
+
+.overrideLink {
+  visibility: hidden;
+}
+
+.hover .overrideLink {
+  visibility: visible;
+}
+
+div.override {
+  margin-top: 20px;
+}
+
+ul.override li {
+  margin-left: 16px;
+}
+
+.req {
+  font-weight: bold;
+  color: red;
+}

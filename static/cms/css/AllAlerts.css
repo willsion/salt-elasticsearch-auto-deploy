@@ -1,0 +1,6 @@
+#ConfigGroupTable,#AlertsTable{height:100%;width:100%;}#ConfigGroupTable .narrow,#AlertsTable .narrow{width:250px;}
+#ConfigGroupTable table.noZebra tr:nth-child(odd),#AlertsTable table.noZebra tr:nth-child(odd){background:#fff;}
+#ConfigGroupTable .notLeftmost,#AlertsTable .notLeftmost{border-left:1px solid #ccc;}
+#ConfigGroupTable .selector,#AlertsTable .selector,#ConfigGroupTable .drillDown,#AlertsTable .drillDown{cursor:pointer;}
+.global-alert-settings .recipient{padding-right:6px;}
+.global-alert-settings a{text-decoration:none;}

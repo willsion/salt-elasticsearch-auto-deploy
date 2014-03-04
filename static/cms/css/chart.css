@@ -1,0 +1,358 @@
+.rickshaw_graph .detail {
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.1);
+	bottom: 0;
+	width: 1px;
+	transition: opacity 0.25s linear;
+	-moz-transition: opacity 0.25s linear;
+	-o-transition: opacity 0.25s linear;
+	-webkit-transition: opacity 0.25s linear;
+}
+.rickshaw_graph .detail.inactive {
+	opacity: 0;
+}
+.rickshaw_graph .detail .item.active {
+	opacity: 1;
+}
+.rickshaw_graph .detail .x_label {
+	font-family: Arial, sans-serif;
+	border-radius: 3px;
+	padding: 6px;
+	opacity: 0.5;
+	border: 1px solid #e0e0e0;
+	font-size: 12px;
+	position: absolute;
+	background: white;
+	white-space: nowrap;
+}
+.rickshaw_graph .detail .item {
+	position: absolute;
+	z-index: 2;
+	border-radius: 3px;
+	padding: 0.25em;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+	opacity: 0;
+	background: rgba(0, 0, 0, 0.4);
+	color: white;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	margin-left: 1em;
+	margin-top: -1em;
+	white-space: nowrap;
+}
+.rickshaw_graph .detail .item.active {
+	opacity: 1;
+	background: rgba(0, 0, 0, 0.8);
+}
+.rickshaw_graph .detail .item:before {
+	content: "\25c2";
+	position: absolute;
+	left: -0.5em;
+	color: rgba(0, 0, 0, 0.7);
+	width: 0;
+}
+.rickshaw_graph .detail .dot {
+	width: 4px;
+	height: 4px;
+	margin-left: -4px;
+	margin-top: -3px;
+	border-radius: 5px;
+	position: absolute;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+	background: white;
+	border-width: 2px;
+	border-style: solid;
+	display: none;
+	background-clip: padding-box;
+}
+.rickshaw_graph .detail .dot.active {
+	display: block;
+}
+/* graph */
+
+.rickshaw_graph {
+	position: relative;
+}
+.rickshaw_graph svg {
+	display: block;	
+	overflow: hidden;
+}
+
+/* ticks */
+
+.rickshaw_graph .x_tick {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 0px;
+	border-left: 1px dotted rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+}
+.rickshaw_graph .x_tick .title {
+	position: absolute;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+	opacity: 0.5;
+	white-space: nowrap;
+	margin-left: 3px;
+	bottom: 1px;
+}
+
+/* annotations */
+
+.rickshaw_annotation_timeline {
+	height: 1px;
+	border-top: 1px solid #e0e0e0;
+	margin-top: 10px;
+	position: relative;
+}
+.rickshaw_annotation_timeline .annotation {
+	position: absolute;
+	height: 6px;
+	width: 6px;
+	margin-left: -2px;
+	top: -3px;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+.rickshaw_graph .annotation_line {
+	position: absolute;
+	top: 0;
+	bottom: -6px;
+	width: 0px;
+	border-left: 2px solid rgba(0, 0, 0, 0.3);
+	display: none;
+}
+.rickshaw_graph .annotation_line.active {
+	display: block;
+}
+
+.rickshaw_graph .annotation_range {
+        background: rgba(0, 0, 0, 0.1);
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: -6px;
+        z-index: -10;
+}
+.rickshaw_graph .annotation_range.active {
+        display: block;
+}
+.rickshaw_graph .annotation_range.active.offscreen {
+        display: none;
+}
+
+.rickshaw_annotation_timeline .annotation .content {
+	background: white;
+	color: black;
+	opacity: 0.9;
+	padding: 5px 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+	border-radius: 3px;
+	position: relative;
+	z-index: 20;
+	font-size: 12px;
+	padding: 6px 8px 8px;
+	top: 18px;
+	left: -11px;
+	width: 160px;
+	display: none;
+	cursor: pointer;
+}
+.rickshaw_annotation_timeline .annotation .content:before {
+	content: "\25b2";
+	position: absolute;
+	top: -11px;
+	color: white;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.8);
+}
+.rickshaw_annotation_timeline .annotation.active,
+.rickshaw_annotation_timeline .annotation:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+	cursor: none;
+}
+.rickshaw_annotation_timeline .annotation .content:hover {
+	z-index: 50;
+}
+.rickshaw_annotation_timeline .annotation.active .content {
+	display: block;
+}
+.rickshaw_annotation_timeline .annotation:hover .content {
+	display: block;
+	z-index: 50;
+}
+.rickshaw_graph .y_axis {
+	fill: none;
+}
+.rickshaw_graph .y_ticks .tick {
+	stroke: rgba(0, 0, 0, 0.16);
+	stroke-width: 2px;
+	shape-rendering: crisp-edges;
+	pointer-events: none;
+}
+.rickshaw_graph .y_grid .tick {
+	z-index: -1;
+	stroke: rgba(0, 0, 0, 0.20);
+	stroke-width: 1px;
+	stroke-dasharray: 1 1;
+}
+.rickshaw_graph .y_grid path {
+	fill: none;
+	stroke: none;
+}
+.rickshaw_graph .y_ticks path {
+	fill: none;
+	stroke: #808080;
+}
+.rickshaw_graph .y_ticks text {
+	opacity: 0.5;
+	font-size: 12px;
+	pointer-events: none;
+}
+.rickshaw_graph .x_tick.glow .title,
+.rickshaw_graph .y_ticks.glow text {
+	fill: black;
+	color: black;
+	text-shadow:
+		-1px 1px 0 rgba(255, 255, 255, 0.1),
+		1px -1px 0 rgba(255, 255, 255, 0.1),
+		1px 1px 0 rgba(255, 255, 255, 0.1),
+		0px 1px 0 rgba(255, 255, 255, 0.1),
+		0px -1px 0 rgba(255, 255, 255, 0.1),
+		1px 0px 0 rgba(255, 255, 255, 0.1),
+		-1px 0px 0 rgba(255, 255, 255, 0.1),
+		-1px -1px 0 rgba(255, 255, 255, 0.1);
+}
+.rickshaw_graph .x_tick.inverse .title,
+.rickshaw_graph .y_ticks.inverse text {
+	fill: white;
+	color: white;
+	text-shadow:
+		-1px 1px 0 rgba(0, 0, 0, 0.8),
+		1px -1px 0 rgba(0, 0, 0, 0.8),
+		1px 1px 0 rgba(0, 0, 0, 0.8),
+		0px 1px 0 rgba(0, 0, 0, 0.8),
+		0px -1px 0 rgba(0, 0, 0, 0.8),
+		1px 0px 0 rgba(0, 0, 0, 0.8),
+		-1px 0px 0 rgba(0, 0, 0, 0.8),
+		-1px -1px 0 rgba(0, 0, 0, 0.8);
+}
+.rickshaw_legend {
+	font-family: Arial;
+	font-size: 12px;
+	color: white;
+	background: #404040;
+	display: inline-block;
+	padding: 12px 5px;
+	border-radius: 2px;
+	position: relative;
+}
+.rickshaw_legend:hover {
+	z-index: 10;
+}
+.rickshaw_legend .swatch {
+	width: 10px;
+	height: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.rickshaw_legend .line {
+	clear: both;
+	line-height: 140%;
+	padding-right: 15px;
+}
+.rickshaw_legend .line .swatch {
+	display: inline-block;
+	margin-right: 3px;
+	border-radius: 2px;
+}
+.rickshaw_legend .label {
+	white-space: nowrap;
+	display: inline;
+}
+.rickshaw_legend .action:hover {
+	opacity: 0.6;
+}
+.rickshaw_legend .action {
+	margin-right: 0.2em;
+	font-size: 10px;
+	opacity: 0.2;
+	cursor: pointer;
+	font-size: 14px;
+}
+.rickshaw_legend .line.disabled {
+	opacity: 0.4;
+}
+.rickshaw_legend ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin: 2px;
+	cursor: pointer;
+}
+.rickshaw_legend li {
+	padding: 0 0 0 2px;
+	min-width: 80px;
+	white-space: nowrap;
+}
+.rickshaw_legend li:hover {
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 3px;
+}
+.rickshaw_legend li:active {
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 3px;
+}
+.Fill{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}
+.close{text-decoration:none;}
+.clearfix{*zoom:1;}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0;}
+.clearfix:after{clear:both;}
+.hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;}
+.input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.rickshaw_legend{display:block;background:inherit;color:inherit;font-family:inherit;font-size:inherit;width:100%;padding:36px 0 0 0;}.rickshaw_legend ul{width:100%;margin:0;overflow:hidden;}.rickshaw_legend ul li.line{display:inline;width:33%;float:left;line-height:inherit;text-overflow:ellipsis;overflow:hidden;padding:0;margin:0;clear:none;}.rickshaw_legend ul li.line .action{color:inherit;opacity:1;filter:alpha(opacity=100);text-decoration:none;}.rickshaw_legend ul li.line .action:hover{opacity:inherit;}
+.rickshaw_legend ul li.line .label{padding:inherit;border-radius:0;font-size:inherit;font-weight:normal;line-height:inherit;color:inherit;text-shadow:0 0 0;background-color:inherit;}
+.rickshaw_legend ul .disabled a.action{opacity:0;filter:alpha(opacity=0);}
+.plot-container{display:inline-block;}
+.charts-container h2,.charts-container h3{line-height:24px;margin:10px 25px 0 5px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.form-horizontal.charts-search-form .controls{margin-left:100px;}
+.charts-container{position:relative;}.charts-container .chart-toolbar{background-color:#fff;position:absolute;right:5px;top:3px;visibility:hidden;}.charts-container .chart-toolbar .btn-group{z-index:100;}
+.chart-container.empty .x_tick{border-color:#ebebeb;}
+.chart-container.empty .chart .y_grid{opacity:0.4;}
+.chart-container.empty .empty-chart-label{position:absolute;left:0;right:0;font-size:20px;top:50%;height:20px;margin-top:-33px;text-align:center;color:#999;}
+.chart-container{padding:5px 10px 15px 0;vertical-align:top;display:inline-block;position:relative;}.chart-container .chart-toolbar{background-color:inherit;right:5px;bottom:-10px;top:inherit;}
+.chart-container .chart{position:relative;}
+.chart-container .yAxis{position:absolute;}
+.chart-container .yAxisLabel{color:#666;text-overflow:ellipsis;position:relative;font-size:90%;top:-10px;left:5px;}
+.charts-container:hover>div>.chart-toolbar{visibility:visible;}
+.chart-container.enlargeable:hover,.plot-container.selectable:hover{-moz-border-top-left-radius:4px;-moz-border-top-right-radius:4px;-moz-border-bottom-right-radius:4px;-moz-border-bottom-left-radius:4px;-webkit-border-radius-topleft:4px;-webkit-border-radius-topright:4px;-webkit-border-radius-bottomight:4px;-webkit-border-radius-bottomleft:4px;border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;background-color:#f5f5f5;cursor:pointer;}.chart-container.enlargeable:hover>div>.chart-toolbar,.plot-container.selectable:hover>div>.chart-toolbar{visibility:visible;}
+.plot-container.selectable{border:#fff 2px solid;}
+.plot-container.selectable.selected{border:#ccc 2px solid;}
+#largePlotDialog{width:90%;margin-left:-45%;margin-top:-280px;}#largePlotDialog .modal-body{max-height:600px;}#largePlotDialog .modal-body h3{margin:20px 0 0 0;}
+#largePlotDialog .chart-container:hover{background-color:inherit;cursor:inherit;}
+.chart-legend .label{background-color:inherit;color:#111;}
+.row-fluid .chart-container{margin-left:0;}
+.chart-control{overflow-x:hidden;}
+.chart-title{overflow-x:hidden;font-size:110%;}
+h3.chart-title{font-weight:normal;}
+.well.charts-result-panel{padding:10px 0 10px 0;width:250px;float:left;}
+.charts-result-panel a{text-decoration:none;word-wrap:break-word;}
+.charts-result-panel .chart-type-selector,.charts-result-panel .facets-container>div{padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #ddd;}
+.charts-main-panel{margin-left:270px;}
+.charts-main-panel .plot-title{width:470px;}
+.rickshaw_graph .detail .x_label{z-index:100;font-weight:bold;padding:0 5px;background-color:whiteSmoke;opacity:0.9;filter:alpha(opacity=90);}
+.rickshaw_graph .x_tick{bottom:-20px;}
+.detail_swatch{display:inline-block;width:10px;height:10px;margin:0 4px 0 0;}
+.charts-search-form .help-link-container,.charts-search-form .metrics-link-container{margin-left:12px;}
+.charts-search-form .radio{padding-top:4px;}
+.charts-search-form textarea{margin-right:12px;}
+.metrics-list-container .other-filters{margin-top:4px;margin-bottom:12px;}.metrics-list-container .other-filters label{margin-right:8px;}
+.metrics-list-container ol.metrics-list{list-style-type:none;}.metrics-list-container ol.metrics-list li dl{margin:6px 0 0 18px;}.metrics-list-container ol.metrics-list li dl dt{font-weight:normal;}
+.metrics-list-container ol.metrics-list li dl dd{margin:0 0 10px 18px;}.metrics-list-container ol.metrics-list li dl dd p{margin-bottom:0;}
+.metrics-list-container ol.metrics-list em{font-weight:bold;font-style:normal;}
+.saved-view-link-container{font-weight:bold;margin-right:10px;padding:4px 14px;vertical-align:middle;}
+small{margin-left:6px;}
+section.chart-section{margin-top:6px;}section.chart-section>div{margin-left:12px;}
+section.chart-section .chart-section-heading{border-bottom:1px solid #ccc;}section.chart-section .chart-section-heading a{color:inherit;}
+.stackarea-chart-container{margin-left:auto;margin-right:auto;}

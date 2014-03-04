@@ -1,0 +1,160 @@
+// (c) Copyright 2013 Cloudera, Inc. All rights reserved.
+
+@import "../common/mixins.less";
+@import "../../../../repos/bootstrap/less/variables.less";
+@import "../../../../repos/bootstrap/less/mixins.less";
+
+.queryDetailsList() {
+  list-style-type: none;
+  margin-left: @fontSizeB;
+}
+
+.profile {
+  .impala-query-statement-container {
+    .expand-statement, .collapse-statement {
+      display: none;
+      float: left;
+      margin-top: 3px;
+      margin-right: 4px;
+    }    
+
+    .statement {
+      background: @white;
+      border: 0;
+      margin: 0;
+      padding: 0;
+
+      .keyword {
+        color: @blueDark;
+      }
+    }
+
+    .fade-container {
+      #gradient > .vertical(rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 1.0));
+      position: static;
+      top: 0;
+      height: 30px;
+    }
+  }
+
+  .collapsed {
+    .statement {
+      max-height: 80px;
+      overflow-y: hidden;
+    }
+
+    .fade-container {
+      display: none;
+      position: relative;
+      top: -20px;
+    }
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  .profile-info {
+    pre {
+      margin-bottom: @fontSizeB;
+    }
+  }
+
+  .query-info {
+    .unstyled {
+      margin-left: @fontSizeB;
+    }
+
+    .btn-group {
+      margin-bottom: @fontSizeB;
+      margin-left: @fontSizeB;
+    }
+  }
+
+  .above-average {
+    color: @red;
+  }
+
+  .below-average {
+    color: @green;
+  }
+
+  .fragment {
+    h2 {
+      color: @grayDark;
+
+      small {
+        font-size: 80%;
+      }
+    }
+
+    .toggle-expansion-link {
+      // The same as an h2, which is what I'm trying to line it up with.
+      line-height: 40px;
+      vertical-align: middle;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .expand-collapse-all-container {
+      margin-bottom: @fontSizeB;
+    }
+
+    .fragment-instances {
+      .queryDetailsList();
+
+      .fragment-instance {
+        .floating-toggler {
+          display: inline-block;
+          // Same as the h3 I'm lining it up with
+          line-height: 40px;
+          width: 14px;
+        }
+
+        h3 {
+          color: @grayDark;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        .averaged-fragment-details, .fragment-instance-details {
+          .unstyled {
+            margin-left: @fontSizeB;
+          }
+
+          .plan-steps {
+            .queryDetailsList();
+
+            .plan-step {
+              h4 {
+                color: @grayDark;
+              }
+
+              a {
+                text-decoration: none;
+              }
+
+              .unstyled {
+                margin-left: @fontSizeB;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .table-of-contents {
+      margin-top: 12px;
+      max-height: 400px;
+      overflow: auto;
+    }
+
+    .affix {
+      top: 0;
+    }
+  }
+}
