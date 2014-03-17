@@ -12,9 +12,6 @@ from elasticsearch import logger
 import json,traceback,os,re,traceback,uuid,re,urllib2,re
 from elasticsearch.salt_api import __fetch_machine_info
 from elasticsearch import logger
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
 import salt.utils
 
 files_path = os.path.join(
@@ -33,14 +30,36 @@ def _add_ele(sentence,flag,date,key):
     if flag:
         sentence.append(mapping[key] + " " + str(date)) 
 
+def __fetch_all_es_masternode():
+    try:
+        st = services_template.objects.filter(type="elasticsearch")
+        rl = [x.id for x in role.objects.filter(name="masternode")]
+        all_ser = services.objects.filter(belong_template__in=st)
+        all_masternode = instance_machine.objects.filter(ser_id__in=[x.id for x in all_ser],role_id__in=rl)
+        all_master_machine = machine.objects.filter(id__in=[x.machine_id for x in all_masternode])
+        return list(set([x.IP for x in all_master_machine]))
+    except:
+        return []
+
+def __fetch_es_masternode(ser):
+    try:
+        rl = [x.id for x in role.objects.filter(name="masternode")]
+        all_masternode = instance_machine.objects.filter(ser_id=ser.id,role_id__in=rl)
+        all_master_machine = machine.objects.filter(id__in=[x.machine_id for x in all_masternode])
+        return list(set([x.IP for x in all_master_machine]))
+    except:
+        return []
+
 def __refresh_file():
 
     file_path = "/home/op1/curator/es_index_maint.sh"
     file_head = ["#!/bin/bash","export http_proxy="]
-    setting = "curl -XPUT 192.168.81.129:9200/_cluster/settings -d '{\"transient\":{\"cluster.routing.allocation.disable_allocation\": true}}'"
+    setting = []
+    for item in __fetch_all_es_masternode():
+        setting.append("curl -XPUT "+ item + ":9200/_cluster/settings -d '{\"transient\":{\"cluster.routing.allocation.disable_allocation\": true}}'")
     need_file = {}
 
-    file_head.append(setting)
+    file_head.extend(setting)
 
     optimize_file = {}
 
@@ -53,22 +72,29 @@ def __refresh_file():
         _add_ele(sentence,item.disable_flag,item.disable,"disable")
 
         if not sentence == []:
-            temp = "python2.7  /home/op1/curator/curator.py --host 192.168.81.129 --prefix " + item.name + "  " + " ".join(sentence)  + " -t 7200 -l /home/op1/curator/daily_cleanup.log"
+            IP = __fetch_es_masternode(item.ser)
+            if IP == []:
+                continue
+            else:
+                IP = IP[0]
+            temp = "python2.7  /home/op1/curator/curator.py --host " + IP + " --prefix " + item.name + "  " + " ".join(sentence)  + " -t 7200 -l /home/op1/curator/daily_cleanup.log"
             file_head.append(temp)
             file_head.append("sleep 60s")
         if item.optimize_flag:
-            optimize_file[item.name] = item.optimize
+            optimize_file[item.name] = [item.optimize,IP]
 
     #if not optimize_file == {}:
     #   file_head.append(setting)
 
-    file_head.append("curl -XPUT 192.168.81.129:9200/_cluster/settings -d '{\"transient\":{\"cluster.routing.allocation.disable_allocation\": false}}'")
+    for item in __fetch_all_es_masternode():
+        file_head.append("curl -XPUT " + item + ":9200/_cluster/settings -d '{\"transient\":{\"cluster.routing.allocation.disable_allocation\": false}}'")
+    need_file = {}
+
 
     for key,value in optimize_file.items():
-        temp = "python2.7  /home/op1/curator/curator.py --host 192.168.81.129 --prefix " + key + " -o " + str(value)  + " -t 7200 -l /home/op1/curator/daily_cleanup.log"
+        temp = "python2.7  /home/op1/curator/curator.py --host " + str(value[1]) + " --prefix " + key + " -o " + str(value[0])  + " -t 7200 -l /home/op1/curator/daily_cleanup.log"
         file_head.append(temp)
 
-    file_head.append("curl -XPUT 192.168.81.129:9200/_cluster/settings -d '{\"transient\":{\"cluster.routing.allocation.disable_allocation\": false}}'")
     
     with salt.utils.fopen(file_path, 'w') as fp_:
         print >> fp_,"\n".join(file_head)
@@ -129,7 +155,6 @@ def batch_commit(request):
 
     _date_flag = zip(date_list,flag_list)
 
-    print "======_date_flag=====", _date_flag[3][1]
     context = {"result":"","status":"ok"}
     try:
         for item in id_list:
@@ -225,7 +250,8 @@ def fetch_display(request):
         machine_ip = url.strip() + "/_stats"
         if check_way == "masternode":
             try:
-               role_id = role.objects.get(name="masternode").id
+                ser = services.objects.get(id=ser_id)
+                role_id = role.objects.get(name="masternode",service=ser.belong_template).id
             except:
                 logger.error("fetch " + traceback.format_exc())
                 traceback.print_exc()

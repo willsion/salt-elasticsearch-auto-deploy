@@ -12,9 +12,7 @@ from elasticsearch import logger
 import json,traceback,os,re,pexpect,traceback
 from elasticsearch.salt_api import __fetch_machine_info
 from elasticsearch import logger
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
+from _pillar.pillar_op import *
 
 
 def redirect_display(request):
@@ -238,7 +236,6 @@ def machine_list_commit(request):
         delete_machine = delete_machine.split("&")
         delete_machine = machine.objects.filter(id__in=delete_machine)
         for item in delete_machine:
-            print "====item===id",item.id
             item.cluster = None
             item.save()
             instance_machine.objects.filter(machine_id=int(item.id)).delete()
@@ -394,10 +391,14 @@ def add_ser_commit(request):
                     result["fail"].append([ma_name,role_name])
 
         #需要在/srv/pillar/{{template}}//cluster目录下 生成cluster的信息，包含es，logstash，redis
-        template_name = cl.name
-        exec("pt = pillar_" +  template_name + "()")
-        pi = pillar(pt)
-        pi.add_cluster(template_name,new_service_name)
+        
+
+        try:
+            template_type = cl.type
+            template_name = cl.name
+            web_request("master","pillar_module.pillar_operation",[template_name,new_service_name],template_type,"add_cluster")
+        except:
+            logger.error("ser_command " + traceback.format_exc())
 
         context["data"] = result
 
@@ -406,8 +407,7 @@ def add_ser_commit(request):
         context = {"status":"fail","data":str(e)}
 
     #最后刷新机器上的/srv/pillar/目录的内容
-    pi = pillar()
-    pi._refresh()
+    web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
 
     return HttpResponse(json.dumps(context))
 

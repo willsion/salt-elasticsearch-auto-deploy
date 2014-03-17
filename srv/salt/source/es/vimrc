@@ -1,0 +1,20 @@
+set nocompatible
+filetype plugin indent on
+
+set laststatus=2
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\0.3.3b]\ [HEX=\0.2.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set nu
+syntax on
+set autoindent
+set smartindent
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set paste
+
+set showmatch
+set incsearch
+set hlsearch
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936

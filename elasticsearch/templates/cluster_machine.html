@@ -3,7 +3,7 @@
 
 {% block content %}  
  
-<script type="text/javascript" src="/static/ext/jquery/plugins/sammy-0.7.1.min.js"></script>
+<script type="text/javascript" src="/elasticsearch/static/ext/jquery/plugins/sammy-0.7.1.min.js"></script>
 
 
 <script type="text/javascript">
@@ -82,7 +82,7 @@
         
 
         $.ajax({
-            url: '/salt/cluster/machine_list/commit',
+            url: '/elasticsearch/salt/cluster/machine_list/commit',
             type: 'POST',
             dataType: 'JSON',
             data: {id:{{cluster.id}},delete_machine:delete_machine.join("&"),unaccept_host:unaccept_host.join("&&"),ready_to_add_host:ready_to_add_host.join("&&"),accept_host:accept_host.join("&&")},
@@ -92,19 +92,19 @@
                 {
 
                     alert("操作成功");
-                    window.location.href="/salt/services";
+                    window.location.href="/elasticsearch/salt/services";
                     return; 
                 } 
                 else
                 {
                     alert("操作失败");
-                    window.location.href="/salt/services";
+                    window.location.href="/elasticsearch/salt/services";
                     return; 
                 }
             },
             error: function (data) {
                 alert(data);
-                window.location.href="/salt/services";
+                window.location.href="/elasticsearch/salt/services";
                 return;            
             }
         });

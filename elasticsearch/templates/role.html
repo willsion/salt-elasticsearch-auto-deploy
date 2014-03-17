@@ -2,9 +2,9 @@
 
 
 {% block head %}
-    <script src="/static/ajaxfileupload.js"></script>
-    <script src="/static/jquery.contextmenu.js"></script>
-    <link rel="stylesheet" href="/static/jquery.contextmenu.css">
+    <script src="/elasticsearch/static/ajaxfileupload.js"></script>
+    <script src="/elasticsearch/static/jquery.contextmenu.js"></script>
+    <link rel="stylesheet" href="/elasticsearch/static/jquery.contextmenu.css">
 
     <style type="text/css">
         .fieldset_class {
@@ -41,7 +41,7 @@
 
     <div class="container-fluid">
 
-        <h2><img border="0" src="/static/img/{{template.icon}}" style="height: 16px;width: 14px">{{template.name}}</h2>
+        <h2><img border="0" src="/elasticsearch/static/img/{{template.icon}}" style="height: 16px;width: 14px">{{template.name}}</h2>
 
         <ul class="nav nav-tabs" id="myTab" style="margin-bottom: 1px;">
             <li class="nav nav-tabs active"><a data-toggle="tab">role管理</a></li>
@@ -51,7 +51,7 @@
                 <i class="icon-wrench"></i>配置管理<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/salt/conf_file?template_id={{template.id}}">配置文件</a>
+                    <li><a href="/elasticsearch/salt/conf_file?template_id={{template.id}}">配置文件</a>
                     </li>                  
                 </ul>
             </li>                
@@ -214,7 +214,7 @@
                         if (return_flag == 0)
                         {
                             alert("操作成功");
-                            window.location.href="/salt/role?template_id={{template.id}}";
+                            window.location.href="/elasticsearch/salt/role?template_id={{template.id}}";
                             return;
                         }
                         else if (return_flag == 1)
@@ -267,14 +267,14 @@
         var checked = $("#unique_key").attr('checked');
 
 
-        adjax("/salt/configure/file/add/reg",{reg:_reg,name:name,id:_id,checked:checked},0);
+        adjax("/elasticsearch/salt/configure/file/add/reg",{reg:_reg,name:name,id:_id,checked:checked},0);
     }
 
     function _add_configure(id)
     {
         if(typeof $("#configure_file").val() != 'undefined'){
             $.ajaxFileUpload({
-                url:'/salt/configure/file/add/file',
+                url:'/elasticsearch/salt/configure/file/add/file',
                 secureuri:false,
                 fileElementId:'configure_file',//input框的ID
                 dataType: 'json',//返回数据类型
@@ -319,7 +319,7 @@
 
         });
 
-        adjax("/salt/role/add/" + ope,{role_array:role_array.join("&"),conf_id:conf_id.join("&")},0);
+        adjax("/elasticsearch/salt/role/add/" + ope,{role_array:role_array.join("&"),conf_id:conf_id.join("&")},0);
     }
 
     function commit()
@@ -329,7 +329,7 @@
         if ((ope == "configure") || (ope == "role"))
         {
             name = $("#name1").val();
-            adjax("/salt/configure/add/" + ope,{id:id,name:name},0);           
+            adjax("/elasticsearch/salt/configure/add/" + ope,{id:id,name:name},0);           
         }
         else if (ope == "role_conf")
         {
@@ -345,7 +345,7 @@
     function _configure_detail()
     {
         var id = $(this).attr("value");
-        var result = adjax("/salt/configure/display",{id:id},1);
+        var result = adjax("/elasticsearch/salt/configure/display",{id:id},1);
     }
 
     function _reset()
@@ -391,7 +391,7 @@
             return;
         }
 
-        adjax("/salt/role/modify/get",{id:id_array.join("&")},2); 
+        adjax("/elasticsearch/salt/role/modify/get",{id:id_array.join("&")},2); 
     }
 
     function checkall(){

@@ -9,11 +9,10 @@ from django.template import RequestContext
 from elasticsearch.models import *
 from django.db import connection
 from elasticsearch import logger
-import json,traceback,os,re,pexpect,traceback,copy,datetime
+import json,traceback,os,re,pexpect,traceback,copy,datetime,time
 from elasticsearch.salt_api import __fetch_machine_info
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
+from _pillar.pillar_op import *
+
 import salt.client,uuid
 from celery.decorators import task
 
@@ -31,7 +30,7 @@ def update_package(service_tmp,version):
     if service_tmp == 'elasticsearch':
         return elasticsearch_package(version)
 def elasticsearch_package(version):
-    return u'/srv/salt/source/package/elasticsearch-'+version+'.zip'
+    return u'/srv/salt/source/es/package/elasticsearch-'+version+'.zip'
 def download_package(o,url):
     cmd=r"curl -o "+o+" "+url
     os.system(cmd)
@@ -73,16 +72,14 @@ def celery_update(machine_ids,machine_list,job_id):
 
 def highstate_commit(idsarry,job_id):
     try:
-        pi = pillar()
-        pi._refresh()
-        cmd = 'salt -L "' + ','.join(idsarry) + '" saltutil.refresh_pillar'
-        print "=========cmd=========",cmd
-        os.system(cmd)
+        web_request(','.join(idsarry),"saltutil.refresh_pillar",[],None,None)
+
         cmd = 'salt -L "' + ','.join(idsarry) + '" state.highstate '
         print "=========cmd=========",cmd
         res = cmd
         time.sleep(20)
-        res = res + "\n" + os.popen(cmd).read()
+        result = web_request(','.join(idsarry),"state.highstate",[],None,None)
+        res = res + "\n" + str(result)
     except:
         logger.error("highstate_commit " + traceback.format_exc())
     return res
@@ -93,10 +90,11 @@ def execute(request):
     new_version = request.POST.get("service_version","")
     machine_ids = request.POST.get("machine_ids","")
     service_tmp = request.POST.get("service_tmp","")
+    tem_type    = request.POST.get("tem_type","")
     service_id = request.POST.get("service_id",None)
 
     context = {"status":"ok","result":""}
-    if (service_tmp != "elasticsearch"):
+    if (tem_type != "elasticsearch"):
         context["status"] = "fail"
         context["result"] = u"只能升级 elasticsearch"
         return HttpResponse(json.dumps(context))
@@ -118,7 +116,7 @@ def execute(request):
         return HttpResponse(json.dumps(context))
     service_name = ser.name
     print("service_name:  " +service_name)
-    new_update_package_path = update_package(service_tmp,new_version)
+    new_update_package_path = update_package(tem_type,new_version)
 
 
     old_version = read_elasticsearch_version_pillar(service_tmp,service_name)
@@ -178,6 +176,7 @@ def main(request):
         return render_to_response('update.html', context,RequestContext(request))
     context["services"] = ser
     context["services_tmp"] = ser.belong_template.name
+    context["tem_type"] = ser.belong_template.type
     machine_id_list = []
     try:
         machine_ids = instance_machine.objects.filter(ser_id=int(service_id)).values("machine_id")
@@ -252,9 +251,12 @@ def update_elasticsearch_version_pillar(new_version,service_tmp,service_name):
     #fr.write(re.sub(r'es-version: "\d+\.\d+\.\d+"',r'es-version: "'+new_version+'"', f.read()))
     #f.close()
     #fr.close()
-    exec("pt = pillar_" + service_tmp + "()")
-    pi = pillar(pt)
-    pi.update_cluster_version(service_tmp,service_name,new_version)
+
+    try:
+        result = web_request("master","pillar_module.pillar_operation",[service_tmp,service_name,new_version],"elasticsearch","update_cluster_version")
+    except:
+        logger.error("modify " + traceback.format_exc())
+
 
 def read_elasticsearch_version_pillar(service_tmp,service_name):
 
@@ -264,9 +266,15 @@ def read_elasticsearch_version_pillar(service_tmp,service_name):
     #    for i in re.findall(r'es-version: "(\d+\.\d+\.\d+)"',line):
     #        return i
     #fr.close()
-    exec("pt = pillar_" + service_tmp + "()")
-    pi = pillar(pt)
-    return pi.read_cluster_version(service_tmp,service_name)
+    try:
+        result = web_request("master","pillar_module.pillar_operation",[service_tmp,service_name],"elasticsearch","read_cluster_version")
+    except:
+        logger.error("modify " + traceback.format_exc())
+        result = ""
+
+    return " ".join(result[0].values())
+
+
 
 
 
@@ -292,7 +300,6 @@ def machine_operations(id,action):
         es__operation = set()
 
         for _ele in _item:
-            print _ele
             try:
                 _target = machine.objects.get(id=int(_ele.machine_id)).target
             except:
@@ -302,7 +309,7 @@ def machine_operations(id,action):
 
             try:
                 _role = role.objects.get(id=int(_ele.role_id))
-                _template = _role.service.name
+                _template = _role.service.type
             except:
                 logger.error("_role fail " + traceback.format_exc())
                 context["result"].append([_ele.machine_id,u"无法找到对应模板"])
@@ -312,57 +319,21 @@ def machine_operations(id,action):
                 es__operation.add(_target)
 
             elif _template not in _operation:
-                _operation[_template] = {}
+                _operation[_template] = set()
 
             if not _template == "elasticsearch" and not _target in _operation[_template]:
-                _operation[_template][_target] = []
+                _operation[_template].add(_target)
 
-            try:
-                _relative_conf = role_configure.objects.filter(role_id=_role.id).values("conf")
-                _conf = template_configure.objects.filter(id__in=[x["conf"] for x in _relative_conf]).values("name")
-                _conf = [x["name"] for x in _conf]
-            except:
-                logger.error("_relative_conf fail " + traceback.format_exc())
-                continue
-
-
-            if not _template == "elasticsearch":
-                _operation[_template][_target].extend(_conf)
-
-        print(_operation)
-        _op = {}
-        for _template,_target in _operation.items():
-            if not _template in _op:
-                _op[_template] = {}
-
-            for _tar,_conf_list in _target.items():
-                tm = list(set(_conf_list))
-                tm.sort()
-                _conf_key = ",".join(tm)
-
-                if _conf_key not in _op[_template]:
-                    _op[_template][_conf_key] = set()
-
-                _op[_template][_conf_key].add(_tar)
-
-
-        local  = salt.client.LocalClient()
 
         if not es__operation == set():
-            result = local.cmd(list(es__operation), 'elasticsearch.' + action, [],timeout=60, expr_form="list")
-            for k,v in result.items():
-                ret = ret +  str(k) + " : " + str(v)
+
+            result = web_request(','.join(list(es__operation)),'elasticsearch.' + action,[],None,None)
+
+            ret = ret +  str(result)
 
         for _tem,_targ in _operation.items():
-            print "_tem,_targ ",_tem,_targ
-            for _conf_key,_target_list in _targ.items():
-                _machine_l = _conf_key.split(",")
-                _cf = _target_list
-
-                result = local.cmd(list(_machine_l), _tem + '.' + action, _cf,timeout=60, expr_form="list")
-
-                for k,v in result.items():
-                    ret =  ret + str(k) + " : " + str(v) + "\n\n"
+                result = web_request(','.join(list(_targ)),_tem + '.' + action,[],None,None)
+                ret =  ret  + str(result)
 
         context["result"] = ret
         return ret

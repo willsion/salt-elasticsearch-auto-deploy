@@ -3,15 +3,17 @@ from elasticsearch.models import *
 import sys,traceback
 from elasticsearch import logger
 from django.db import connection
-import salt.utils,re
+from django.conf import settings
+import salt.utils,re,os
 
 default_version = "0.90.11"
 class pillar_elasticsearch(object):
 
 
-    def role_conf(self,role_conf):
+    def role_conf(self,role_conf,template):
 
-        all_role = role.objects.filter(name__in=role_conf)
+        st = services_template.objects.get(name=template)
+        all_role = role.objects.filter(name__in=role_conf,service=st)
 
         all_conf_id = role_conf_item.objects.filter(role_id__in=all_role)
 
@@ -29,6 +31,8 @@ class pillar_elasticsearch(object):
 
     def _add_template(self,file,name):
 
+        pillar = settings.PILLAR_ROOT
+        os.system("cat " + pillar + "/elasticsearch_template/template/elasticsearch.sls > " + file)
         result = {"result":"ok"}
         return result
 
@@ -42,7 +46,6 @@ class pillar_elasticsearch(object):
         try:
             cl = services.objects.get(name=name)
         except:
-            traceback.print_exc()
             logger.error("add_cluster " + traceback.format_exc())
             result["reason"] = "cluster invalid"
             return result
@@ -53,7 +56,6 @@ class pillar_elasticsearch(object):
 
             ma_list = ",".join([x["target"] for x in ma_list])
         except:
-            traceback.print_exc()
             logger.error("add_cluster " + traceback.format_exc())
             result["reason"] = "machine invalid"
             return result           
@@ -77,7 +79,6 @@ class pillar_elasticsearch(object):
         try:
             cl = services.objects.get(name=name)
         except:
-            traceback.print_exc()
             logger.error("add_cluster " + traceback.format_exc())
             result["reason"] = "cluster invalid"
             return result
@@ -88,7 +89,6 @@ class pillar_elasticsearch(object):
 
             ma_list = ",".join([x["target"] for x in ma_list])
         except:
-            traceback.print_exc()
             logger.error("add_cluster " + traceback.format_exc())
             result["reason"] = "machine invalid"
             return result
@@ -114,7 +114,8 @@ class pillar_elasticsearch(object):
 
     def _add_role(self,role_file,template,name):
         try:
-            role_item = role.objects.get(name=name)
+            st = services_template.objects.get(name=template)
+            role_item = role.objects.get(name=name,service=st)
             all_object = role_conf_item.objects.filter(role_id=role_item)
             all_configure = []
             for x in all_object:

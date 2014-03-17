@@ -2,9 +2,9 @@
 
 
 {% block head %}
-    <script src="/static/ajaxfileupload.js"></script>
-    <script src="/static/jquery.contextmenu.js"></script>
-    <link rel="stylesheet" href="/static/jquery.contextmenu.css">
+    <script src="/elasticsearch/static/ajaxfileupload.js"></script>
+    <script src="/elasticsearch/static/jquery.contextmenu.js"></script>
+    <link rel="stylesheet" href="/elasticsearch/static/jquery.contextmenu.css">
 {% endblock %}
 
 {% block content %}
@@ -25,13 +25,13 @@
 
     <div class="container-fluid">
 
-        <h2><img border="0" src="/static/img/{{template.icon}}" style="height: 16px;width: 14px">{{template.name}}</h2>
+        <h2><img border="0" src="/elasticsearch/static/img/{{template.icon}}" style="height: 16px;width: 14px">{{template.name}}</h2>
 
 
         <ul class="nav nav-tabs" id="myTab" style="margin-bottom: 1px;">
 
             <li>    
-                <a href="/salt/role?template_id={{template.id}}">
+                <a href="/elasticsearch/salt/role?template_id={{template.id}}">
                 <i class="icon-home"></i>role管理</a>    
             </li>
 
@@ -40,7 +40,7 @@
                 <i class="icon-wrench"></i>配置管理<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/salt/conf_file?template_id={{template.id}}">配置文件</a>
+                    <li><a href="/elasticsearch/salt/conf_file?template_id={{template.id}}">配置文件</a>
                     </li>                   
                 </ul>
             </li>                
@@ -117,7 +117,7 @@
                                                     <input class="default_configure" type="checkbox" />
                                                 </th>
                                                 <th style="width: 30%;" >属性</th>
-                                                <th>缺省值</th>
+                                                <th>值</th>
                                                 
                                             </tr>
                                         </thead>
@@ -180,7 +180,7 @@
         var config_name  = $("#config_name").val();
         var _id = $("#right_click_id").attr("value");
 
-        adjax("/salt/configure/" + ope,{id:id,name:config_name,value:config_value,_id:_id},0);        
+        adjax("/elasticsearch/salt/configure/" + ope,{id:id,name:config_name,value:config_value,_id:_id},0);        
     }
 
     function _upload_reg(name)
@@ -191,14 +191,14 @@
         var checked = $("#unique_key").attr('checked');
 
 
-        adjax("/salt/configure/file/add/reg",{reg:_reg,name:name,id:_id,checked:checked},0);
+        adjax("/elasticsearch/salt/configure/file/add/reg",{reg:_reg,name:name,id:_id,checked:checked},0);
     }
 
     function _add_configure(id)
     {
         if(typeof $("#configure_file").val() != 'undefined'){
             $.ajaxFileUpload({
-                url:'/salt/configure/file/add/file',
+                url:'/elasticsearch/salt/configure/file/add/file',
                 secureuri:false,
                 fileElementId:'configure_file',//input框的ID
                 dataType: 'json',//返回数据类型
@@ -249,7 +249,7 @@
             var name = $("#name1").val();
             var create_role = $("#create_role").attr('checked');
             var spera = $("#spera").val();
-            adjax("/salt/configure/add/" + ope,{deploy_path:deploy_path,id:id,name:name,create_role:create_role,spera:spera},0);           
+            adjax("/elasticsearch/salt/configure/add/" + ope,{deploy_path:deploy_path,id:id,name:name,create_role:create_role,spera:spera},0);           
         }
         else if (ope == "add_configure")
         {
@@ -260,7 +260,7 @@
             var a = $('#role_conf_configure_id').attr("value");
             var b = $('#role_conf_id').attr("value");
             var c = $('.role_conf_configure_modify').val();
-            adjax("/salt/configure/role_conf_configure_commit",{role_conf_configure_id:a,role_conf_id:b,name:c},0);
+            adjax("/elasticsearch/salt/configure/role_conf_configure_commit",{role_conf_configure_id:a,role_conf_id:b,name:c},0);
         }
         else if (ope == "role_conf")
         {
@@ -288,12 +288,12 @@
                 var cancel_item      = $(ele).find(".cancel_item").attr("checked");
                 del_array.push(cancel_item);
 
-                var name             = $(ele).find(".name").html();
+                var name             = $(ele).find(".role_id").attr("value");
                 role_id_array.push(name);
             });
 
             
-            adjax("/salt/configure/role_configure_relative",{id:dc_item.join("&"),role_id_array:role_id_array.join('&'),add_array:add_array.join("&"),del_array:del_array.join("&")},0);
+            adjax("/elasticsearch/salt/configure/role_configure_relative",{id:dc_item.join("&"),role_id_array:role_id_array.join('&'),add_array:add_array.join("&"),del_array:del_array.join("&")},0);
         }
         else if (ope == "fetch_file_info")
         {
@@ -301,7 +301,7 @@
             var path = $("#current_conf_path").val();
             var sep = $("#current_conf_spera").val();
             var id = $("#right_click_id").attr("value");
-            adjax("/salt/configure/modify_configure_info",{id:id,name:name,path:path,sep:sep},0)
+            adjax("/elasticsearch/salt/configure/modify_configure_info",{id:id,name:name,path:path,sep:sep},0)
         }
 
         else
@@ -313,7 +313,7 @@
     function _configure_detail()
     {
         var id = $(this).attr("value");
-        var result = adjax("/salt/configure/display",{id:id},1);
+        var result = adjax("/elasticsearch/salt/configure/display",{id:id},1);
     }
 
     function modify_role_configure(configure_id,role_id,obj)
@@ -327,7 +327,7 @@
         $("#operation").attr("value","role_conf_configure");
 
         $.ajax({
-                url: "/salt/configure/role_configure?configure_id=" + configure_id + "&role_id=" + role_id,
+                url: "/elasticsearch/salt/configure/role_configure?configure_id=" + configure_id + "&role_id=" + role_id,
                 type: 'GET',
                 dataType: 'JSON',
                 timeout: 5000,
@@ -362,7 +362,7 @@
                         if (return_flag == 0)
                         {
                             alert("操作成功");
-                            window.location.href="/salt/conf_file?template_id={{template.id}}";
+                            window.location.href="/elasticsearch/salt/conf_file?template_id={{template.id}}";
                             return;
                         }
                         else if (return_flag == 2)
@@ -438,7 +438,8 @@
 
     function _reset(_id,_name)
     {
-        var html = '<div class="item_value" value="' + _id + '" style="cursor: pointer;">' + _name + '</div>';
+        var name = $(_name).parent().find('div').eq(1).html();
+        var html = '<div class="item_value" value="' + _id + '" style="cursor: pointer;">' + name + '</div>';
         $("#td_" + _id).html(html);
         $("#td_" + _id).find(".item_value").click(_modify_conf); 
     }
@@ -448,7 +449,7 @@
     {
         var _id  = $(this).attr("value");
         var _name = $(this).html();
-        var _changes_html = '<div class="nowrap overrideGroup"><div class="warningThreshold">原来的值: </div><div>' + _name + '</div><div class="criticalThreshold"><label class="control-label input-small">修改后的值:</label><div class="controls"><textarea class="modify_value" name="desc"' + 'tag="'+ _id + '" style="height:180px;width:380px;"></textarea><p class="help-block message"></p></div></div><a href="#" class="erase overrideGroup" value="1" onclick="_reset(' + "'" + _id + "','" + _name + "'" + ')" >取消修改<i class="IconErase16x16"></i></a></div></div></div>';
+        var _changes_html = '<div class="nowrap overrideGroup"><div class="warningThreshold">原来的值: </div><div>' + _name + '</div><div class="criticalThreshold"><label class="control-label input-small">修改后的值:</label><div class="controls"><textarea class="modify_value" name="desc"' + 'tag="'+ _id + '" style="height:180px;width:380px;"></textarea><p class="help-block message"></p></div></div><a href="#" class="erase overrideGroup" value="1" onclick="_reset(' + "'" + _id + "',this" + ')" >取消修改<i class="IconErase16x16"></i></a></div></div></div>';
         $(this).parent().html(_changes_html);
         $(".defaultGroup").css({'cursor':'pointer'});
 
@@ -472,7 +473,7 @@
             context_array.push(context);
         });
 
-        adjax("/salt/configure/modify",{id:id_array.join("&"),context:context_array.join("&sperate&")},0);
+        adjax("/elasticsearch/salt/configure/modify",{id:id_array.join("&"),context:context_array.join("&sperate&")},0);
 
     }
 
@@ -502,7 +503,7 @@
         }
 
 
-        adjax("/salt/configure/fetch_role",{id:$("#template_id").attr("value")},2);
+        adjax("/elasticsearch/salt/configure/fetch_role",{id:$("#template_id").attr("value")},2);
     }
 
     $(document).ready(function() {
@@ -542,7 +543,7 @@
         $('#modal_body').html("请稍候");
         $("#operation").attr("value","fetch_file_info");
 
-        adjax("/salt/configure/fetch_file_info",{id:id,name:name},3);            
+        adjax("/elasticsearch/salt/configure/fetch_file_info",{id:id,name:name},3);            
     }
 
 
@@ -551,7 +552,7 @@
         var id = $("#right_click_id").attr("value");        
         var name = $("#right_click_name").attr("value");
 
-        adjax("/salt/configure/delete_conf",{id:id},0);       
+        adjax("/elasticsearch/salt/configure/delete_conf",{id:id},0);       
     }
 
     function delte_conf()

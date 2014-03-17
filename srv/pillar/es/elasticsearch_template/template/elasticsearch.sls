@@ -1,0 +1,12 @@
+es-httpEnabled: "true"
+es-number_of_shards: 5
+es-number_of_replicas: 1
+es-recover_after_nodes: 3
+es-recover_after_time: "5m"
+es-expected_nodes: 5
+es-recovery.max_bytes_per_sec: "50mb"
+es-minimum_master_nodes: 1
+es-zenPingTimout: "120s"
+es-zenPingInterval: "30s"
+es-zenPingRetries: "6"
+es-multicast: "false"

@@ -105,7 +105,7 @@
 
 
             $.ajax({
-                url: '/salt/instance/modify',
+                url: '/elasticsearch/salt/instance/modify',
                 type: 'POST',
                 dataType: 'JSON',
                 timeout: 5000,
@@ -114,19 +114,19 @@
                     if( data.status=="ok")
                     {
                         alert("操作成功");
-                        window.location.href="/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                        window.location.href="/elasticsearch/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
                         return;  
                     } 
                     else
                     {
                         alert("操作失败: " + data.result);
-                        window.location.href="/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                        window.location.href="/elasticsearch/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
                         return; 
                     }
                 },
                 error: function (data) {
                     alert("操作出错");
-                    window.location.href="/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
+                    window.location.href="/elasticsearch/salt/instance?service_id={{services.id}}&cluster_id={{cluster_id}}";
                     return;           
                 }
             });  

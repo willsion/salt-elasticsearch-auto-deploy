@@ -9,11 +9,10 @@ from django.template import RequestContext
 from elasticsearch.models import *
 from django.db import connection
 from elasticsearch import logger
-import json,traceback,os,re,pexpect,traceback,copy
+import json,traceback,os,re,pexpect,copy
 from elasticsearch.salt_api import __fetch_machine_info
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
+
+from _pillar.pillar_op import *
 
 
 def modify(request):
@@ -56,16 +55,16 @@ def modify(request):
                 还未写修改变量的接口,
                 但是 可以 直接 重写cluster
                 '''
-                template_name = ser_item.belong_template.name
-                if template_name.lower() == "elasticsearch":
-                    exec("pt = pillar_" +  template_name + "()")
-                    pi = pillar(pt)
-                    pi.add_cluster(template_name,ser_item.name)
+                type = ser_item.belong_template.type
+                name = ser_item.belong_template.name
+                try:
+                    web_request("master","pillar_module.pillar_operation",[name,ser_item.name],type,"add_cluster")
+                except:
+                    logger.error("modify " + traceback.format_exc())
 
 
         #更新所有target的pillar信息
-        pi = pillar()
-        pi._refresh()
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
 
 
     except Exception,e:
@@ -143,8 +142,6 @@ def instance(request):
 
     context["role_machine"] = role_machine
     context["cluster_id"] = cluster_id
-
-    print context
 
     return render_to_response('instance.html', context,RequestContext(request))
                  

@@ -100,6 +100,12 @@ class services_template(BaseModel):
         db_column = u'icon', 
         verbose_name = _(u'图标'))
 
+    type = models.CharField(
+        null = True,
+        blank = True,
+        unique = False,
+        max_length = 100)
+
     class Meta:
         db_table = u"services_template"
 
@@ -137,7 +143,7 @@ class role(BaseModel):
     name = models.CharField(
         null = False,
         blank = False,
-        unique = True,
+        unique = False,
         max_length = 100, 
         db_column = u'name', 
         verbose_name = _(u'服务名称'))

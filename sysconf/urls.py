@@ -9,12 +9,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-	url(r'^admin/', include(admin.site.urls), name='admin'),
+	url(r'^elasticsearch/admin/', include(admin.site.urls), name='admin'),
 	url(r'^/?$', login, name='login'),
 	url(r'^login/?$', login, name='login'), # 登录
 	url(r'^logout/?$', logout, name='logout'), # 注销
 
 
-	url(r'^salt/',include('elasticsearch.urls')),
+	url(r'^elasticsearch/salt/',include('elasticsearch.urls')),
 
 )

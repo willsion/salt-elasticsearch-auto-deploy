@@ -1,17 +1,18 @@
 base:
   '*':
-    - git
-    - vim
-    - screen
-    - appdirectory
+    - es.git
+    - es.vim
+    - es.screen
 
   'template:elasticsearch':
     - match: pillar
-    - java
-    - elasticsearch
+    - es.appdirectory
+    - es.java
+    - es.elasticsearch
 
 
   'template:logstash':
     - match: pillar
-    - java
-    - logstash
+    - es.appdirectory
+    - es.java
+    - es.logstash

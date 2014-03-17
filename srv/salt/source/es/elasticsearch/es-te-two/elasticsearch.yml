@@ -1,0 +1,28 @@
+cluster.name: {{pillar['clustername']}}
+node.name: {{ grains['id']}}
+node.master: {{pillar.1576|default('false')}}
+node.data: {{pillar.1577|default('false')}}
+index.number_of_shards: {{pillar['es-number_of_shards']}}
+index.number_of_replicas: {{pillar['es-number_of_replicas']}}
+path.data: /var/data/elasticsearch
+path.logs: /var/log/elasticsearch
+bootstrap.mlockall: true
+http.enabled: {{pillar.1583|default('false')}}
+gateway.type: local
+gateway.recover_after_nodes: {{pillar['es-recover_after_nodes']}}
+gateway.recover_after_time: {{pillar['es-recover_after_time']}}
+gateway.expected_nodes: {{pillar['es-expected_nodes']}}
+indices.recovery.max_bytes_per_sec: {{pillar['es-recovery.max_bytes_per_sec']}}
+discovery.zen.minimum_master_nodes: {{pillar['es-minimum_master_nodes']}}
+discovery.zen.ping.timeout: 10s
+discovery.zen.fd.ping_timeout: {{pillar['es-zenPingTimout']}}
+discovery.zen.fd.ping_interval: {{pillar['es-zenPingInterval']}}
+discovery.zen.fd.ping_retries: {{pillar['es-zenPingRetries']}}
+discovery.zen.ping.multicast.enabled: {{pillar['es-multicast']}}
+discovery.zen.ping.unicast.hosts: {{pillar['es-zenPingUnicastHosts']}}
+index: 
+    analysis :
+        analyzer :
+            key_lowercase :
+                tokenizer : keyword
+                filter : [lowercase]

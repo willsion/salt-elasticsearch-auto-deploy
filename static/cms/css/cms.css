@@ -1151,8 +1151,8 @@ label.error{display:inline-block;width:auto;padding:0 4px;}
 .Icon.iCommandState.notActive.isSuccess,.notActive.isSuccess .Icon.iCommandState{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -448px;}
 .Icon.iCommandState.notActive.notSuccess,.notActive.notSuccess .Icon.iCommandState{background-image:url('/static/cms/icons/sprite16x16.png');background-position:0 -480px;}
 .table-th-sort-span{display:inline-block;min-height:5px;width:9px;background-repeat:no-repeat;background-position:50% 50%;cursor:inherit;}
-.table-th-sort .table-th-sort-span{background-image:url(/static/cms/icons/bullet_arrow_up.png);}
-.table-th-sort-rev .table-th-sort-span{background-image:url(/static/cms/icons/bullet_arrow_down.png);}
+.table-th-sort .table-th-sort-span{background-image:url(/elasticsearch/static/cms/icons/bullet_arrow_up.png);}
+.table-th-sort-rev .table-th-sort-span{background-image:url(/elasticsearch/static/cms/icons/bullet_arrow_down.png);}
 .hdfsService .icon,.hdfsServiceIcon,.mapreduceService .icon,.mapreduceServiceIcon,.yarnService .icon,.yarnServiceIcon,.hbaseService .icon,.hbaseServiceIcon,.hiveService .icon,.hiveServiceIcon,.hueService .icon,.hueServiceIcon,.zookeeperService .icon,.zookeeperServiceIcon,.flumeService .icon,.flumeServiceIcon,.mgmtService .icon,.mgmtServiceIcon,.oozieService .icon,.oozieServiceIcon,.impalaService .icon,.impalaServiceIcon,.sqoopService .icon,.sqoopServiceIcon,.solrService .icon,.solrServiceIcon,.ks_indexerService .icon,.ks_indexerServiceIcon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;padding:0 2px;}
 .hdfsService .icon,.hdfsServiceIcon{background-position:0 -288px;}
 .yarnService .icon,.yarnServiceIcon,.mapreduceService .icon,.mapreduceServiceIcon{background-position:0 -352px;}
@@ -1207,7 +1207,7 @@ label.error{display:inline-block;width:auto;padding:0 4px;}
 .unknownHealth{color:#960;}.unknownHealth .icon{background-position:0 -576px;}
 .nohistoryHealth{color:#333355;}.nohistoryHealth .icon{background-position:0 -128px;}
 .disabledHealth{color:#333355;}.disabledHealth .icon{background-position:0 -64px;}
-.UNKNOWNStatus .icon,.unknownStatus .icon,.NONEStatus .icon,.noneStatus .icon,.STOPPEDStatus .icon,.stoppedStatus .icon,.DOWNStatus .icon,.downStatus .icon,.UNKNOWN_HEALTHStatus .icon,.unknown_healthStatus .icon,.DISABLED_HEALTHStatus .icon,.disabled_healthStatus .icon,.CONCERNING_HEALTHStatus .icon,.concerning_healthStatus .icon,.BAD_HEALTHStatus .icon,.bad_healthStatus .icon,.GOOD_HEALTHStatus .icon,.good_healthStatus .icon{vertical-align:text-top;background-image:url('/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:2px;padding:0 3px 0 0;}
+.UNKNOWNStatus .icon,.unknownStatus .icon,.NONEStatus .icon,.noneStatus .icon,.STOPPEDStatus .icon,.stoppedStatus .icon,.DOWNStatus .icon,.downStatus .icon,.UNKNOWN_HEALTHStatus .icon,.unknown_healthStatus .icon,.DISABLED_HEALTHStatus .icon,.disabled_healthStatus .icon,.CONCERNING_HEALTHStatus .icon,.concerning_healthStatus .icon,.BAD_HEALTHStatus .icon,.bad_healthStatus .icon,.GOOD_HEALTHStatus .icon,.good_healthStatus .icon{vertical-align:text-top;background-image:url('/elasticsearch/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:2px;padding:0 3px 0 0;}
 .UNKNOWNStatus .iconLarge,.unknownStatus .iconLarge,.NONEStatus .iconLarge,.noneStatus .iconLarge,.STOPPEDStatus .iconLarge,.stoppedStatus .iconLarge,.DOWNStatus .iconLarge,.downStatus .iconLarge,.UNKNOWN_HEALTHStatus .iconLarge,.unknown_healthStatus .iconLarge,.DISABLED_HEALTHStatus .iconLarge,.disabled_healthStatus .iconLarge,.CONCERNING_HEALTHStatus .iconLarge,.concerning_healthStatus .iconLarge,.BAD_HEALTHStatus .iconLarge,.bad_healthStatus .iconLarge,.GOOD_HEALTHStatus .iconLarge,.good_healthStatus .iconLarge{vertical-align:middle;background-image:url('/static/cms/icons/sprite24x24.png');background-repeat:no-repeat;text-align:center;width:24px;height:24px;display:inline-block;}
 .HISTORY_NOT_AVAILABLEStatus .icon,.history_not_availableStatus .icon,.HISTORY_NOT_AVAILABLEStatus .iconLarge,.history_not_availableStatus .iconLarge{display:none;}
 .HISTORY_NOT_AVAILABLEStatus .summary,.history_not_availableStatus .summary{color:#111111;}
@@ -1287,7 +1287,7 @@ label.error{display:inline-block;width:auto;padding:0 4px;}
 .maintenanceIconActual24x24{background-position:0 -312px;}
 .maintenanceIconEffective24x24{background-position:0 -336px;}
 .column_filter16x16,.outdated_config16x16,.maintenanceIconActual16x16,.maintenanceIconEffective16x16{background-image:url('/static/cms/icons/sprite16x16.png');background-repeat:no-repeat;text-align:center;width:16px;height:16px;display:inline-block;}
-.outdated_config14x14{background-image:url('/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:1px;vertical-align:text-top;}
+.outdated_config14x14{background-image:url('/elasticsearch/static/cms/icons/sprite14x14.png');background-repeat:no-repeat;text-align:center;width:14px;height:14px;display:inline-block;margin-top:1px;vertical-align:text-top;}
 .maintenanceIconActual16x16{background-position:0 -1120px;}
 .maintenanceIconEffective16x16{background-position:0 -1152px;}
 .outdated_config24x24{background-position:0 -432px;}
@@ -1477,8 +1477,8 @@ html,html body{margin:0;}
 .DataTable.defaultRight th,.DataTable.defaultRight td{text-align:right;}
 .DataTable.defaultRight th.alignLeft,.DataTable.defaultRight td.alignLeft{text-align:left;}
 .DataTable.defaultRight th.sorting_desc,.DataTable.defaultRight th.sorting_asc{text-align:right;}.DataTable.defaultRight th.sorting_desc div,.DataTable.defaultRight th.sorting_asc div{margin-right:12px;margin-left:0;background-position:left;}.DataTable.defaultRight th.sorting_desc div.alignLeft,.DataTable.defaultRight th.sorting_asc div.alignLeft{background-position:right;}
-.DataTable th.sorting_asc div{background-image:url('/static/cms/icons/bullet_arrow_up.png');}
-.DataTable th.sorting_desc div{background-image:url('/static/cms/icons/bullet_arrow_down.png');}
+.DataTable th.sorting_asc div{background-image:url('/elasticsearch/static/cms/icons/bullet_arrow_up.png');}
+.DataTable th.sorting_desc div{background-image:url('/elasticsearch/static/cms/icons/bullet_arrow_down.png');}
 .DataTable .cmfTableFilterRow th,.DataTable .cmfTableFilterRow td{background-color:#777777;background:-moz-linear-gradient(top, #666666, #888888);background:-webkit-gradient(linear, left top, left bottom, from(#666666), to(#888888));-ms-filter:"progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#666666, EndColorStr=#888888)";filter:"progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#666666, EndColorStr=#888888)";}
 .DataTable .cmfTableFilterRow>th{background-color:#777777;background:-moz-linear-gradient(top, #666666, #888888);background:-webkit-gradient(linear, left top, left bottom, from(#666666), to(#888888));-ms-filter:"progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#666666, EndColorStr=#888888)";filter:"progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#666666, EndColorStr=#888888)";}
 .DataTable td p{padding-top:0;}

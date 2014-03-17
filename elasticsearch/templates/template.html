@@ -1,21 +1,31 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <script src="/static/ajaxfileupload.js"></script>
+    <script src="/elasticsearch/static/ajaxfileupload.js"></script>
 {% endblock %}
 
 
 {% block content %}
+
+<input type='hidden' id='opera_tag' />
 
 <div class="container-fluid" style="margin-top:5px" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
     <div class="toolbar">
         <a data-toggle="modal" 
             href="#myModal"
-            class="btn btn-primary AjaxLink">新建
+            class="btn btn-primary AjaxLink"
+            id="new_template">新建
         </a>
-        <a           
-            class="btn btn-primary AjaxLink" onclick="auto_load()">加载默认es模板
+        <a data-toggle="modal"
+            href="#myModal"         
+            class="btn btn-primary AjaxLink"
+            id="new_es">创建es模板
+        </a>
+        <a data-toggle="modal"
+            href="#myModal"         
+            class="btn btn-primary AjaxLink"
+            id="new_logstash">创建logstash模板
         </a>
     </div>
 
@@ -33,9 +43,9 @@
             <tbody>                
                 {% for item in template %}
                 <tr>
-                    <td><img border="0" src="/static/img/{{item.icon}}" style="height: 16px;width: 14px"></td>
+                    <td><img border="0" src="/elasticsearch/static/img/{{item.icon}}" style="height: 16px;width: 14px"></td>
                     
-                    <td><a href="/salt/configure?template_id={{item.id}}">
+                    <td><a href="/elasticsearch/salt/configure?template_id={{item.id}}">
                                 {{item.name}}</a></td>
                     
                     <td>
@@ -85,10 +95,10 @@
 
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:auto;min-width: 650px;height:auto;left: 45%;top:40%">
         <div class="modal-header">
-        <span id="modal-header" style="font-weight:600;font-size:20px;">新建模板</span>
+        <span id="template_modal-header" style="font-weight:600;font-size:20px;">新建模板</span>
         <a class="close" data-dismiss="modal">×</a>
         </div>
-        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="modal_body">
+        <div class="modal-body" style="overflow-y: auto;max-height: 400px;padding: 15px;" id="template_modal_body">
             <div class="control-group">
                 <label class="control-label">
                     名称
@@ -138,7 +148,7 @@
         {
 
             $.ajax({
-                url: '/salt/template/del',
+                url: '/elasticsearch/salt/template/del',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {id:id},
@@ -148,7 +158,7 @@
                     {
 
                         alert("操作成功");
-                        window.location.href="/salt/template";
+                        window.location.href="/elasticsearch/salt/template";
                         return;
                     }
                     else
@@ -165,23 +175,48 @@
             });
         }
 
-        $("#modal_command").click(function(){
-            name = $('#name1').attr("value");
-            if (name == "")
-            {
-                alert("请输入名称");
-                return;
-            }
+        function trim(input) {
+            return input.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+          }
 
-            if(confirm("是否继续")){
-                save_task();
+        $("#modal_command").click(function(){
+
+            var ope = $("#opera_tag").attr("value");
+            if (ope == "new_template")
+            {
+                name = $('#name1').attr("value");
+                name = trim(name);
+                if (name == "")
+                {
+                    alert("请输入名称");
+                    return;
+                }
+
+                if(confirm("是否继续")){
+                    save_task();
+                }
             }
+            else
+            {
+                var name = $("#new_es_name").val();
+                if (name == undefined)
+                {
+                    name = $("#new_logstash_name").val();
+                }
+                name = trim(name);
+                if (name == "")
+                {
+                    alert("请输入名称");
+                    return;
+                }
+                auto_load(name,ope);
+            }            
         });
 
         function save_task(){
             if(typeof $("#name").val() != 'undefined'){
                 $.ajaxFileUpload({
-                    url:'/salt/template/add_file',
+                    url:'/elasticsearch/salt/template/add_file',
                     secureuri:false,
                     fileElementId:'name',//input框的ID
                     dataType: 'json',//返回数据类型
@@ -205,7 +240,7 @@
             desc = $('#param_str').attr("value");
 
             $.ajax({
-                url: '/salt/template/add',
+                url: '/elasticsearch/salt/template/add',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {name:name,desc:desc,img:img},
@@ -214,37 +249,7 @@
                     if( data.status=="ok")
                     {
                         alert("新建成功");
-                        window.location.href="/salt/template";
-                        return;
-
-                    }
-                    else
-                    {
-                        alert("新建失败");
-                    }
-                },
-                error: function (data) {
-                    $(".modal-backdrop").remove();
-                    $(".global-spinner-well").hide();
-                    //alert(data);
-                    alert("新建出错");
-                }
-            });
-        }
-
-        function auto_load()
-        {
-            $.ajax({
-                url: '/salt/template/auto_load',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {name:"auto"},
-                timeout: 10000,
-                success: function(data) {
-                    if( data.status=="ok")
-                    {
-                        alert("新建成功");
-                        window.location.href="/salt/template";
+                        window.location.href="/elasticsearch/salt/template";
                         return;
 
                     }
@@ -262,8 +267,65 @@
             });
         }
 
-         $(document).ready(function() {
+        function auto_load(name,ope)
+        {
+            $.ajax({
+                url: '/elasticsearch/salt/template/auto_load',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {name:name,ope:ope},
+                timeout: 100000,
+                success: function(data) {
+                    if( data.status=="ok")
+                    {
+                        alert("新建成功");
+                        window.location.href="/elasticsearch/salt/template";
+                        return;
+
+                    }
+                    else
+                    {
+                        alert("新建失败: " + data.result);
+                    }
+                },
+                error: function (data) {
+                    $(".modal-backdrop").remove();
+                    $(".global-spinner-well").hide();
+                    //alert(data);
+                    alert("新建出错");
+                }
+            });
+        }
+
+        function new_template()
+        {
+            var html = '<div class="control-group"><label class="control-label">名称</label><div class="controls"><input id="name1" name="templateName" value="" type="text"><p class="help-block message"></p></div></div><div class="control-group"><label class="control-label">描述</label><div class="controls"><textarea id="param_str" name="desc" style="height:80px;"></textarea><p class="help-block message"></p></div></div><div class="control-group"><label class="control-label">图标</label><div class="controls"><input type="file" name="upload_file" id="name" size="28" /><p class="help-block message"></p></div></div>';
+            $("#template_modal-header").html("新建模板");
+            $("#template_modal_body").html(html);
+            $("#opera_tag").attr("value","new_template");
+        }
+
+        function new_es()
+        {
+            var html = '<div class="control-group"><label class="control-label">名称</label><div class="controls"><input id="new_es_name" type="text"></div></div';
+            $("#template_modal-header").html("新建es模板");
+            $("#template_modal_body").html(html);
+            $("#opera_tag").attr("value","new_es");
+        }
+
+        function new_logstash()
+        {
+            var html = '<div class="control-group"><label class="control-label">名称</label><div class="controls"><input id="new_logstash_name" type="text"></div></div';
+            $("#template_modal-header").html("新建logstash模板");
+            $("#template_modal_body").html(html);
+            $("#opera_tag").attr("value","new_logstash");
+        }
+
+        $(document).ready(function() {
             page_light("template_page");
+            $("#new_template").click(new_template);
+            $("#new_es").click(new_es);
+            $("#new_logstash").click(new_logstash);
        });
      </script>
 {% endblock %}

@@ -22,4 +22,8 @@ nohup python2.7  /var/www/salt/manage.py celeryd -l info 1>/dev/null 2>&1 &
 nohup python2.7  /var/www/salt/manage.py celerybeat -l info 1>/dev/null 2>&1 &
 
 
+sudo killall -9 /usr/bin/python2.7 /usr/bin/salt-api
+
+sudo salt-api start -d
+
 

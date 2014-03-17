@@ -9,6 +9,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os,sys
 os.environ["http_proxy"] = ""
@@ -64,7 +66,7 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = '/elasticsearch/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -153,13 +155,13 @@ CELERYBEAT_SCHEDULE = {
 
     "git_upload_every_night": {
             "task": "sche.instance_status.upload_to_git",
-            "schedule": crontab(minute=17, hour=15),
+            "schedule": crontab(minute=23, hour=9),
             "args": ()
             },
 
     "indices_crontab":{
             "task": "sche.instance_status.indices_crontab",
-            "schedule": crontab(minute=10, hour=0),
+            "schedule": crontab(minute=26, hour=0),
             "args": (["/home/op1/curator/es_index_maint.sh"])
             },
 }
@@ -197,9 +199,6 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
-
-STATIC_URL = '/static/'
-
 
 temp_path =  os.path.join(os.path.dirname(__file__), '/elasticsearch/templates')
 
@@ -242,11 +241,16 @@ AUTHENTICATION_BACKENDS = (
 CAS_SERVER_URL = 'http://192.168.93.59:8085/caso/' if DEBUG else 'https://cas.ctripcorp.com/caso/ <http://192.168.93.59:8085/caso/%27%20if%20DEBUG%20else%20%27https://cas.ctripcorp.com/caso/> '
 CAS_LOGOUT_COMPLETELY = True
 CAS_IGNORE_REFERER = True
-CAS_REDIRECT_URL = "/salt/index"
+CAS_REDIRECT_URL = "/elasticsearch/salt/index"
 CAS_AUTO_CREATE_USERS = True
 CAS_GATEWAY = False
 CAS_RETRY_LOGIN = True
-LOGIN_URL = '/login'
-LOGOUT_URL = '/logout'
-LOGIN_REDIRECT_URL = '/salt/index'
 
+'''
+LOGIN_URL = '/elasticsearch/login'
+LOGOUT_URL = '/elasticsearch/logout'
+LOGIN_REDIRECT_URL = '/elasticsearch/salt/index'
+'''
+
+SOURCE_ROOT = "/srv/salt/source/es/"
+PILLAR_ROOT = "/srv/pillar/es/"

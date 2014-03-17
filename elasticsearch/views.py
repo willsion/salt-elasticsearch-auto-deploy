@@ -13,9 +13,10 @@ from django.contrib.auth.decorators import login_required, permission_required
 import json,traceback,time,re
 import os,salt.client,time,datetime
 from time import mktime
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
+
+from _pillar.pillar_op import *
+
+
 import salt.utils,uuid 
 from celery.decorators import task
 
@@ -70,13 +71,13 @@ def fetch_job(request):
 def celery_highstate(list_data,job_id):
 
     try:
-        cmd = 'salt -L "' + ','.join(list_data) + '" saltutil.refresh_pillar'
-        print "====rfr==",cmd
-        os.system(cmd)
+        web_request(','.join(list_data),"saltutil.refresh_pillar",[],None,None)
 
-        cmd = 'salt -L "' + ','.join(list_data) + '" state.highstate >> ' + files_path + "/" + job_id
-        print "======job=====",cmd
-        os.system(cmd)
+        result = web_request(','.join(list_data),"state.highstate",[],None,None)
+
+        with salt.utils.fopen(files_path + "/" + job_id, 'w') as fp_:
+            print >> fp_,str(result)
+
     except:
         traceback.print_exc()
 
@@ -89,8 +90,7 @@ def highstate_commit(request):
     idarray = request.POST.get("id",None)
     context = {"status":"ok"}
     try:
-        pi = pillar()
-        pi._refresh()
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
 
         idarray = idarray.split("&")
         id = str(uuid.uuid1())
@@ -217,21 +217,21 @@ def indexdata(request):
 @task(ignore_result=True)
 def hosts_operations_action(es__operation,action,_operation,job_id):
     ret = ""
-    local  = salt.client.LocalClient()
     if not es__operation == set():
-        result = local.cmd(list(es__operation), 'elasticsearch.' + action, [],timeout=60, expr_form="list")
-        for k,v in result.items():
-            ret = ret +  str(k) + " : " + str(v)
+
+        result = web_request(','.join(list(es__operation)),'elasticsearch.' + action,[],None,None)
+
+        ret = ret +  str(result)
+
     for _tem,_targ in _operation.items():
         print "_tem,_targ ",_tem,_targ
         for _conf_key,_target_list in _targ.items():
             _machine_l = _conf_key.split(",")
             _cf = _target_list
 
-            result = local.cmd(list(_machine_l), _tem + '.' + action, _cf,timeout=60, expr_form="list")
+            result = web_request(','.join(list(_machine_l)),_tem + '.' + action,_cf,None,None)
+            ret =  ret  + str(result)
 
-            for k,v in result.items():
-                ret =  ret + str(k) + " : " + str(v) + "\n\n"
     with salt.utils.fopen(files_path + "/" + job_id , 'w') as fp_:
         print >> fp_,ret
     with salt.utils.fopen(files_path + "/" + job_id + "_flag", 'w') as fp_:
@@ -270,7 +270,7 @@ def hosts_operations(request):
 
             try:
                 _role = role.objects.get(id=int(_ele.role_id))
-                _template = _role.service.name
+                _template = _role.service.type
             except:
                 logger.error("_role fail " + traceback.format_exc())
                 context["result"].append([machine_id,u"无法找到对应模板"])
@@ -508,32 +508,42 @@ def ser_command(request):
             ser.save()
 
             #修改这个cluster的 pillar信息
-            template_name = ser.belong_template.name
-            exec("pt = pillar_" +  template_name + "()")
-            pi = pillar(pt)
-            pi.rm_cluster(template_name,ser.name)
-            pi.add_cluster(template_name,new_name)
+            _type = ser.belong_template.type
+            name  = ser.belong_template.name
+
+        try:
+            web_request("master","pillar_module.pillar_operation",[name,ser.name],_type,"rm_cluster")
+        except:
+            logger.error("ser_command " + traceback.format_exc())
+
+        try:
+            web_request("master","pillar_module.pillar_operation",[name,new_name],_type,"add_cluster")
+        except:
+            logger.error("ser_command " + traceback.format_exc())
+
 
         else:
             #删除逻辑               
             instance_machine.objects.filter(ser_id=int(id)).delete()
             ser.delete()
 
-            template_name = ser.belong_template.name
-            exec("pt = pillar_" +  template_name + "()")
-            pi = pillar(pt)
-            pi.rm_cluster(template_name,ser.name)
+            _type = ser.belong_template.type
+            name  = ser.belong_template.name
+            try:
+                web_request("master","pillar_module.pillar_operation",[name,ser.name],_type,"rm_cluster")
+            except:
+                logger.error("ser_command " + traceback.format_exc())
 
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
     except Exception,e:
         logger.error("ser_command " + traceback.format_exc())
         context = {"status":"fail","reason":e}
 
-    pi = pillar()
-    pi._refresh()
+
         
     return HttpResponse(json.dumps(context))
 
-@login_required
+#@login_required
 def services_display(request):
     try:
         st = services_template.objects.all()
@@ -568,7 +578,8 @@ def services_display(request):
                 ser_dict["id"] = item.id
                 ser_dict["name"] = item.name
                 ser_dict["icon"] = item.belong_template.icon
-                ser_dict["template"] = item.belong_template.name
+                ser_dict["template"] = item.belong_template.type
+                ser_dict["template_name"] = item.belong_template.name
                 #遍历这个ser所有的实例
                 all_instance = instance_machine.objects.filter(ser_id=item.id)
 
@@ -587,7 +598,7 @@ def services_display(request):
                     for role_item in _role:                        
                         single_role = {}
                         single_role["role"] = role_item
-                        if not  item.belong_template.name.lower() == "elasticsearch":
+                        if not  item.belong_template.type.lower() == "elasticsearch":
                             _temp_conf = set()
                             for x in role_conf_item.objects.filter(role_id=role_item):
                                 _conf = x.configure_item.template_configure_id
@@ -596,7 +607,7 @@ def services_display(request):
 
                         machine_dict["role"].append(single_role)
 
-                    if  item.belong_template.name.lower() == "elasticsearch":
+                    if  item.belong_template.type.lower() == "elasticsearch":
 
                         try:
                             _refresh_time = mktime(time.strptime(machine_instance[0].last_check, "%Y-%m-%d %H:%M:%S"))

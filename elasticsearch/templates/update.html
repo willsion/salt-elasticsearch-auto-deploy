@@ -1,10 +1,12 @@
 {% extends "service_base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="/static/odb-app.css">
+<link rel="stylesheet" href="/elasticsearch/static/odb-app.css">
 {% endblock %}
 
 {% block service_content %}
+<input type='hidden' class='tem_type' value="{{tem_type}}"/>
+
 <div style="text-align: right; margin-top: 10px; height: 32px;">
      <span style="float: left;padding-left:10px; font-size: 16px;margin: 5px 0px;">service种类：{{services_tmp}}</span>
      <a onclick="submit()"  class="btn btn-primary AjaxLink">提交升级</a>
@@ -54,7 +56,7 @@
                                 <tr class='{{item.id}}_table'>
 {#                                    <td style="width: 25px;"><input class="chkRole" type="checkbox"></td>#}
 {#                                    <td>#}
-{#                                        <img border="0" class="img" src="/static/img/{{r.2}}" style="height: 16px;width: 14px">#}
+{#                                        <img border="0" class="img" src="/elasticsearch/static/img/{{r.2}}" style="height: 16px;width: 14px">#}
 {#                                    </td>#}
                                     <td>
                                         <label class="name" >{{r.name}}</label><input type='hidden' class="ser_id" value='{{r.id}}' />
@@ -131,7 +133,7 @@
 
         </div>
         <div class="modal-footer">
-            <a class="btn btn-primary" data-dismiss="modal"   href="/salt/update?service_id={{services.id}}&cluster_id={{cluster.id}}" >关闭</a>
+            <a class="btn btn-primary" data-dismiss="modal"   href="/elasticsearch/salt/update?service_id={{services.id}}&cluster_id={{cluster.id}}" >关闭</a>
         </div>
     </div>
 {% endblock %}
@@ -150,7 +152,7 @@
             {
                 var job_size = $(".job_size").attr("value");
                 $.ajax({
-                        url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                        url: "/elasticsearch/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
                         type: 'GET',
                         dataType: 'JSON',
                         timeout: 5000,
@@ -273,11 +275,11 @@
             machine_ids=machine_id_list.join("_");
             //alert(machine_ids);
             $.ajax({
-                url: '/salt/update/execute',
+                url: '/elasticsearch/salt/update/execute',
                 type: 'POST',
                 dataType: 'JSON',
                 timeout: 50000 ,
-                data: {package_url:package_url,service_id:{{services.id}},service_version:service_version,machine_ids:machine_ids,service_tmp:'{{services_tmp}}'},
+                data: {package_url:package_url,tem_type:$(".tem_type").attr("value"),service_id:{{services.id}},service_version:service_version,machine_ids:machine_ids,service_tmp:'{{services_tmp}}'},
                 /*success: function(data) {
                     if( data.status=="ok")
                     {

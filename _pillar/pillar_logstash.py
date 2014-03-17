@@ -8,9 +8,10 @@ import salt.utils
 class pillar_logstash(object):
 
 
-    def role_conf(self,role_conf):
+    def role_conf(self,role_conf,template):
 
-        all_role = role.objects.filter(name__in=role_conf)
+        st = services_template.objects.get(name=template)
+        all_role = role.objects.filter(name__in=role_conf,service=st)
 
         all_conf_id = role_conf_item.objects.filter(role_id__in=all_role)
 
@@ -43,7 +44,8 @@ class pillar_logstash(object):
 
     def _add_role(self,role_file,template,name):
         try:
-            role_item = role.objects.get(name=name)
+            st = services_template.objects.get(name=template)
+            role_item = role.objects.get(name=name,service=st)
             all_object = role_conf_item.objects.filter(role_id=role_item)
             all_configure = []
             for x in all_object:

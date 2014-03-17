@@ -2,7 +2,7 @@
 
 
 {% block head %}
-<link rel="stylesheet" href="/static/bootstrap_table.css">
+<link rel="stylesheet" href="/elasticsearch/static/bootstrap_table.css">
 {% endblock %}
 
 
@@ -20,7 +20,7 @@
 
         <div class="h1-toolbar pull-right nowrap">
             <div class="btn-group currentModeOnly">
-                <a class="btn" title="Add Cluster" href="/salt/cluster/add_cluster/redirect_display">增加集群</a>
+                <a class="btn" title="Add Cluster" href="/elasticsearch/salt/cluster/add_cluster/redirect_display">增加集群</a>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
 
                             <ul class="dropdown-menu">    
         
-                                <li><a  href="/salt/cluster/add_serivce/display?cluster_id={{cluster.id}}">增加服务</a></li>
+                                <li><a  href="/elasticsearch/salt/cluster/add_serivce/display?cluster_id={{cluster.id}}">增加服务</a></li>
            
                                 <li class="divider"></li>        
         
@@ -69,7 +69,7 @@
 
                                 <li class="divider"></li> 
 
-                                <li><a  href="/salt/cluster/redirect_display?id={{cluster.id}}">修改机器关联</a></li>    
+                                <li><a  href="/elasticsearch/salt/cluster/redirect_display?id={{cluster.id}}">修改机器关联</a></li>    
     
                             </ul>
                         </div>
@@ -88,7 +88,8 @@
                 <table class="DataTable datatab" id="servicesTable1" style="font-size: 14px;">
                     <thead>
                         <tr>
-                            <th  rowspan="2" style="width: 8%"><div>名称</div></th>                           
+                            <th  rowspan="2" style="width: 8%"><div>名称</div></th>
+                            <th  rowspan="2" style="width: 8%"><div>模板</div></th>                           
                             <th  rowspan="2" style="width: 2%"></th>
                             <th  rowspan="1" style="width: 45%;text-align:center">实例</th>
                             <th  rowspan="1" ></th>
@@ -110,9 +111,10 @@
                         {% for service in cluster.service %}
                         <tr class="service">                            
                             <td>        
-                                <a class="showTooltip" href="/salt/service/instance?service_id={{service.id}}"><img border="0" src="/static/img/{{service.icon}}" style="height: 16px;width: 14px">
+                                <a class="showTooltip" href="/elasticsearch/salt/service/instance?service_id={{service.id}}"><img border="0" src="/elasticsearch/static/img/{{service.icon}}" style="height: 16px;width: 14px">
                                     <span>{{service.name}}</span></a>
                             </td>
+                            <td>{{service.template_name}}</td>
                             <td>
                             </td>
 
@@ -131,7 +133,7 @@
                                                         <tr>
                                                             <td style="width: 30%;overflow:hidden;">
                                                                 {% for role in instance.role %}
-                                                                    <span class="label label-success">{{ role.role.name|slice:":1" }}</span>
+                                                                    <span class="label label-success">{{ role.role.name|slice:":1"|upper }}</span>
                                                                 {% endfor %}
                                                             </td>
                                                             <td style="width: 30%;overflow:hidden;">
@@ -194,20 +196,20 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a
-                                            href="/salt/instance?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            href="/elasticsearch/salt/instance?service_id={{service.id}}&cluster_id={{cluster.id}}"
                                             class="AjaxLink"
                                             href=>实例 管理
                                             </a>
                                         </li>
                                         <li class="divider"></li>
                                         <li><a
-                                            href="/salt/indices?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            href="/elasticsearch/salt/indices?service_id={{service.id}}&cluster_id={{cluster.id}}"
                                             class="AjaxLink"
                                             href=>索引维护
                                             </a>
                                         </li>
                                         <li><a
-                                            href="/salt/update?service_id={{service.id}}&cluster_id={{cluster.id}}"
+                                            href="/elasticsearch/salt/update?service_id={{service.id}}&cluster_id={{cluster.id}}"
                                             class="AjaxLink"
                                             href=>版本升级
                                             </a>
@@ -280,7 +282,7 @@
                 $('#modal-header').text("修改关联机器");
                 $('#modal-body').html("请稍候......");
                 $.ajax({
-                url: "/salt/cluster/machine_list?id=" + id,
+                url: "/elasticsearch/salt/cluster/machine_list?id=" + id,
                 type: 'GET',
                 dataType: 'JSON',
                 timeout: 5000,
@@ -333,11 +335,11 @@
 
             if (opera_tag == 1)
             {
-                url = '/salt/service/com';
+                url = '/elasticsearch/salt/service/com';
             }
             else
             {
-                url = '/salt/cluster/com';             
+                url = '/elasticsearch/salt/cluster/com';             
             }
 
             $.ajax({
@@ -353,13 +355,13 @@
                     {
 
                         alert("操作成功");
-                        window.location.href="/salt/services";
+                        window.location.href="/elasticsearch/salt/services";
                         return;   
                     } 
                     else
                     {
                         alert("操作失败");
-                        window.location.href="/salt/services";
+                        window.location.href="/elasticsearch/salt/services";
                         return; 
                     }
                 },
@@ -383,7 +385,7 @@
             });
 
             $.ajax({
-                url: "/salt/instance/status",
+                url: "/elasticsearch/salt/instance/status",
                 type: 'POST',
                 dataType: 'JSON',
                 data: {id:id.join("&")},
@@ -476,7 +478,7 @@
                        "sLast": "尾页"
                        },
                        "sZeroRecords": "",
-                       "sProcessing": "<img src='/static/img/loading10.gif' />"
+                       "sProcessing": "<img src='/elasticsearch/static/img/loading10.gif' />"
                     },
                     "aaSorting": [[ 0, "asc" ]]
                 });

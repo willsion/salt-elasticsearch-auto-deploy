@@ -6,15 +6,15 @@ from django.template import Context
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.template import RequestContext
+from django.conf import settings
 from elasticsearch.models import *
 from django.db import connection
 from elasticsearch import logger
 import json,traceback,os,re,traceback,uuid,re,copy
 from elasticsearch.salt_api import __fetch_machine_info
 from elasticsearch import logger
-from _pillar.pillar import *
-from _pillar.pillar_elasticsearch import *
-from _pillar.pillar_logstash import *
+
+from _pillar.pillar_op import *
 
 files_path = os.path.join(
             os.path.join(
@@ -39,25 +39,63 @@ def auto_load_file(name,sepa,deploy_path,reg,st):
     con.deploy_path = deploy_path
     con.services_template_id = st
     con.save()        
-    request = {"name":name,"reg":reg,"id":"o_" + str(con.id),"checked":""}
+    request = {"name":name,"reg":reg,"id":"o_" + str(con.id),"checked":"","mock_flag":1}
     a = mock_http(request)
     _configure_add_reg(a)
 
 
+def check_role(role_item,conf_item):
+    request = {"role_id_array":str(role_item.id),"id":str(conf_item.id),"add_array":"checked","del_array":""}
+    a = mock_http(request)
+    role_configure_relative(a)
+    cc = role_conf_item.objects.get(role_id=role_item,configure_item=conf_item)
+    request = {"role_conf_id":str(cc.id),"name":"True","mock_http":"True"}
+    a = mock_http(request)
+    role_conf_configure_commit(a)
+
 def auto_load(request):
+    name = request.POST.get("name","").replace(".","_")
+    ope = request.POST.get("ope",None)
+
+    if ope == "new_es":
+        ret = es_load(name)
+    else:
+        ret = logstash_load(name)
+
+    return HttpResponse(json.dumps(ret))
+
+
+def logstash_load(name):
     ret = {"status":"ok"}
     try:
-        st = services_template.objects.get(name="elasticsearch")
-        ret = {"status":"fail","result":"elasticsearch existed!"}
+        st = services_template.objects.get(name=name)
+        ret = {"status":"fail","result":"已存在同名模板，不允许再创建哦"}
+    except:
+        try:
+            request = {"name":name,"desc":"logstash","img":"logstash.png","type":"logstash","mock_flag":True}
+            a = mock_http(request)
+            _add(a)
+        except Exception,e:
+            traceback.print_exc()
+            ret["status"] = "fail"
+            ret["result"] = e
+            logger.error("fetch_role " + traceback.format_exc())                
+
+    return ret
+
+
+def es_load(name):
+    ret = {"status":"ok"}
+    try:
+        st = services_template.objects.get(name=name)
+        ret = {"status":"fail","result":"已存在同名模板，不允许再创建哦"}
     except:
 
         try:
-            st = services_template()
-            st.name = "elasticsearch"
-            st.description = "elasticsearch"
-            st.icon  = "elasticsearch.png"
-            st.save()
-
+            request = {"name":name,"desc":"elasticsearch","img":"elasticsearch.png","type":"elasticsearch","mock_flag":True}
+            a = mock_http(request)
+            _add(a)
+            st = services_template.objects.get(name=name)
             for item in ["masternode","datanode","http"]:
                 request = {"name":item,"id":st.id}
                 a = mock_http(request)
@@ -71,8 +109,10 @@ def auto_load(request):
 
             auto_load_file("elasticsearch.yml",": ","",r"[\r\n]+[#]?[ ]*([^: ]+)[ ]*:[ ]*([^\r\n]+)",st)
 
+            auto_load_file("logging.yml",": ","",r"([^:\n]+):([\s\S]*?)(?=[\n]{2}|$)",st)
+
             #有个配置 写不出合适的regex能匹配出来，只有手工增加了
-            el_con = template_configure.objects.get(name="elasticsearch.yml")
+            el_con = template_configure.objects.get(name="elasticsearch.yml",services_template_id=st)
             index_item = configure()
             index_item.template_configure_id = el_con
             index_item.key = "index"
@@ -81,35 +121,29 @@ def auto_load(request):
 
             auto_load_file("elasticsearch.in.sh","=","/home/op1/app/elasticsearch/bin/",r"(?<=\n)([^=\n]+)=([\s\S]*?)(?=\n\n)",st)
 
+            #找到配置文件
+            conf_90 = template_configure.objects.get(name="90-nproc.conf",services_template_id=st)
+            conf_limit = template_configure.objects.get(name="limits.conf",services_template_id=st)
+            conf_log = template_configure.objects.get(name="logging.yml",services_template_id=st)
+            conf_in = template_configure.objects.get(name="elasticsearch.in.sh",services_template_id=st)
 
-            #然后关联role和配置
-            #masternode关联elasticsearch.yml的node.master
-            request = {"role_id_array":"masternode","id":str(configure.objects.get(key="node.master",template_configure_id=el_con).id),"add_array":"checked","del_array":""}
-            a = mock_http(request)
-            role_configure_relative(a)
-            cc = role_conf_item.objects.get(role_id=role.objects.get(name="masternode"),configure_item=configure.objects.get(key="node.master"))
-            cc.value = "true"
-            cc.save()
+            #找到敢刚增加的文件中的master，data，http三个配置项
+            master = configure.objects.get(key="node.master",template_configure_id = el_con)
+            data   = configure.objects.get(key="node.data",template_configure_id = el_con)
+            http   = configure.objects.get(key="http.enabled",template_configure_id = el_con)
 
-            #datanode
-            request = {"role_id_array":"datanode","id":str(configure.objects.get(key="node.data",template_configure_id=el_con).id),"add_array":"checked","del_array":""}
-            a = mock_http(request)
-            role_configure_relative(a)
-            cc = role_conf_item.objects.get(role_id=role.objects.get(name="datanode"),configure_item=configure.objects.get(key="node.data"))
-            cc.value = "true"
-            cc.save()
+            #三个role
+            role_master = role.objects.get(name="masternode",service=st)
+            role_data = role.objects.get(name="datanode",service=st)
+            role_http = role.objects.get(name="http",service=st)
 
-            #http
-            request = {"role_id_array":"http","id":str(configure.objects.get(key="http.enabled",template_configure_id=el_con).id),"add_array":"checked","del_array":""}
-            a = mock_http(request)
-            role_configure_relative(a)              
-            cc = role_conf_item.objects.get(role_id=role.objects.get(name="http"),configure_item=configure.objects.get(key="http.enabled"))
-            cc.value = "true"
-            cc.save()
+            check_role(role_master,master)
+            check_role(role_data,data)
+            check_role(role_http,http)
 
             #每个role都关联每份配置文件
-            for item in configure.objects.filter(key="#relative_role"):
-                for _role_item in ["masternode","datanode","http"]:
+            for item in configure.objects.filter(key="#relative_role",template_configure_id__in=[conf_90,conf_limit,conf_log,conf_in]):
+                for _role_item in map(str,[role_master.id,role_data.id,role_http.id]):
                     request = {"role_id_array":_role_item,"id":str(item.id),"add_array":"checked","del_array":""}
                     a = mock_http(request)
                     role_configure_relative(a)
@@ -120,7 +154,7 @@ def auto_load(request):
             ret["result"] = e
             logger.error("fetch_role " + traceback.format_exc())                           
 
-    return HttpResponse(json.dumps(ret))
+    return ret
 
 
 def fetch_role(request):
@@ -152,7 +186,7 @@ def role_configure_relative(request):
     ret = {"status":"ok"}
 
     try:
-        role_id_array = [role.objects.get(name=x)  for x in role_id_array]
+        role_id_array = [role.objects.get(id=x)  for x in role_id_array]
 
         meta = zip(role_id_array,add_array,del_array)
 
@@ -186,18 +220,18 @@ def role_configure_relative(request):
         __refresh_conf(_conf_file)
 
         for item in role_id_array:
-            template_name = item.service.name
-            exec("pt = pillar_" +  template_name + "()")
-            pi = pillar(pt)
-            pi.add_role(template_name,item.name)
+            type = item.service.type
+            name = item.service.name
+            try:
+                web_request("master","pillar_module.pillar_operation",[name,item.name],type,"add_role")
+            except:
+                logger.error("modify " + traceback.format_exc())
 
 
         #还需要获取关联该role的所有机器，因为要刷新这些机器的 配置文件的pillar信息
-        pi = pillar()
-        pi._refresh()
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
 
     except:
-        traceback.print_exc()
         logger.error("role_configure_relative " + traceback.format_exc())
 
     return HttpResponse(json.dumps(ret))    
@@ -274,8 +308,7 @@ def _commit_role_conf(request):
 
 
 
-        pi = pillar()
-        pi._refresh()
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
     
     except Exception,e:
         traceback.print_exc()
@@ -426,7 +459,7 @@ def _configure_content(request):
 
         _tc = template_configure.objects.get(id=int(id))
 
-        con = configure.objects.filter(template_configure_id=_tc)
+        con = configure.objects.filter(template_configure_id=_tc).exclude(key__in=["#relative_role","node.master","node.data","http.enabled"])
 
         for item in con:
             role_name = role_conf_item.objects.filter(configure_item=item)
@@ -451,6 +484,7 @@ def _configure_add_reg(request):
     _reg  = request.POST.get("reg",None)
     _id   = request.POST.get("id",None)
     _checked = request.POST.get("checked",None)
+    _mock_flag = request.POST.get("mock_flag",None)
 
     try:
         try:
@@ -492,7 +526,10 @@ def _configure_add_reg(request):
         logger.error("_configure_add_reg " + traceback.format_exc())
         result = {"status": "fail"}      
 
-    return HttpResponse(json.dumps(result)) 
+    if _mock_flag:
+        return
+    else:
+        return HttpResponse(json.dumps(result)) 
 
 
 def _configure_add_file(request):
@@ -527,10 +564,13 @@ def _del(request):
         item = services_template.objects.get(id=int(id))
         result = {"status": "ok"}
 
-        template_name = item.name
-        exec("pt = pillar_" +  template_name + "()")
-        pi = pillar(pt)
-        pi.sub_template(template_name)
+        type = item.type
+        name = item.name
+        try:
+            web_request("master","pillar_module.pillar_operation",[name,"temp"],type,"sub_template")
+        except:
+            logger.error("modify " + traceback.format_exc())
+
 
         #还需要删除所有该cluster的 role，ser，instance,configure_file,configure
         sv = services.objects.filter(belong_template=item)
@@ -555,8 +595,12 @@ def _del(request):
         item.delete()
 
         #更新所有target的pillar信息
-        pi._refresh()
-
+        web_request("master","pillar_module.pillar_operation",[],None,"_refresh")
+        #还要删除source配置
+        soure_root = settings.SOURCE_ROOT
+        template_path = soure_root + "/" + '/'.join([item.type,item.name])
+        from shutil import rmtree
+        rmtree(template_path)
     except:
         logger.error("_del " + traceback.format_exc())
         result = {"status": "fail"}
@@ -571,28 +615,34 @@ def _add(request):
     name = request.POST.get("name","default").strip()
     desc = request.POST.get("desc",'').strip()
     icon = request.POST.get("img",None)
-
+    type = request.POST.get("type",name)
+    mock_flag = request.POST.get("mock_flag",False)
     try:
         st = services_template()
         st.name = name
-        st.desc = desc
+        st.description = desc
+        st.type = type
         st.icon = icon
         st.save()
 
-        #elasticsearch不需要创建，elasticsearch的一部分pillar信息是写死的
-        if not name == "elasticsearch":
-            template_name = name
-            exec("pt = pillar_" +  template_name + "()")
-            pi = pillar(pt)
-            pi.add_template(template_name)
+        template_name = name
+
+        try:
+            web_request("master","pillar_module.pillar_operation",[template_name,"temp"],type,"add_template")
+        except:
+            logger.error("modify " + traceback.format_exc())
 
         result = {"status": "ok"}
 
-    except:
+    except Exception,e:
         logger.error("_add " + traceback.format_exc())
-        result = {"status": "fail"}
 
-    return HttpResponse(json.dumps(result)) 
+        result = {"status": "fail","result":str(e)}
+
+    if not mock_flag:
+        return HttpResponse(json.dumps(result))
+    else:
+        return
 
 
 def _add_file(request):
@@ -736,12 +786,13 @@ def _add_configure(request):
             new_role.save()
 
             
-            #写role的逻辑
-            template_name = new_role.service.name
-            exec("pt = pillar_" +  template_name + "()")
-            pi = pillar(pt)
-            pi.add_role(template_name,new_role.name)
-                         
+            type = new_role.service.type
+            name = new_role.service.name
+
+            try:
+                web_request("master","pillar_module.pillar_operation",[name,new_role.name],type,"add_role")
+            except:
+                logger.error("modify " + traceback.format_exc())                    
 
     except Exception,e:
         logger.error("_add_configure " + traceback.format_exc())
@@ -754,7 +805,7 @@ def _add_role(request):
     增加role
     '''
     id = request.POST.get("id",None)
-    name = request.POST.get("name",str(uuid.uuid4())).strip()
+    name = request.POST.get("name",str(uuid.uuid4())).strip().replace(".","_")
 
     try:
         new_item = role()
@@ -764,24 +815,34 @@ def _add_role(request):
         result = {"status": "ok", "filename": name}
         new_item.save()
 
-        template_name = new_item.service.name
-        exec("pt = pillar_" +  template_name + "()")
-        pi = pillar(pt)
-        pi.add_role(template_name,new_item.name)
-
+        type = new_item.service.type
+        name = new_item.service.name
+        try:
+            web_request("master","pillar_module.pillar_operation",[name,new_item.name],type,"add_role")
+        except:
+            logger.error("modify " + traceback.format_exc())  
     except:
         logger.error("_add_role " + traceback.format_exc())
         result = {"status": "fail", "filename": name}        
 
     return HttpResponse(json.dumps(result))   
 
-path_mapping = {"logstash":"/srv/salt/source/logstash/conf/",
-                "elasticsearch":"/srv/salt/source/elasticsearch/"}
 
+def ___recu_mkdir(name):
+    name = name.split("/")
+    root = "/"
+    for i in range(0,len(name)):
+        if name[i] == "":
+            continue
+        root = root + name[i] + "/"
+        if not os.path.isdir(root):
+            mask = os.umask(002)
+            os.mkdir(root)
+            os.umask(mask)
 
 def __refresh_conf(idlist):
     '''
-    传参是 配置文件的id
+    传参是 配置文件的queryset
     '''
     if not type(idlist) == list:
         return
@@ -791,7 +852,7 @@ def __refresh_conf(idlist):
         name = item.name
         sepa = item.sepa
         template_name = item.services_template_id.name                 
-
+        _type = item.services_template_id.type
         '''
         获取真正的value,逻辑是根据每个配置，去查这个配置有多少个role在关联
         体现在 如果有 role关联了这个配置项，在role.sls文件中 应该有pillar关联
@@ -802,7 +863,19 @@ def __refresh_conf(idlist):
         '''
         conf = configure.objects.filter(template_configure_id=item)
 
-        with open(os.path.join(path_mapping[template_name], name), 'w') as destination:
+        '''
+        fix:修改逻辑：不同文件写到不同template下,type标识 是es还是logstash还是啥
+        '''
+
+        soure_root = settings.SOURCE_ROOT
+
+        try:
+            template_path = soure_root + "/" + '/'.join([_type,template_name])
+            ___recu_mkdir(template_path)
+        except:
+            traceback.print_exc()
+
+        with open(os.path.join(template_path, name), 'w') as destination:
             for conf_item in conf:
                 value = conf_item.value
                 try:
@@ -881,6 +954,9 @@ def _configure_modify(request):
 
 
 def _role_configure(request):
+    '''
+    获取某个role对应的某个配置的 值
+    '''
     configure_id = request.GET.get("configure_id",None)
     role_id = request.GET.get("role_id",None)
     result = {"status": "ok"}
@@ -896,9 +972,13 @@ def _role_configure(request):
     return HttpResponse(json.dumps(result))
 
 def role_conf_configure_commit(request):
+    '''
+    修改role关联的配置项的值
+    '''
     role_conf_configure_id = request.POST.get("role_conf_configure_id",'')
     role_conf_id           = request.POST.get("role_conf_id",'')
     name                   = request.POST.get("name","").replace("\\n","\n")
+    mock_flag              = request.POST.get("mock_http",False)
     result = {"status": "ok"}
 
     try:
@@ -906,23 +986,34 @@ def role_conf_configure_commit(request):
         rc.value = name
         rc.save()
 
+        '''
         __refresh_conf([rc.configure_item.template_configure_id])
+        接着在pillar的role里边 重写 该role对应的配置的值,写的格式是
+        这个配置在数据库configure表中的id: |
+          role对应的value
+        '''
+        type = rc.role_id.service.type
+        name = rc.role_id.service.name
 
-        template_name = rc.role_id.service.name
-        exec("pt = pillar_" +  template_name + "()")
-        pi = pillar(pt)
-        pi.add_role(template_name,rc.role_id.name)
+        try:
+            web_request("master","pillar_module.pillar_operation",[name,rc.role_id.name],type,"add_role")
+        except:
+            logger.error("modify " + traceback.format_exc())
 
     except:
         traceback.print_exc()
         result["status"] = "fail"
 
- 
-    return HttpResponse(json.dumps(result))
+    if not mock_flag: 
+        return HttpResponse(json.dumps(result))
+    else:
+        return
 
 
 def fetch_file_info(request):
-
+    '''
+    获取配置文件的信息
+    '''
     result = {"status": "ok"}
     try:
         id = request.POST.get("id","_None").split("_")[1]
@@ -939,6 +1030,9 @@ def fetch_file_info(request):
     return HttpResponse(json.dumps(result))
 
 def delete_conf(request):
+    '''
+    删除配置文件的信息
+    '''
     result = {"status": "ok"}
     try:
         id = request.POST.get("id","_None").split("_")[1]
@@ -953,7 +1047,7 @@ def delete_conf(request):
         c.delete()
 
         tc.delete()
-
+        #文件暂时不删了，保存个备份
     except Exception,e:
         traceback.print_exc()
         result["status"] = "fail"
@@ -961,7 +1055,9 @@ def delete_conf(request):
     return HttpResponse(json.dumps(result))
 
 def modify_configure_info(request):
-
+    '''
+    修改配置文件的信息
+    '''
     id = request.POST.get("id",None)
     name = request.POST.get("name",None)
     path = request.POST.get("path",None)
@@ -976,6 +1072,8 @@ def modify_configure_info(request):
         tc.deploy_path = path
         tc.sepa  = sep
         tc.save()
+
+        __refresh_conf([tc])
 
     except Exception,e:
         traceback.print_exc()

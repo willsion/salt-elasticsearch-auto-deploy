@@ -225,7 +225,7 @@
             }
             date_list = date_list.join("&");
             flag_list = flag_list.join("&");
-            adjax("/salt/indices/modify/batch_commit",{id_list:id_list,date_list:date_list,flag_list:flag_list},0);   
+            adjax("/elasticsearch/salt/indices/modify/batch_commit",{id_list:id_list,date_list:date_list,flag_list:flag_list},0);   
         }
 
         function batch()
@@ -238,7 +238,7 @@
                 var _exist_index = _batch("_exist_index");
                 var ser_id = $("#ser_id").attr("value");
 
-                adjax("/salt/indices/fetch/commit",{ser_id:ser_id,_need_add:_need_add,_need_delete:_need_delete,_exist_index:_exist_index},0);
+                adjax("/elasticsearch/salt/indices/fetch/commit",{ser_id:ser_id,_need_add:_need_add,_need_delete:_need_delete,_exist_index:_exist_index},0);
             }
             if (type == "batch_ope")
             {
@@ -283,14 +283,14 @@
                             else
                             {
                                 alert("操作成功");
-                                window.location.href="/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
+                                window.location.href="/elasticsearch/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
                                 return;
                             }                          
                         }
                         else
                         {
                             alert("操作失败: " + data.result);
-                            window.location.href="/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
+                            window.location.href="/elasticsearch/salt/indices?service_id={{services.id}}&cluster_id={{cluster.id}}";
                             return;
                         }
                     },
@@ -327,7 +327,7 @@
 
             $("#index_modal_body").html("请稍候");
             $("#index_modal-header").html("查询结果");
-            adjax("/salt/indices/fetch/display",{ser_id:ser_id,check_way:check_way,url:url,check_parttern:check_parttern},1);
+            adjax("/elasticsearch/salt/indices/fetch/display",{ser_id:ser_id,check_way:check_way,url:url,check_parttern:check_parttern},1);
 
             $("#ope_type").attr("value","fetch");
         }
@@ -514,7 +514,7 @@
             name_list = name_list.join("&");
             content   = content.join("&");
 
-             adjax("/salt/indices/modify/items_commit",{name_list:name_list,content:content},0);
+             adjax("/elasticsearch/salt/indices/modify/items_commit",{name_list:name_list,content:content},0);
         }
 
         function commit_ope()

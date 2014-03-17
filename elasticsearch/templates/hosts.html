@@ -159,7 +159,7 @@
                                 <tr class='{{host.id}}_table'>
                                     <td><input class="chkRole" type="checkbox"></td>
                                     <td>
-                                        <img border="0" class="img" src="/static/img/{{r.2}}" style="height: 16px;width: 14px">
+                                        <img border="0" class="img" src="/elasticsearch/static/img/{{r.2}}" style="height: 16px;width: 14px">
                                     </td>
                                     <td><label class="name" >{{r.0}}</label><input type='hidden' class="ser_id" value='{{r.1}}' /></td>
                                     <td class="instance_status" id="{{r.1}}_instance_status">
@@ -275,7 +275,7 @@
         function _add_node()
         {
             $.ajax({
-                url: '/salt/host/add',
+                url: '/elasticsearch/salt/host/add',
                 type: 'GET',
                 dataType: 'JSON',
                 timeout: 100000,
@@ -358,7 +358,7 @@
             ser = $('#ser_command').attr("value");
             id  = $('#ser_id').attr("value");
             $.ajax({
-                url: '/salt/host/hosts_operations',
+                url: '/elasticsearch/salt/host/hosts_operations',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {id:id,action:ser},
@@ -412,7 +412,7 @@
             });
 
             $.ajax({
-                url: "/salt/instance/status",
+                url: "/elasticsearch/salt/instance/status",
                 type: 'POST',
                 dataType: 'JSON',
                 data: {id:id.join("&")},
@@ -478,7 +478,7 @@
             {
                 var job_size = $(".job_size").attr("value");
                 $.ajax({
-                        url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                        url: "/elasticsearch/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
                         type: 'GET',
                         dataType: 'JSON',
                         timeout: 5000,

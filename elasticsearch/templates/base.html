@@ -10,18 +10,18 @@
     <title>elasticsearch</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/static/img/favicon.ico">
-    <link rel="stylesheet" href="/static/ext/jquery/css/bootstrap/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="/static/cms/css/bootstrap.css?v=4.8.0">
-    <link rel="stylesheet" href="/static/cms/css/bootstrap-responsive.css?v=4.8.0">
-    <link rel="stylesheet" href="/static/cms/css/cms.css?v=4.8.0">
-    <script type="text/javascript" src="/static/ext/modernizr-1.6.min.js"></script>    
-    <script type="text/javascript" src="/static/ext/jquery/js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="/static/ext/require.js"></script>
-    <script type="text/javascript" src="/static/ext/Class.js"></script>    
-    <script type="text/javascript" src="/static/ext/jquery/plugins/bootstrap-2.1.1.min.js"></script>    
-    <script type="text/javascript" src="/static/ext/jquery/plugins/jquery-plugins-all-4.7.min.js"></script>
-    <script type="text/javascript" src="/static/ext/jquery/plugins/moment.min.js"></script>
+    <link rel="shortcut icon" href="/elasticsearch/static/img/favicon.ico">
+    <link rel="stylesheet" href="/elasticsearch/static/ext/jquery/css/bootstrap/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/elasticsearch/static/cms/css/bootstrap.css?v=4.8.0">
+    <link rel="stylesheet" href="/elasticsearch/static/cms/css/bootstrap-responsive.css?v=4.8.0">
+    <link rel="stylesheet" href="/elasticsearch/static/cms/css/cms.css?v=4.8.0">
+    <script type="text/javascript" src="/elasticsearch/static/ext/modernizr-1.6.min.js"></script>    
+    <script type="text/javascript" src="/elasticsearch/static/ext/jquery/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/elasticsearch/static/ext/require.js"></script>
+    <script type="text/javascript" src="/elasticsearch/static/ext/Class.js"></script>    
+    <script type="text/javascript" src="/elasticsearch/static/ext/jquery/plugins/bootstrap-2.1.1.min.js"></script>    
+    <script type="text/javascript" src="/elasticsearch/static/ext/jquery/plugins/jquery-plugins-all-4.7.min.js"></script>
+    <script type="text/javascript" src="/elasticsearch/static/ext/jquery/plugins/moment.min.js"></script>
 
     <script type="text/javascript">
 
@@ -39,7 +39,7 @@
         });
 
         $.ajax({
-                url: "/salt/highstate/commit",
+                url: "/elasticsearch/salt/highstate/commit",
                 type: 'POST',
                 data: {id:idarray.join("&")},
                 dataType: 'JSON',
@@ -74,7 +74,7 @@
     function highstate()
     {
         $.ajax({
-                url: "/salt/highstate",
+                url: "/elasticsearch/salt/highstate",
                 type: 'GET',
                 dataType: 'JSON',
                 timeout: 5000,
@@ -111,7 +111,7 @@
         {
             var job_size = $(".job_size").attr("value");
             $.ajax({
-                    url: "/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
+                    url: "/elasticsearch/salt/fetch_job?job_id=" + job_id + "&job_size=" + job_size,
                     type: 'GET',
                     dataType: 'JSON',
                     timeout: 5000,
@@ -158,7 +158,7 @@
 <div class="navbar navbar-inverse AppHeader CustomGradientblack">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand appName" href="/" style="text-decoration:none"><img border="0" src="/static/img/logo.png" style="height: 35px;width: 35px">ELK Manager<span class="hidden productName" >ELK managered</span></a>
+            <a class="brand appName" href="/elasticsearch/index" style="text-decoration:none"><img border="0" src="/elasticsearch/static/img/logo.png" style="height: 35px;width: 35px">ELK Manager<span class="hidden productName" >ELK managered</span></a>
 
             
             <ul class="nav pull-right">
@@ -175,7 +175,7 @@
                     
                         <li>
                             <a class="AjaxLink link-with-counter" title="退出登录"
-                                    href="/salt/status">退出登录
+                                    href="/logout">退出登录
                                 <i class="icon-text-width icon-white"></i>
                             </a>
                         </li>
@@ -188,28 +188,28 @@
             <ul class="nav" id="main_page">    
                 <li class="active" >    
                         <a
-                    href="/salt/index"
+                    href="/elasticsearch/salt/index"
                     >
                     主页</a>    
                 </li>
 
                 <li id="ser_page">    
                     <a
-                    href="/salt/services"
+                    href="/elasticsearch/salt/services"
                     >
                     集群</a>    
                 </li>
     
                 <li id="host_page">    
                     <a
-                    href="/salt/host"
+                    href="/elasticsearch/salt/host"
                     >
                     主机</a>    
                 </li>
 
                 <li id="template_page">
                     <a
-                    href="/salt/template"
+                    href="/elasticsearch/salt/template"
                     >
                     模板</a>    
                 </li>

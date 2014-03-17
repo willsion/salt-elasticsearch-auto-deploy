@@ -30,7 +30,7 @@ class status:
 
     __fetch_sql = '''
     select
-        services_template.name,
+        services_template.type,
         machine.target,
         instance_machine.id,
         machine.IP
@@ -47,7 +47,7 @@ class status:
     ON cluster.id = machine.cluster
     LEFT JOIN role_conf_item
     ON role.id = role_conf_item.role_id
-    order by services_template.name;
+    order by services_template.type;
     '''
 
     def logstash(self,target):
@@ -184,6 +184,7 @@ def check_indice():
 @_task
 def upload_to_git():
     con = os.chdir(r"/home/op1/salt")
+    dd = os.popen("git pull")
     dd = os.popen("git status").read()
     modify =  re.findall(r"modified:[ ]+([^\n]+)",dd)
     for item in modify:
@@ -204,5 +205,5 @@ def upload_to_git():
             os.system("git add " + ele_item)
             #print "git add " + ele_item
            
-    os.system("git commit -m 'auto upload'")
+    os.system("git commit -m 'upload'")
     os.system("git push")

@@ -36,7 +36,7 @@
                                     name="serviceType"
                                     value="{{item.name}}"/>
                             </td>
-                            <td style="width:15%"><label for="serviceType_HDFS_4"><img border="0" src="/static/img/{{item.icon}}" style="height: 16px;width: 14px">{{item.name}}</label></td>
+                            <td style="width:15%"><label for="serviceType_HDFS_4"><img border="0" src="/elasticsearch/static/img/{{item.icon}}" style="height: 16px;width: 14px">{{item.name}}</label></td>
                             <td style="width:85%" class="description wrap"><label for="serviceType_HDFS_4">{{item.description}}</label></td>
                         </tr>
                         {% endfor %}     
@@ -190,7 +190,7 @@
             cluster_template_id = $("#" + select_template).attr("value");
 
             $.ajax({
-                url: '/salt/cluster/add_service/commit',
+                url: '/elasticsearch/salt/cluster/add_service/commit',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {result:result_string,new_service_name:new_service_name,cluster_id:cluster_id,cluster_template_id:cluster_template_id},
@@ -200,19 +200,19 @@
                     {
 
                         alert("操作成功");
-                        window.location.href="/salt/services";
+                        window.location.href="/elasticsearch/salt/services";
                         return;
                     } 
                     else
                     {
                         alert("操作失败");
-                        window.location.href="/salt/services";
+                        window.location.href="/elasticsearch/salt/services";
                         return;
                     }
                 },
                 error: function (data) {
                     alert(data);
-                    window.location.href="/salt/services";
+                    window.location.href="/elasticsearch/salt/services";
                     return;         
                 }
             });
